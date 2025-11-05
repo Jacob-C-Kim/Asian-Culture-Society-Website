@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+/opt/homebrew/bin/rg --version >/dev/null 2>&1 && export PATH="/opt/homebrew/bin:$PATH"
+
+set -euo pipefail
+
+# Ensure pnpm from your nvm install is on PATH
+export NVM_BIN="$HOME/.nvm/versions/node/v23.3.0/bin"
+export PATH="$NVM_BIN:$PATH"
+
+PNPM="$NVM_BIN/pnpm"
+
+# Run your staged-only secret scan
+"$PNPM" sec:scan:staged
+
+# Lint & typecheck at workspace root
+"$PNPM" -w lint
+"$PNPM" -w typecheck
+
+# gitleaks staged scan
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact || { echo "❌ Secret detected. Fix before committing."; exit 1; }
+else
+  echo "gitleaks not installed; skipping gitleaks scan."
+fi

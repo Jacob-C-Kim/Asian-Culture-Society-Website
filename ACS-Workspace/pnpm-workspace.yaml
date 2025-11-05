@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - prisma
+
+patchedDependencies:
+  refractor@3.6.0: patches/refractor@3.6.0.patch

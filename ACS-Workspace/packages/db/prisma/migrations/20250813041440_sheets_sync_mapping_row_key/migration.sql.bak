@@ -1,0 +1,65 @@
+/*
+  Warnings:
+
+  - Added the required column `committeeId` to the `line_items` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `price_total_cents` to the `line_items` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `type` to the `line_items` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- CreateEnum
+CREATE TYPE "public"."LineItemSource" AS ENUM ('SHEETS', 'WORKSPACE');
+
+-- CreateEnum
+CREATE TYPE "public"."LineItemType" AS ENUM ('EXPENSE', 'REVENUE');
+
+-- CreateEnum
+CREATE TYPE "public"."LineItemStatus" AS ENUM ('NA', 'PENDING', 'APPROVED', 'DENIED');
+
+-- AlterTable
+ALTER TABLE "public"."line_items" ADD COLUMN     "committeeId" TEXT NOT NULL,
+ADD COLUMN     "event_text_opt" TEXT,
+ADD COLUMN     "link_opt" TEXT,
+ADD COLUMN     "notes_opt" TEXT,
+ADD COLUMN     "online" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "price_total_cents" INTEGER NOT NULL,
+ADD COLUMN     "price_unit_opt_cents" INTEGER,
+ADD COLUMN     "qty" INTEGER NOT NULL DEFAULT 1,
+ADD COLUMN     "reason_opt" TEXT,
+ADD COLUMN     "sheetRowKey" VARCHAR(64),
+ADD COLUMN     "source" "public"."LineItemSource" NOT NULL DEFAULT 'SHEETS',
+ADD COLUMN     "status" "public"."LineItemStatus" NOT NULL DEFAULT 'NA',
+ADD COLUMN     "type" "public"."LineItemType" NOT NULL,
+ADD COLUMN     "used" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "vendor" TEXT,
+ALTER COLUMN "eventId" DROP NOT NULL;
+
+-- CreateTable
+CREATE TABLE "public"."committee_sheets" (
+    "id" SERIAL NOT NULL,
+    "committeeId" TEXT NOT NULL,
+    "year" TEXT NOT NULL,
+    "spreadsheetId" TEXT NOT NULL,
+    "dataSheetName" TEXT NOT NULL DEFAULT 'Data',
+    "inputSheetName" TEXT NOT NULL DEFAULT 'Input',
+    "lastSyncAt" TIMESTAMP(3),
+
+    CONSTRAINT "committee_sheets_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE INDEX "committee_sheets_committeeId_idx" ON "public"."committee_sheets"("committeeId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "committee_sheets_committeeId_year_key" ON "public"."committee_sheets"("committeeId", "year");
+
+-- CreateIndex
+CREATE INDEX "line_items_committeeId_idx" ON "public"."line_items"("committeeId");
+
+-- CreateIndex
+CREATE INDEX "line_items_sheetRowKey_idx" ON "public"."line_items"("sheetRowKey");
+
+-- AddForeignKey
+ALTER TABLE "public"."line_items" ADD CONSTRAINT "line_items_committeeId_fkey" FOREIGN KEY ("committeeId") REFERENCES "public"."Committee"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."committee_sheets" ADD CONSTRAINT "committee_sheets_committeeId_fkey" FOREIGN KEY ("committeeId") REFERENCES "public"."Committee"("id") ON DELETE CASCADE ON UPDATE CASCADE;

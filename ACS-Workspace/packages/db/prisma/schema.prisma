@@ -1,0 +1,242 @@
+// -----------------------------------------------------
+// generator & datasource
+// -----------------------------------------------------
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------
+// ENUMS
+// ----------------------
+enum RequestStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELED
+}
+
+/** Source of a line item (sheets vs created in app) */
+enum LineItemSource {
+  SHEETS
+  WORKSPACE
+}
+
+/** Budget classification mirrored from Sheets */
+enum LineItemType {
+  EXPENSE
+  REVENUE
+}
+
+/** Lightweight per-item status (separate from Request workflow) */
+enum LineItemStatus {
+  NA
+  PENDING
+  APPROVED
+  DENIED
+}
+
+// ----------------------
+// MODELS
+// ----------------------
+model Committee {
+  id   String @id @default(cuid())
+  name String @unique
+
+  // Relations
+  events          Event[]
+  committeeBudget CommitteeBudget[]
+  requests        Request[]
+  lineItems       LineItem[]        // <- new backref
+  sheets          CommitteeSheet[]  // <- mapping to spreadsheets
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  name        String
+  // Store as DateTime; if you truly need a string, change to String
+  date        DateTime
+  committeeId String
+  createdById String?
+
+  // Relations
+  committee   Committee     @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+  createdBy   User?         @relation("Event_createdById", fields: [createdById], references: [id], onDelete: SetNull)
+  eventBudget EventBudget[]
+  lineItems   LineItem[]
+  requests    Request[]
+
+  @@index([committeeId])
+  @@map("events")
+}
+
+model CommitteeBudget {
+  id          String  @id @default(cuid())
+  committeeId String
+  amount      Decimal @db.Decimal(12, 2)
+
+  committee Committee @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  @@index([committeeId])
+  @@map("budgets_committee")
+}
+
+model EventBudget {
+  id      String  @id @default(cuid())
+  eventId String
+  amount  Decimal @db.Decimal(12, 2)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@map("budgets_event")
+}
+
+/**
+ * Line items now support syncing from Sheets:
+ *  - committee-level items allowed (eventId optional)
+ *  - dedupe via sheetRowKey
+ *  - cents for safe arithmetic
+ */
+model LineItem {
+  id      String @id @default(cuid())
+  name    String
+
+  // Relations
+  eventId     String?
+  event       Event?      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  committeeId String
+  committee   Committee   @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  inRequests  RequestItem[]
+
+  // ---- Sheets sync fields (new) ----
+  type                LineItemType
+  used                Boolean        @default(false)
+  qty                 Int            @default(1)
+  price_total_cents   Int            // total price in cents (from "Price")
+  price_unit_opt_cents Int?
+  vendor              String?
+  online              Boolean        @default(false)
+  link_opt            String?
+  notes_opt           String?
+  status              LineItemStatus @default(NA)
+  reason_opt          String?
+  event_text_opt      String?        // free-text event name from sheet if not linked
+  source              LineItemSource @default(SHEETS)
+
+  /// Deterministic hash of selected row fields to make upserts idempotent
+  sheetRowKey         String?        @db.VarChar(64)
+
+  // ---- indexes ----
+  @@index([eventId])
+  @@index([committeeId])
+  @@index([sheetRowKey])
+  @@unique([sheetRowKey])
+  @@map("line_items")
+}
+
+model Request {
+  id          String        @id @default(cuid())
+  type        String
+  eventId     String
+  committeeId String
+  status      RequestStatus @default(DRAFT)
+  createdById String
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  event       Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  committee   Committee          @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+  createdBy   User               @relation("Request_createdById", fields: [createdById], references: [id], onDelete: Restrict)
+  items       RequestItem[]
+  mediaTypes  MediaRequestType[]
+  attachments Attachment[]
+
+  @@index([eventId])
+  @@index([committeeId])
+  @@index([createdById])
+  @@map("requests")
+}
+
+model RequestItem {
+  requestId  String
+  lineItemId String
+
+  request  Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  lineItem LineItem @relation(fields: [lineItemId], references: [id], onDelete: Cascade)
+
+  @@id([requestId, lineItemId])
+  @@index([lineItemId])
+  @@map("request_items")
+}
+
+model MediaRequestType {
+  id        String  @id @default(cuid())
+  requestId String
+  type      String
+  status    String
+  notes     String?
+
+  request Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@index([requestId])
+  @@map("media_request_types")
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  requestId  String
+  mediaType  String?
+  fileUrl    String
+  fileHash   String
+  uploaderId String
+  createdAt  DateTime @default(now())
+
+  request  Request @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  uploader User    @relation(fields: [uploaderId], references: [id], onDelete: Restrict)
+
+  @@index([requestId])
+  @@index([uploaderId])
+  @@map("attachments")
+}
+
+model User {
+  id   String @id @default(cuid())
+  name String
+
+  // Relations
+  createdEvents Event[]      @relation("Event_createdById")
+  createdReqs   Request[]    @relation("Request_createdById")
+  uploads       Attachment[]
+
+  @@map("users")
+}
+
+/**
+ * Maps a committee + academic year to the Google Sheet that drives it.
+ * Used by the sync worker to pull rows from `Data` (and optionally `Input`).
+ */
+model CommitteeSheet {
+  id               Int      @id @default(autoincrement())
+  committeeId      String
+  year             String
+  spreadsheetId    String
+  dataSheetName    String   @default("Data")
+  inputSheetName   String   @default("Input")
+  lastSyncAt       DateTime?
+
+  committee Committee @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  @@unique([committeeId, year])
+  @@index([committeeId])
+  @@map("committee_sheets")
+}

@@ -1,0 +1,16 @@
+name: Sheets Sync (nightly)
+on:
+  schedule:
+    - cron: "12 4 * * *" # 04:12 UTC nightly (~midnight ET)
+  workflow_dispatch: {}
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call sync endpoint
+        run: |
+          curl -X POST \
+            -H "x-api-key: ${{ secrets.SHEETS_SYNC_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            ${{ secrets.SHEETS_SYNC_URL }}

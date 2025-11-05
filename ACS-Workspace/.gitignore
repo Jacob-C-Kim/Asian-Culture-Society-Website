@@ -1,0 +1,11 @@
+# node / next
+node_modules
+.next
+out
+.env
+.env.*
+.env.*.local
+*.env.local
+apps/web/.env.local
+packages/db/.env
+.DS_Store
