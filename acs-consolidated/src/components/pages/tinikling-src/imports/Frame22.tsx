@@ -1,4 +1,3 @@
-import imgTransparentLogo11 from "../assets/acs-logo-transparent.png";
 
 function Frame2() {
   return (
@@ -9,7 +8,7 @@ function Frame2() {
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">schedule</p>
       </div>
-      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('${imgTransparentLogo11}')` }} />
+      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('/assets/logos/acs-logo-transparent.png')` }} />
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">our eboard</p>
       </div>

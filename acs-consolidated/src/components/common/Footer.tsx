@@ -1,6 +1,5 @@
 import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
-import campusGroupsLogo from "../pages/home-src/assets/campus-groups-logo.png";
 import svgPaths from "../pages/home-src/imports/svg-61ju42v1aq";
 import discordSvgPaths from "../pages/home-src/imports/svg-pgq3ktlc4j";
 
@@ -116,7 +115,7 @@ const CampusGroupsButton = memo(function CampusGroupsButton() {
       <div className="box-border flex gap-2.5 h-[43px] items-center justify-start overflow-clip px-4 md:px-[30px] py-2.5">
         <div className="relative shrink-0 w-[25px] h-[25px] flex items-center justify-center">
           <img
-            src={campusGroupsLogo.src}
+            src="/assets/logos/campus-groups-logo.png"
             alt="CampusGroups Logo"
             className="w-full h-full object-contain"
           />

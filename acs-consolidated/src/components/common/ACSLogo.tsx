@@ -1,5 +1,4 @@
 import { memo } from "react";
-import imgTransparentLogo11 from "../pages/home-src/assets/acs-logo-transparent.png";
 
 interface ACSLogoProps {
   size?: number;
@@ -16,7 +15,7 @@ const ACSLogo = memo(function ACSLogo({
     <div
       className={`bg-center bg-cover bg-no-repeat shrink-0 cursor-pointer hover:scale-105 transition-transform ${className}`}
       style={{
-        backgroundImage: `url('${imgTransparentLogo11.src}')`,
+        backgroundImage: `url('/assets/logos/acs-logo-transparent.png')`,
         width: `${size}px`,
         height: `${size}px`
       }}

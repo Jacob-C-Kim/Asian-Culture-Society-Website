@@ -1,6 +1,3 @@
-import imgColumn2 from "../assets/tinikling-column-2.png";
-import imgColumn3 from "../assets/tinikling-column-3.png";
-import modernTinklingImage from "../assets/modern-tinikling.png";
 import discordSvgPaths from "../imports/svg-3075tc4bla";
 
 function SignUpButton() {
@@ -40,7 +37,7 @@ function TinklingContent() {
 }
 
 function TinklingImage() {
-  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[308px]" data-name="Column 2" style={{ backgroundImage: `url('${imgColumn2}')` }} />;
+  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[308px]" data-name="Column 2" style={{ backgroundImage: `url('/assets/images/tinikling-column-2.png')` }} />;
 }
 
 function TinklingSection() {
@@ -67,7 +64,7 @@ function TinklingHero() {
 }
 
 function BackstoryImage() {
-  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('${imgColumn3}')` }} />;
+  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('/assets/images/tinikling-column-3.png')` }} />;
 }
 
 function BackstoryContent() {
@@ -105,7 +102,7 @@ function BackstoryWrapper() {
 }
 
 function ModernVariationsImage() {
-  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('${modernTinklingImage}')` }} />;
+  return <div className="bg-center bg-cover bg-no-repeat h-[200px] md:h-[340px] rounded-[18px] shrink-0 w-full md:w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('/assets/images/modern-tinikling.png')` }} />;
 }
 
 function DiscordButton() {

@@ -1,5 +1,3 @@
-import acsLogoImage from "../assets/acs-logo-transparent.png";
-
 function AboutUsHeader() {
   return (
     <div className="relative size-full" data-name="about us">
@@ -44,8 +42,8 @@ export default function AboutUsPage() {
           {/* Right side - ACS Logo */}
           <div className="flex flex-col items-center">
             <div className="size-[194px] relative">
-              <img 
-                src={acsLogoImage.src} 
+              <img
+                src="/assets/logos/acs-logo-transparent.png"
                 alt="Asian Culture Society Logo" 
                 className="w-full h-full object-contain rounded-full"
               />
@@ -67,8 +65,8 @@ export default function AboutUsPage() {
         {/* ACS Logo */}
         <div className="mb-8">
           <div className="size-[150px] relative">
-            <img 
-              src={acsLogoImage.src} 
+            <img
+              src="/assets/logos/acs-logo-transparent.png"
               alt="Asian Culture Society Logo" 
               className="w-full h-full object-contain rounded-full"
             />
