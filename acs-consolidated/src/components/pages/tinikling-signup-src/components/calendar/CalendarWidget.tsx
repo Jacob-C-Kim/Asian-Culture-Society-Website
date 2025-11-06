@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar } from "../ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import { getEventDates } from "../../data/events";
 
 interface CalendarWidgetProps {
