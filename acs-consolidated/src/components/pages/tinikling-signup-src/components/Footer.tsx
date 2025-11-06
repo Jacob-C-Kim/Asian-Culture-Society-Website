@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ACSLogo from "./ACSLogo";
-import campusGroupsLogo from "figma:asset/69d02b9174c751a313d8676a0de4260a34c015d1.png";
+import campusGroupsLogo from "../assets/69d02b9174c751a313d8676a0de4260a34c015d1.png";
 import svgPaths from "../imports/svg-61ju42v1aq";
 import discordSvgPaths from "../imports/svg-pgq3ktlc4j";
 
@@ -113,7 +113,7 @@ function CampusGroupsButton() {
       <div className="box-border flex gap-2.5 h-[43px] items-center justify-start overflow-clip px-4 md:px-[30px] py-2.5">
         <div className="relative shrink-0 w-[25px] h-[25px] flex items-center justify-center">
           <img
-            src={campusGroupsLogo}
+            src={campusGroupsLogo.src}
             alt="CampusGroups Logo"
             className="w-full h-full object-contain"
           />

@@ -1,4 +1,4 @@
-import imgScreenshot20250815At22629Pm1 from "figma:asset/1c1c660bf60ec3210121cb4ab04167fa1efa1006.png";
+import imgScreenshot20250815At22629Pm1 from "../assets/1c1c660bf60ec3210121cb4ab04167fa1efa1006.png";
 
 function Frame8() {
   return (
