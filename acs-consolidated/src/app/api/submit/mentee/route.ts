@@ -1,17 +1,39 @@
 /**
- * Secure API endpoint for mentee sign-up submissions
+ * API endpoint for mentee program applications.
+ * Handles validation, rate limiting, and sanitization.
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { env } from '@/lib/env';
-import { validateFormData, sanitizeString, isValidEmail, checkRateLimit } from '@/lib/security';
+import {
+  validateRequiredFields,
+  sanitizeUserInput,
+  isValidEmail,
+  checkRateLimit
+} from '@/lib/security';
+
+const REQUIRED_FIELDS = ['name', 'email', 'major', 'year'] as const;
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_TEXT_FIELD_LENGTH = 500;
+
+function getClientIpAddress(request: NextRequest): string {
+  return (
+    request.headers.get('x-forwarded-for') ||
+    request.headers.get('x-real-ip') ||
+    'unknown'
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting by IP
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-    const rateLimitCheck = checkRateLimit(ip, env.RATE_LIMIT_MAX, env.RATE_LIMIT_WINDOW);
+    const clientIp = getClientIpAddress(request);
+    const rateLimitResult = checkRateLimit(
+      clientIp,
+      env.RATE_LIMIT_MAX,
+      env.RATE_LIMIT_WINDOW
+    );
 
-    if (!rateLimitCheck.allowed) {
+    if (!rateLimitResult.isAllowed) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
         {
@@ -24,58 +46,55 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Parse request body
-    const body = await request.json();
+    const requestBody = await request.json();
+    const validation = validateRequiredFields(requestBody, [...REQUIRED_FIELDS]);
 
-    // Validate required fields
-    const requiredFields = ['name', 'email', 'major', 'year'];
-    const validation = validateFormData(body, requiredFields);
-
-    if (!validation.valid) {
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Validation failed', details: validation.errors },
+        { error: 'Missing required fields', fields: validation.missingFields },
         { status: 400 }
       );
     }
 
-    // Validate email format
-    if (!isValidEmail(body.email)) {
+    if (!isValidEmail(requestBody.email)) {
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Invalid email address' },
         { status: 400 }
       );
     }
 
-    // Sanitize inputs
-    const sanitizedData = {
-      name: sanitizeString(body.name, 100),
-      email: sanitizeString(body.email, 254),
-      major: sanitizeString(body.major, 100),
-      year: sanitizeString(body.year, 50),
-      goals: body.goals ? sanitizeString(body.goals, 500) : '',
-      preferences: body.preferences ? sanitizeString(body.preferences, 500) : '',
+    const menteeApplication = {
+      name: sanitizeUserInput(requestBody.name, MAX_NAME_LENGTH),
+      email: sanitizeUserInput(requestBody.email, MAX_EMAIL_LENGTH),
+      major: sanitizeUserInput(requestBody.major, MAX_NAME_LENGTH),
+      year: sanitizeUserInput(requestBody.year, 50),
+      goals: requestBody.goals
+        ? sanitizeUserInput(requestBody.goals, MAX_TEXT_FIELD_LENGTH)
+        : '',
+      preferences: requestBody.preferences
+        ? sanitizeUserInput(requestBody.preferences, MAX_TEXT_FIELD_LENGTH)
+        : '',
     };
 
-    // TODO: Store in database (Supabase integration)
-    // For now, just log the submission
-    console.log('Mentee sign-up submission:', sanitizedData);
+    // TODO: Persist to database when Supabase is configured
+    console.log('Mentee application received:', menteeApplication);
 
     return NextResponse.json(
       {
         success: true,
-        message: 'Mentee sign-up submitted successfully',
+        message: 'Application submitted successfully',
       },
       {
         status: 200,
         headers: {
-          'X-RateLimit-Remaining': rateLimitCheck.remaining.toString(),
+          'X-RateLimit-Remaining': rateLimitResult.remainingRequests.toString(),
         }
       }
     );
 
   } catch (error) {
-    console.error('Error processing mentee sign-up:', error);
-
+    // Never expose internal error details to clients
+    console.error('Error processing mentee application:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -83,7 +102,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Reject other HTTP methods
 export async function GET() {
   return NextResponse.json(
     { error: 'Method not allowed' },
