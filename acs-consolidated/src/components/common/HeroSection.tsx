@@ -1,7 +1,9 @@
+import { memo } from "react";
+
 /**
  * Reusable Hero/Welcome Section Component
  */
-export function HeroSection({
+export const HeroSection = memo(function HeroSection({
   title = "asian culture society",
   subtitle = "welcome to",
   description = "RIT's largest Asian club, bringing students together to celebrate, learn, and share the rich history, culture, and art of Asian countries",
@@ -47,4 +49,4 @@ export function HeroSection({
       </div>
     </div>
   );
-}
+});

@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { NavigationHeader } from "@/components/common/NavigationHeader";
-import AboutUsPage from "./components/AboutUsPage";
 import StickyHeader from "../../common/StickyHeader";
+
+const AboutUsPage = dynamic(() => import("./components/AboutUsPage"), {
+  loading: () => <div className="min-h-screen" />,
+});
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('about-us');
@@ -11,9 +15,9 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  const handleNavigation = (page: string) => {
+  const handleNavigation = useCallback((page: string) => {
     setCurrentPage(page);
-  };
+  }, []);
 
   // About Us page with sticky header behavior (same as homepage and calendar)
   return (
