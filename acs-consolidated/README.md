@@ -124,6 +124,72 @@ npm run prepare
 - Lighthouse CI monitoring on every PR
 - Performance budgets enforced
 
+## 📊 Error Monitoring & Observability
+
+### Sentry Integration (Optional)
+
+Error monitoring is configured but requires Sentry setup:
+
+```bash
+# 1. Install Sentry
+npm install @sentry/nextjs
+
+# 2. Run setup wizard
+npx @sentry/wizard@latest -i nextjs
+
+# 3. Add environment variable
+echo "NEXT_PUBLIC_SENTRY_DSN=your-dsn-here" >> .env.local
+
+# 4. Uncomment initialization in src/lib/monitoring/sentry.ts
+```
+
+Features:
+- Automatic error tracking
+- Performance monitoring
+- Session replay for debugging
+- Sensitive data filtering
+
+### Usage
+
+```typescript
+import { captureError, captureMessage } from '@/lib/monitoring/sentry';
+
+try {
+  // Your code
+} catch (error) {
+  captureError(error as Error, { context: 'user-action' });
+}
+```
+
+## 🚀 Deployment
+
+### Vercel Preview Deployments
+
+Automated preview deployments are configured for pull requests:
+
+1. **Setup**:
+   ```bash
+   # Link your Vercel project
+   npx vercel link
+   ```
+
+2. **Add GitHub Secrets**:
+   - `VERCEL_TOKEN` - Get from https://vercel.com/account/tokens
+   - `VERCEL_ORG_ID` - From `vercel link` output
+   - `VERCEL_PROJECT_ID` - From `vercel link` output
+
+3. **Automatic Workflow**:
+   - Every PR triggers a preview deployment
+   - Comment added to PR with preview URL
+   - Runs linting, type-checking, and build before deploy
+
+### Production Deployment
+
+```bash
+# Deploy to production
+vercel --prod
+```
+
 ## 🔧 Environment Configuration
 
 ### Required Environment Variables
