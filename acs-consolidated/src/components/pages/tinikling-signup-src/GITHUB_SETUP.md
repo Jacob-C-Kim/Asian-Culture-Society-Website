@@ -308,7 +308,7 @@ Since Figma assets won't work outside of Figma Make, you'll need to:
 
 ```typescript
 // Instead of:
-// import imgTransparentLogo11 from "figma:asset/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+// import imgTransparentLogo11 from "figma:asset/acs-logo-transparent.png";
 
 // Use:
 const imgTransparentLogo11 = "https://via.placeholder.com/61x61/cccccc/000000?text=LOGO";

@@ -1,5 +1,5 @@
 import EventsSection from "./EventsSection";
-import koiFishImage from "../assets/a5d3332fda9431ae902f1c45d60dc0351c6d5df0.png";
+import koiFishImage from "../assets/koi-fish.png";
 
 function HeroSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
