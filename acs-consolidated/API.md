@@ -297,7 +297,7 @@ API endpoints accept requests from:
 ## Future Enhancements
 
 Planned features:
-- [ ] Database integration (Supabase)
+- [ ] Database integration
 - [ ] Email notifications
 - [ ] Admin dashboard API
 - [ ] JWT authentication for protected routes
