@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import svgPaths from "../../imports/svg-onqcmwzw98";
-import { getEventsForDate } from "../../data/events";
+// Unused: import { getEventsForDate } from "../../data/events";
 import { getAllEventsForDate, formatDate } from "../../utils/calendarHelpers";
 
 interface EventDetailsCardProps {
@@ -8,41 +8,68 @@ interface EventDetailsCardProps {
   onClose: () => void;
 }
 
-export default function EventDetailsCard({ 
-  selectedDate, 
-  onClose 
+export default function EventDetailsCard({
+  selectedDate,
+  onClose
 }: EventDetailsCardProps) {
+  // ALL HOOKS MUST BE AT THE TOP - React Rules of Hooks
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  const [isSwipeActive, setIsSwipeActive] = useState(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+
+  // Get events safely (can be empty if no selectedDate)
+  const events = selectedDate ? getAllEventsForDate(selectedDate) : [];
+  const safeIndex = Math.max(0, Math.min(currentEventIndex, Math.max(0, events.length - 1)));
+  const currentEvent = events[safeIndex];
 
   // Check if mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  if (!selectedDate) return null;
+  // Reset event index when date changes and focus the card if it has multiple events
+  useEffect(() => {
+    if (!selectedDate) return;
+    setCurrentEventIndex(0);
+    setShowSwipeHint(true);
 
-  const events = getAllEventsForDate(selectedDate);
-  
-  // Ensure we have valid events and currentEventIndex is within bounds
-  if (!events || events.length === 0) {
-    return null;
-  }
-  
-  // Ensure currentEventIndex is within bounds
-  const safeIndex = Math.max(0, Math.min(currentEventIndex, events.length - 1));
-  const currentEvent = events[safeIndex];
-  
-  // Double check that currentEvent exists
-  if (!currentEvent) {
-    return null;
-  }
+    if (isMobile && events.length > 1) {
+      const timer = setTimeout(() => {
+        setShowSwipeHint(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedDate, isMobile, events.length]);
+
+  // Listen for global navigation events
+  useEffect(() => {
+    if (!events.length) return;
+
+    const handleNavigateEvent = (e: CustomEvent) => {
+      if (events.length > 1) {
+        const { direction } = e.detail;
+        handleScroll(direction);
+      }
+    };
+
+    document.addEventListener('navigateEvent', handleNavigateEvent as EventListener);
+    return () => document.removeEventListener('navigateEvent', handleNavigateEvent as EventListener);
+  }, [events.length, safeIndex]);
+
+
+  // NOW do early returns AFTER all hooks
+  if (!selectedDate) return null;
+  if (!events || events.length === 0) return null;
+  if (!currentEvent) return null;
 
   // Handle scrolling through events
   const handleScroll = (direction: 'up' | 'down') => {
@@ -55,11 +82,8 @@ export default function EventDetailsCard({
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Only handle arrow keys if there are multiple events
-    if (events.length <= 1) {
-      return;
-    }
-    
+    if (events.length <= 1) return;
+
     if (e.key === 'ArrowDown' && safeIndex < events.length - 1) {
       e.preventDefault();
       e.stopPropagation();
@@ -70,39 +94,6 @@ export default function EventDetailsCard({
       handleScroll('up');
     }
   };
-
-  // Reset event index when date changes and focus the card if it has multiple events
-  useEffect(() => {
-    setCurrentEventIndex(0);
-    setShowSwipeHint(true); // Reset hint for new date
-    
-    // Hide swipe hint after 4 seconds
-    if (isMobile && events.length > 1) {
-      const timer = setTimeout(() => {
-        setShowSwipeHint(false);
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [selectedDate, isMobile, events.length]);
-
-  // Listen for global navigation events
-  useEffect(() => {
-    const handleNavigateEvent = (e: CustomEvent) => {
-      if (events.length > 1) {
-        const { direction } = e.detail;
-        handleScroll(direction);
-      }
-    };
-
-    document.addEventListener('navigateEvent', handleNavigateEvent as EventListener);
-    return () => document.removeEventListener('navigateEvent', handleNavigateEvent as EventListener);
-  }, [events.length, safeIndex]);
-
-  // Touch handling for mobile swipe navigation
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
-  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
-  const [isSwipeActive, setIsSwipeActive] = useState(false);
-  const [showSwipeHint, setShowSwipeHint] = useState(true);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (events.length <= 1 || !isMobile) return;
@@ -159,20 +150,6 @@ export default function EventDetailsCard({
     setTouchEnd(null);
   };
 
-  // Auto-focus the event card when it has multiple events for keyboard navigation (desktop only)
-  useEffect(() => {
-    if (events.length > 1 && !isMobile) {
-      // Focus the event card element after a short delay to ensure it's rendered
-      const timer = setTimeout(() => {
-        const eventCard = document.querySelector('[role="region"][aria-label*="Event"]') as HTMLElement;
-        if (eventCard) {
-          eventCard.focus();
-        }
-      }, 300);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [selectedDate, events.length, isMobile]);
 
   return (
     <div className="relative">
