@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import InteractiveFrame22, { NavigationHeader } from "./components/InteractiveFrame22";
 import EventsSection from "./components/EventsSection";
-import Footer from "./components/Footer";
+import Footer from "@/components/common/Footer";
 import CalendarPage from "./components/CalendarPage";
 import StickyHeader from "../../common/StickyHeader";
 

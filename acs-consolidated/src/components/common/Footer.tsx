@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ACSLogo from "./ACSLogo";
-import campusGroupsLogo from "../assets/campus-groups-logo.png";
-import svgPaths from "../imports/svg-61ju42v1aq";
-import discordSvgPaths from "../imports/svg-pgq3ktlc4j";
+import campusGroupsLogo from "../pages/home-src/assets/campus-groups-logo.png";
+import svgPaths from "../pages/home-src/imports/svg-61ju42v1aq";
+import discordSvgPaths from "../pages/home-src/imports/svg-pgq3ktlc4j";
 
 function InstagramButton() {
   const [isHovered, setIsHovered] = useState(false);
@@ -138,7 +138,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row items-start md:justify-between gap-8 md:gap-4 px-4 md:px-8 py-[40px] md:py-[63px] w-full min-h-[286px]">
         {/* Left side - Logo and contact info */}
         <div className="flex flex-col">
-          <ACSLogo 
+          <ACSLogo
             size={61}
             className="mb-[20px]"
             onClick={() =>
