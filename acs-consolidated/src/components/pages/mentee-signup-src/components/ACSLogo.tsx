@@ -15,7 +15,7 @@ export default function ACSLogo({
     <div 
       className={`bg-center bg-cover bg-no-repeat shrink-0 cursor-pointer hover:scale-105 transition-transform ${className}`}
       style={{ 
-        backgroundImage: `url('${imgTransparentLogo11}')`,
+        backgroundImage: `url('${imgTransparentLogo11.src}')`,
         width: `${size}px`,
         height: `${size}px`
       }}
