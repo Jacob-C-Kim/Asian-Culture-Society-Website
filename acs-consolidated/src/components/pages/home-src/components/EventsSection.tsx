@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import svgPaths from "../imports/svg-onqcmwzw98";
-import { events, Event, getSortedEvents } from "../data/events";
+import { Event, getSortedEvents } from "../data/events";
 
-function FilterButtons({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
+function FilterButtons({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
     <div className="content-stretch flex gap-[18px] items-start justify-start relative shrink-0">
       <div 
@@ -287,7 +287,7 @@ function PaginationDots({ currentSlide, onSlideChange, totalSlides }: {
   );
 }
 
-export default function EventsSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
+export default function EventsSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sortedEvents = getSortedEvents(); // Get events sorted by date
   const totalSlides = Math.max(sortedEvents.length, 1);

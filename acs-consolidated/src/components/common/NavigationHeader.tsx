@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, memo, useCallback, useMemo } from "react";
+import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
 
 export const NavigationHeader = memo(function NavigationHeader({

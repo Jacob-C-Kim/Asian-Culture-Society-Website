@@ -140,7 +140,7 @@ function MentorsSection() {
   );
 }
 
-export default function MentorMenteePage({ onNavigate, hideHeader }: { onNavigate?: (page: string) => void; hideHeader?: boolean }) {
+export default function MentorMenteePage({ onNavigate, hideHeader: _hideHeader }: { onNavigate?: (page: string) => void; hideHeader?: boolean }) {
   return (
     <div className="bg-white flex flex-col w-full min-h-screen">
       {/* White section at the top to prevent navigation gap during sticky transition */}

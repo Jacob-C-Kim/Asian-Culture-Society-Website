@@ -1,20 +1,3 @@
-function AboutUsHeader() {
-  return (
-    <div className="relative size-full" data-name="about us">
-      <div className="absolute bottom-0 flex flex-col font-['Lexend:Bold',_sans-serif] font-bold justify-center leading-[0] left-[13.79%] right-[-13.79%] text-[25px] text-black top-0">
-        <p className="leading-[normal]">about us</p>
-      </div>
-      <div className="absolute bottom-0 left-[13.79%] right-[-10.84%] top-full">
-        <div className="absolute bottom-0 left-0 right-0 top-[-1px]">
-          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 394 1">
-            <line id="Line 1" stroke="var(--stroke-0, #195259)" x2="394" y1="0.5" y2="0.5" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function AboutUsPage() {
   return (
     <div className="bg-[#99E3ED] relative min-h-screen w-full flex items-center justify-center" data-name="About us">

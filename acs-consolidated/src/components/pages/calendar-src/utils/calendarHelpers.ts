@@ -1,4 +1,4 @@
-// Unused: import { getEventsForDate } from "../data/events";
+import { getEventsForDate } from "../data/events";
 
 // Helper function to parse start time from time string
 export const parseStartTime = (timeString: string): number => {
