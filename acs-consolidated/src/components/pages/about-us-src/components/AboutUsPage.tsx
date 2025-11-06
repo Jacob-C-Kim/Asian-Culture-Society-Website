@@ -1,4 +1,4 @@
-import acsLogoImage from "figma:asset/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import acsLogoImage from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
 
 function AboutUsHeader() {
   return (
@@ -45,7 +45,7 @@ export default function AboutUsPage() {
           <div className="flex flex-col items-center">
             <div className="size-[194px] relative">
               <img 
-                src={acsLogoImage} 
+                src={acsLogoImage.src} 
                 alt="Asian Culture Society Logo" 
                 className="w-full h-full object-contain rounded-full"
               />
@@ -68,7 +68,7 @@ export default function AboutUsPage() {
         <div className="mb-8">
           <div className="size-[150px] relative">
             <img 
-              src={acsLogoImage} 
+              src={acsLogoImage.src} 
               alt="Asian Culture Society Logo" 
               className="w-full h-full object-contain rounded-full"
             />

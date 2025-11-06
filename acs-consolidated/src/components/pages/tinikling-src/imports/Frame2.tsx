@@ -1,6 +1,6 @@
-import imgTransparentLogo11 from "figma:asset/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
-import imgColumn2 from "figma:asset/7d8380adaae1cd33a31168570eb65b7707216808.png";
-import imgColumn3 from "figma:asset/1b1fe005aec6b48895acd4562a9091a6d2cf842b.png";
+import imgTransparentLogo11 from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import imgColumn2 from "../assets/7d8380adaae1cd33a31168570eb65b7707216808.png";
+import imgColumn3 from "../assets/1b1fe005aec6b48895acd4562a9091a6d2cf842b.png";
 
 function Frame5() {
   return (
