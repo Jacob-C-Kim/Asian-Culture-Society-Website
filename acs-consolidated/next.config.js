@@ -15,7 +15,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'", // Required for Tailwind
               "img-src 'self' data: https:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.supabase.co",
+              "connect-src 'self'",
               "frame-ancestors 'self' https://campusgroups.rit.edu https://*.campusgroups.com https://*.rit.edu",
             ].join('; ')
           },

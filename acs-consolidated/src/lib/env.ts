@@ -23,11 +23,6 @@ export const env = {
   // Security
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 
-  // Supabase (optional)
-  SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-
   // Rate limiting
   RATE_LIMIT_MAX: parseInt(getEnvVar('RATE_LIMIT_MAX_REQUESTS', '10'), 10),
   RATE_LIMIT_WINDOW: parseInt(getEnvVar('RATE_LIMIT_WINDOW_MS', '60000'), 10),

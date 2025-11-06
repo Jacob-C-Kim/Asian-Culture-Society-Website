@@ -74,7 +74,8 @@ export async function POST(request: NextRequest) {
         : '',
     };
 
-    // TODO: Persist to database when Supabase is configured
+    // TODO: Implement data persistence (e.g., send email, write to database, or webhook)
+    // For now, log the registration for demonstration purposes
     console.log('Tinikling workshop registration received:', workshopRegistration);
 
     return NextResponse.json(
