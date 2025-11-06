@@ -53,16 +53,20 @@ export default function App() {
   };
 
   // Calculate transition progress for header
-  const triggerPoint = headerHeight / 2;
-  const transitionDistance = headerHeight / 3;
-  const progress = Math.min(Math.max((scrollY - triggerPoint) / transitionDistance, 0), 1);
-  
+  // Guard against division by zero when headerHeight is 0 (initial render)
+  const triggerPoint = headerHeight > 0 ? headerHeight / 2 : 50;
+  const transitionDistance = headerHeight > 0 ? headerHeight / 3 : 30;
+  const progress = transitionDistance > 0
+    ? Math.min(Math.max((scrollY - triggerPoint) / transitionDistance, 0), 1)
+    : 0;
+
   // Determine if header should be sticky
   const isSticky = scrollY > triggerPoint;
-  
+
   // Calculate transform and opacity based on scroll progress
   const translateY = isSticky ? 0 : Math.max(-scrollY, -headerHeight);
-  const stickyOpacity = progress;
+  // Always keep navbar visible with full opacity
+  const stickyOpacity = 1;
   const stickyScale = 0.98 + (progress * 0.02);
 
   // For calendar page, we want the same sticky header behavior
