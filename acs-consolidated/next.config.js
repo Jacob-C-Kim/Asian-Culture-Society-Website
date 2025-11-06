@@ -1,3 +1,6 @@
+// Sentry integration
+const { withSentryConfig } = require("@sentry/nextjs");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Security headers following OWASP recommendations
@@ -85,4 +88,26 @@ const nextConfig = {
   output: 'standalone',
 }
 
-module.exports = nextConfig
+// Sentry configuration options
+const sentryWebpackPluginOptions = {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  // Suppresses source map uploading logs during build
+  silent: true,
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Only upload source maps in production
+  disableServerWebpackPlugin: process.env.NODE_ENV !== 'production',
+  disableClientWebpackPlugin: process.env.NODE_ENV !== 'production',
+
+  // Hide source maps from generated client bundles
+  hideSourceMaps: true,
+
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  widenClientFileUpload: true,
+};
+
+// Export with Sentry wrapper (gracefully handles when Sentry env vars are missing)
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
