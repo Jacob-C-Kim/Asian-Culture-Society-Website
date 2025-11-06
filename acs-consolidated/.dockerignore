@@ -1,8 +1,13 @@
 # Dependencies
 node_modules
-npm-debug.log
-yarn-error.log
-package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage
+.nyc_output
+__tests__/__snapshots__
 
 # Next.js
 .next
@@ -10,21 +15,10 @@ out
 build
 dist
 
-# Environment files
-.env*
-!.env.example
-
-# Git
-.git
-.gitignore
-
-# Testing
-coverage
-.coverage
-*.test.ts
-*.test.tsx
-*.spec.ts
-*.spec.tsx
+# Development
+.env*.local
+.env.development
+.env.test
 
 # IDE
 .vscode
@@ -37,23 +31,21 @@ coverage
 .DS_Store
 Thumbs.db
 
-# Misc
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
 README.md
 *.md
-.prettierrc
-.eslintrc
-.editorconfig
+docs/
 
 # CI/CD
-.github
+.github/
 .gitlab-ci.yml
-azure-pipelines.yml
+.travis.yml
 
-# Docker
-Dockerfile
-.dockerignore
-docker-compose*.yml
-
-# Logs
-logs
+# Misc
 *.log
+.husky
