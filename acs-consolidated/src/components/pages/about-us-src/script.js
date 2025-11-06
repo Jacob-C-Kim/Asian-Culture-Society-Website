@@ -1,5 +1,5 @@
 // State management
-let activeSection = null;
+// Unused: let activeSection = null;
 
 // DOM elements
 const navItems = document.querySelectorAll('.nav-item');

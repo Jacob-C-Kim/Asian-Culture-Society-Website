@@ -7,7 +7,7 @@ interface StickyHeaderProps {
   currentPage?: string;
 }
 
-export default function StickyHeader({ children, currentPage }: StickyHeaderProps) {
+export default function StickyHeader({ children, currentPage: _currentPage }: StickyHeaderProps) {
   const [scrollY, setScrollY] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isMobile, setIsMobile] = useState(false);

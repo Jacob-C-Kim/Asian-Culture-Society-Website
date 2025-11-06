@@ -83,11 +83,6 @@ const nextConfig = {
 
   // Enable standalone output for Docker
   output: 'standalone',
-
-  // Temporarily disable ESLint during builds to test asset changes
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
 }
 
 module.exports = nextConfig

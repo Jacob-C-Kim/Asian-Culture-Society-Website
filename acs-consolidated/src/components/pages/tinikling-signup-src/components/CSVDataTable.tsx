@@ -106,7 +106,6 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
       ];
 
       let lastError: Error | null = null;
-      let is404Error = false;
       
       for (let i = 0; i < fetchAttempts.length; i++) {
         try {
@@ -115,7 +114,6 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
 
           if (!response.ok) {
             if (response.status === 404) {
-              is404Error = true;
             }
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
           }
@@ -156,7 +154,6 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
           
           // If we get 404 on the first two attempts, skip to fallback immediately
           if (lastError.message.includes('404') && i < 2) {
-            is404Error = true;
           }
           
           // Continue to next method unless it's the last one
