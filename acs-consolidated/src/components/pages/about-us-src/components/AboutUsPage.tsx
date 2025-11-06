@@ -1,4 +1,4 @@
-import acsLogoImage from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import acsLogoImage from "../assets/acs-logo-transparent.png";
 
 function AboutUsHeader() {
   return (

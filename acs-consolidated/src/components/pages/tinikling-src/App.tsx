@@ -78,7 +78,7 @@ export default function App() {
           left: isSticky ? '0' : 'auto',
           right: isSticky ? '0' : 'auto',
           transform: isSticky ? `translateY(${translateY}px) scale(${stickyScale})` : 'none',
-          backgroundColor: `rgba(255, 255, 255, ${stickyOpacity})`,
+          backgroundColor: isSticky ? `rgba(255, 255, 255, ${stickyOpacity})` : 'rgb(255, 255, 255)',
           borderBottom: `1px solid rgba(229, 231, 235, ${stickyOpacity})`,
           boxShadow: `0 2px 8px -2px rgba(0, 0, 0, ${0.1 * stickyOpacity})`,
           backdropFilter: stickyOpacity > 0 ? 'blur(8px)' : 'none',

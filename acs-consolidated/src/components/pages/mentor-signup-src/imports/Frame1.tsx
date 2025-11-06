@@ -1,6 +1,6 @@
 import svgPaths from "./svg-61ju42v1aq";
 import calendarSvgPaths from "./svg-onqcmwzw98";
-import imgTransparentLogo11 from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import imgTransparentLogo11 from "../assets/acs-logo-transparent.png";
 
 function Frame22() {
   return (

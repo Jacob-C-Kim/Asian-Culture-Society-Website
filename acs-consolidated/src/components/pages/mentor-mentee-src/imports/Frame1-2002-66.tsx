@@ -1,5 +1,5 @@
 import svgPaths from "./svg-lxb58x5013";
-import imgTransparentLogo11 from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import imgTransparentLogo11 from "../assets/acs-logo-transparent.png";
 
 function Mentors() {
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ACSLogo from "./ACSLogo";
-import campusGroupsLogo from "../assets/69d02b9174c751a313d8676a0de4260a34c015d1.png";
+import campusGroupsLogo from "../assets/campus-groups-logo.png";
 import svgPaths from "../imports/svg-61ju42v1aq";
 import discordSvgPaths from "../imports/svg-pgq3ktlc4j";
 
