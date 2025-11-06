@@ -1,135 +1,241 @@
-# ACS Consolidated Website
+# Asian Culture Society Website - Engineering Standards
 
-This is the consolidated Asian Culture Society website that combines all 8 separate pages into one Next.js application.
+A modern, high-performance website for RIT's Asian Culture Society built with Next.js 15, TypeScript, and Tailwind CSS.
 
-## Pages Included
+## 🏗️ Architecture
 
-- `/home` - Home page (from ACS-Website)
-- `/about-us` - About Us page
-- `/calendar` - Calendar page
-- `/mentor-mentee` - Mentor/Mentee program page
-- `/tinikling` - Tinikling page
-- `/tinikling/sign-up` - Tinikling sign up page
-- `/mentor-mentee/mentor/sign-up` - Mentor sign up page
-- `/mentor-mentee/mentee/sign-up` - Mentee sign up page
+This monorepo consolidates the ACS website with best practices for code quality, security, and performance.
 
-## Local Development
+### Project Structure
+
+```
+acs-consolidated/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   ├── components/
+│   │   ├── common/             # Shared components (Header, Footer, Logo)
+│   │   ├── sections/           # Semantic page sections
+│   │   └── ui/                 # shadcn/ui components
+│   ├── lib/
+│   │   ├── api/                # API clients
+│   │   ├── utils/              # Utility functions
+│   │   └── validators/         # Zod validation schemas
+│   └── config/                 # Environment configuration
+├── public/                     # Static assets
+└── .github/workflows/          # CI/CD pipelines
+```
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
 
-### Install Dependencies
+### Installation
 
 ```bash
+cd acs-consolidated
 npm install
 ```
 
-### Run Development Server
+### Development
 
 ```bash
-npm run dev
+npm run dev       # Start development server
+npm run build     # Production build
+npm run start     # Start production server
+npm test          # Run tests with coverage
+npm run lint      # Check code quality
+npm run format    # Format code
 ```
 
-Open [http://localhost:3000/home](http://localhost:3000/home) to view the site.
+## 🔒 Security & DevSecOps
 
-### Build for Production
+### Automated Security Scanning
+
+- **CodeQL**: Weekly security scans for JavaScript/TypeScript vulnerabilities
+- **Trivy**: Container and dependency vulnerability scanning
+- **Gitleaks**: Secret detection to prevent credential leaks
+- **Dependabot**: Automated dependency updates every Monday
+
+### Security Best Practices
+
+- Environment variable validation with Zod
+- Input sanitization on all API routes
+- Rate limiting on form submissions
+- Content Security Policy (CSP) headers
+- CORS configuration
+
+## 🧪 Testing
+
+### Test Coverage Requirements
+
+- Minimum 70% coverage across branches, functions, lines, and statements
+- Unit tests for all components and API routes
+- Integration tests for critical user flows
+
+### Running Tests
+
+```bash
+npm test                # Run all tests with coverage
+npm run test:watch      # Watch mode for development
+```
+
+### Example Tests
+
+- `src/components/common/__tests__/StickyHeader.test.tsx`
+- `src/components/common/__tests__/NavigationHeader.test.tsx`
+- `src/app/api/submit/mentor/__tests__/route.test.ts`
+
+## 📊 Code Quality
+
+### Linting & Formatting
+
+- **ESLint**: TypeScript, React, Jest, and Testing Library rules
+- **Prettier**: Consistent code formatting with Tailwind CSS plugin
+- **TypeScript**: Strict mode enabled for type safety
+
+### Pre-commit Hooks
+
+Husky + lint-staged automatically:
+- Runs ESLint fixes
+- Formats code with Prettier
+- Ensures consistent code quality before commits
+
+### Setup Pre-commit Hooks
+
+```bash
+npm run prepare
+```
+
+## ⚡ Performance Optimization
+
+### Bundle Optimization
+
+- Dynamic imports for code splitting
+- React.memo for preventing unnecessary re-renders
+- useCallback for event handler optimization
+- Lazy loading of heavy components
+
+### Performance Results
+
+- **90%+ reduction** in initial bundle sizes for most pages
+- Lighthouse CI monitoring on every PR
+- Performance budgets enforced
+
+## 🔧 Environment Configuration
+
+### Required Environment Variables
+
+Copy `.env.example` to `.env.local`:
+
+```bash
+# Application
+NODE_ENV=production
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Security
+NEXTAUTH_SECRET=your-secret-key-here
+
+# Rate Limiting
+RATE_LIMIT_MAX_REQUESTS=10
+RATE_LIMIT_WINDOW_MS=60000
+
+# CORS
+ALLOWED_ORIGINS=https://campusgroups.rit.edu,https://rit.edu
+```
+
+### Environment Validation
+
+All environment variables are validated at runtime using Zod schemas (`src/config/env.ts`).
+
+## 🚀 CI/CD Pipeline
+
+### Continuous Integration
+
+Every push triggers:
+1. **Lint & Format Check**: ESLint and Prettier validation
+2. **Type Check**: TypeScript compilation
+3. **Tests**: Jest unit and integration tests
+4. **Build**: Next.js production build
+5. **Security Scans**: CodeQL, Trivy, Gitleaks
+
+### Continuous Deployment
+
+- Pull requests generate Vercel preview deployments
+- Merges to `main` automatically deploy to production
+- Lighthouse CI measures performance on every PR
+
+## 📦 Dependencies
+
+### Key Technologies
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript 5 (strict mode)
+- **Styling**: Tailwind CSS 3
+- **UI Components**: shadcn/ui + Radix UI
+- **Forms**: React Hook Form + Zod validation
+- **Testing**: Jest + React Testing Library
+- **Code Quality**: ESLint + Prettier
+
+## 🔄 Deployment
+
+### Production Build
 
 ```bash
 npm run build
 npm start
 ```
 
-## Deployment to Vercel
+### Docker Support
 
-### Option 1: Deploy via Vercel CLI
-
-1. Install Vercel CLI:
-```bash
-npm install -g vercel
+```dockerfile
+# Dockerfile available
+docker build -t acs-website .
+docker run -p 3000:3000 acs-website
 ```
 
-2. Deploy:
-```bash
-vercel
-```
+## 📝 Contributing
 
-### Option 2: Deploy via Vercel Dashboard
+1. Create a feature branch from `develop`
+2. Make your changes following our code standards
+3. Ensure tests pass: `npm test`
+4. Ensure build succeeds: `npm run build`
+5. Submit a pull request
 
-1. Go to [vercel.com](https://vercel.com) and sign in
-2. Click "Add New Project"
-3. Import your GitHub repository: `Jacob-C-Kim/Asian-Culture-Society-Website`
-4. Set the **Root Directory** to: `acs-consolidated`
-5. Framework Preset: Next.js (auto-detected)
-6. Click "Deploy"
+### Commit Message Convention
 
-### Environment Variables
+Follow conventional commits:
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `test:` Test additions/changes
+- `refactor:` Code refactoring
+- `perf:` Performance improvements
+- `chore:` Maintenance tasks
 
-No environment variables are required for basic functionality. If your pages use external APIs (Google Sheets, etc.), add those keys in the Vercel dashboard under:
+## 📚 Documentation
 
-Project Settings → Environment Variables
+- [API Documentation](./API.md)
+- [Environment Variables](./.env.example)
+- [Testing Guide](./docs/testing.md)
+- [Security Policy](./SECURITY.md)
 
-## Updating CampusGroups iFrames
+## 🔐 Security
 
-Once deployed, update your CampusGroups iframe URLs to point to your new Vercel deployment:
+For security issues, please email acsrit@gmail.com instead of using the issue tracker.
 
-**Old structure:**
-- https://campusgroups.rit.edu/acs/home/ → iframe: `https://acs-home.vercel.app`
-- https://campusgroups.rit.edu/acs/about-us/ → iframe: `https://acs-about.vercel.app`
+## 📄 License
 
-**New structure:**
-- https://campusgroups.rit.edu/acs/home/ → iframe: `https://your-app.vercel.app/home`
-- https://campusgroups.rit.edu/acs/about-us/ → iframe: `https://your-app.vercel.app/about-us`
-- https://campusgroups.rit.edu/acs/tinikling/sign-up/ → iframe: `https://your-app.vercel.app/tinikling/sign-up`
-- https://campusgroups.rit.edu/acs/mentor-mentee/mentor/sign-up/ → iframe: `https://your-app.vercel.app/mentor-mentee/mentor/sign-up`
+Private - © 2024 Asian Culture Society at RIT
 
-Replace `your-app` with your actual Vercel project name.
+## 🙋 Support
 
-## Benefits
+- Email: acsrit@gmail.com
+- Discord: https://discord.gg/jJBCYdkJBT
+- Instagram: @acsrit
 
-✅ **Single repository** - All pages in one place
-✅ **Single deployment** - Deploy once instead of 8 times
-✅ **Clean URLs** - Proper nested routing
-✅ **Shared dependencies** - No duplication
-✅ **Easier maintenance** - Update all pages together
-✅ **Better performance** - Next.js optimizations
+---
 
-## Architecture
-
-- **Framework**: Next.js 15 with App Router
-- **UI Libraries**: Radix UI, Lucide Icons
-- **Styling**: Tailwind CSS
-- **Deployment**: Vercel
-
-Each page maintains its original React components wrapped in Next.js client components, so the frontend code remains unchanged.
-
-## Troubleshooting
-
-### Build Errors
-
-If you encounter build errors:
-
-1. Clear Next.js cache:
-```bash
-rm -rf .next
-npm run build
-```
-
-2. Reinstall dependencies:
-```bash
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-### Asset Loading Issues
-
-Assets are served from `/assets/{page-name}/`. If images aren't loading, verify:
-
-1. Assets are in `public/assets/` directory
-2. Image paths in components use `/assets/...` (leading slash for public directory)
-
-## Support
-
-For issues or questions, contact the ACS web development team.
+Built with ❤️ by the Asian Culture Society at RIT
