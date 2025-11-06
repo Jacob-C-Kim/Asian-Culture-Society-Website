@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import InteractiveFrame22, { NavigationHeader } from "./components/InteractiveFrame22";
+import { NavigationHeader } from "@/components/common/NavigationHeader";
+import { HeroSection } from "@/components/common/HeroSection";
 import EventsSection from "./components/EventsSection";
 import Footer from "@/components/common/Footer";
 import CalendarPage from "./components/CalendarPage";
@@ -45,7 +46,7 @@ export default function App() {
         />
       </StickyHeader>
 
-      <InteractiveFrame22 />
+      <HeroSection />
       <EventsSection onNavigate={handleNavigation} />
       <Footer />
     </div>

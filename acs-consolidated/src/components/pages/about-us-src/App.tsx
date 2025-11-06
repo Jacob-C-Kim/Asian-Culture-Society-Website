@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavigationHeader } from "./components/InteractiveFrame22";
+import { NavigationHeader } from "@/components/common/NavigationHeader";
 import AboutUsPage from "./components/AboutUsPage";
 import StickyHeader from "../../common/StickyHeader";
 
