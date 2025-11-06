@@ -111,7 +111,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden w-full">
       {/* Header with smooth transition for home page */}
-      <div 
+      <div
         ref={normalHeaderRef}
         className="w-full relative z-50"
         style={{
@@ -122,9 +122,9 @@ export default function App() {
           left: isSticky ? '0' : 'auto',
           right: isSticky ? '0' : 'auto',
           transform: isSticky ? `translateY(${translateY}px) scale(${stickyScale})` : 'none',
-          backgroundColor: `rgba(255, 255, 255, ${stickyOpacity})`,
-          borderBottom: `1px solid rgba(229, 231, 235, ${stickyOpacity})`,
-          boxShadow: `0 2px 8px -2px rgba(0, 0, 0, ${0.1 * stickyOpacity})`,
+          backgroundColor: isSticky ? `rgba(255, 255, 255, ${stickyOpacity})` : 'rgb(255, 255, 255)',
+          borderBottom: `1px solid rgba(229, 231, 235, ${Math.max(stickyOpacity, 0.1)})`,
+          boxShadow: `0 2px 8px -2px rgba(0, 0, 0, ${0.1 * Math.max(stickyOpacity, 0.1)})`,
           backdropFilter: stickyOpacity > 0 ? 'blur(8px)' : 'none',
           transition: isSticky ? 'none' : 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           willChange: 'transform, background-color, border-color, box-shadow'

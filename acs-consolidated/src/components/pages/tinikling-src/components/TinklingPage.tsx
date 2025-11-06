@@ -1,6 +1,6 @@
-import imgColumn2 from "../assets/7d8380adaae1cd33a31168570eb65b7707216808.png";
-import imgColumn3 from "../assets/1b1fe005aec6b48895acd4562a9091a6d2cf842b.png";
-import modernTinklingImage from "../assets/a12f5a083a60db2a7a8958cc4c45d9171bf665f1.png";
+import imgColumn2 from "../assets/tinikling-column-2.png";
+import imgColumn3 from "../assets/tinikling-column-3.png";
+import modernTinklingImage from "../assets/modern-tinikling.png";
 import discordSvgPaths from "../imports/svg-3075tc4bla";
 
 function SignUpButton() {

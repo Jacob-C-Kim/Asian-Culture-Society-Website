@@ -66,7 +66,7 @@ This is your current React/Tailwind implementation in Figma Make.
    
    In `src/components/InteractiveFrame22.tsx`, replace:
    ```typescript
-   import imgTransparentLogo11 from "figma:asset/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+   import imgTransparentLogo11 from "figma:asset/acs-logo-transparent.png";
    ```
    
    With:
