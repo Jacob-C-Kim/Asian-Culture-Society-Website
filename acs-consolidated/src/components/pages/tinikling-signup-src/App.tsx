@@ -66,16 +66,19 @@ export default function App() {
   const effectiveHeaderHeight = headerHeight || 77;
   
   // Calculate transition progress for header
+  // Guard against division by zero when headerHeight is 0 (initial render)
   const triggerPoint = effectiveHeaderHeight / 2;
   const transitionDistance = effectiveHeaderHeight / 3;
-  const progress = Math.min(Math.max((scrollY - triggerPoint) / transitionDistance, 0), 1);
+  const progress = transitionDistance > 0
+    ? Math.min(Math.max((scrollY - triggerPoint) / transitionDistance, 0), 1)
+    : 0;
   
   // Determine if header should be sticky
   const isSticky = scrollY > triggerPoint;
   
   // Calculate transform and opacity based on scroll progress
   const translateY = isSticky ? 0 : Math.max(-scrollY, -effectiveHeaderHeight);
-  const stickyOpacity = Math.max(progress, 0.95); // Always keep header mostly visible on mentor signup
+  const stickyOpacity = 1; // Always keep header mostly visible on mentor signup
   const stickyScale = 0.98 + (progress * 0.02);
 
   return (
