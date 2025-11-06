@@ -7,7 +7,7 @@ const getMentorMenteeEvents = (): Event[] => {
   return events.filter(event => event.title === "Speed Dating");
 };
 
-function FilterButtons({ onNavigate }: { onNavigate?: (page: string) => void }) {
+function FilterButtons({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
   const handleCalendarClick = () => {
     // Open the external CampusGroups calendar URL
     window.open('https://campusgroups.rit.edu/ACS/acs-calendar/', '_blank', 'noopener,noreferrer');

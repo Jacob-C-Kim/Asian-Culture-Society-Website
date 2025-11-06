@@ -1,6 +1,6 @@
 import EventsSection from "./EventsSection";
 
-function HeroSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
+function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
     <div className="relative w-full min-h-[500px] md:min-h-[600px] overflow-hidden" style={{ backgroundColor: '#94D1D0', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Koi Fish Image positioned on the left */}
