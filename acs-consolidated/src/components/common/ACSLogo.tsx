@@ -1,3 +1,4 @@
+import { memo } from "react";
 import imgTransparentLogo11 from "../pages/home-src/assets/acs-logo-transparent.png";
 
 interface ACSLogoProps {
@@ -6,7 +7,7 @@ interface ACSLogoProps {
   onClick?: () => void;
 }
 
-export default function ACSLogo({
+const ACSLogo = memo(function ACSLogo({
   size = 61,
   className = "",
   onClick
@@ -23,4 +24,6 @@ export default function ACSLogo({
       data-name="ACS Logo"
     />
   );
-}
+});
+
+export default ACSLogo;

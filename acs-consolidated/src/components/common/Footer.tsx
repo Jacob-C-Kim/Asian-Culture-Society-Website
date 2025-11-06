@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
 import campusGroupsLogo from "../pages/home-src/assets/campus-groups-logo.png";
 import svgPaths from "../pages/home-src/imports/svg-61ju42v1aq";
 import discordSvgPaths from "../pages/home-src/imports/svg-pgq3ktlc4j";
 
-function InstagramButton() {
+const InstagramButton = memo(function InstagramButton() {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = useCallback(() => {
+    window.open("https://www.instagram.com/acsrit/", "_blank");
+  }, []);
 
   return (
     <div
@@ -14,12 +18,7 @@ function InstagramButton() {
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() =>
-        window.open(
-          "https://www.instagram.com/acsrit/",
-          "_blank",
-        )
-      }
+      onClick={handleClick}
     >
       <div className="box-border flex gap-2.5 items-center justify-start overflow-clip px-4 md:px-[30px] py-2.5 h-[43px]">
         <div className="relative shrink-0 w-[25px] h-[25px] flex items-center justify-center">
@@ -48,10 +47,14 @@ function InstagramButton() {
       />
     </div>
   );
-}
+});
 
-function DiscordButton() {
+const DiscordButton = memo(function DiscordButton() {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = useCallback(() => {
+    window.open("https://discord.gg/jJBCYdkJBT", "_blank");
+  }, []);
 
   return (
     <div
@@ -60,9 +63,7 @@ function DiscordButton() {
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() =>
-        window.open("https://discord.gg/jJBCYdkJBT", "_blank")
-      }
+      onClick={handleClick}
     >
       <div className="box-border flex gap-2.5 h-[43px] items-center justify-start overflow-clip px-4 md:px-[30px] py-2.5">
         <div className="relative shrink-0 w-[25px] h-[25px] flex items-center justify-center">
@@ -91,10 +92,17 @@ function DiscordButton() {
       />
     </div>
   );
-}
+});
 
-function CampusGroupsButton() {
+const CampusGroupsButton = memo(function CampusGroupsButton() {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = useCallback(() => {
+    window.open(
+      "https://campusgroups.rit.edu/feeds?type=club&type_id=16075&tab=about",
+      "_blank"
+    );
+  }, []);
 
   return (
     <div
@@ -103,12 +111,7 @@ function CampusGroupsButton() {
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() =>
-        window.open(
-          "https://campusgroups.rit.edu/feeds?type=club&type_id=16075&tab=about",
-          "_blank",
-        )
-      }
+      onClick={handleClick}
     >
       <div className="box-border flex gap-2.5 h-[43px] items-center justify-start overflow-clip px-4 md:px-[30px] py-2.5">
         <div className="relative shrink-0 w-[25px] h-[25px] flex items-center justify-center">
@@ -130,9 +133,12 @@ function CampusGroupsButton() {
       />
     </div>
   );
-}
+});
 
-export default function Footer() {
+const Footer = memo(function Footer() {
+  const handleScrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <div className="bg-[#23464b] relative shrink-0 w-full">
       <div className="flex flex-col md:flex-row items-start md:justify-between gap-8 md:gap-4 px-4 md:px-8 py-[40px] md:py-[63px] w-full min-h-[286px]">
@@ -141,9 +147,7 @@ export default function Footer() {
           <ACSLogo
             size={61}
             className="mb-[20px]"
-            onClick={() =>
-              window.scrollTo({ top: 0, behavior: "smooth" })
-            }
+            onClick={handleScrollToTop}
           />
           <div className="font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] leading-[0] not-italic text-[16px] text-white mb-[8px]">
             <p className="leading-[normal]">
@@ -178,4 +182,6 @@ export default function Footer() {
       />
     </div>
   );
-}
+});
+
+export default Footer;

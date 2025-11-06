@@ -1,7 +1,12 @@
-import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { useState, useEffect, useCallback } from "react";
 import { NavigationHeader } from "@/components/common/NavigationHeader";
-import MentorMenteePage from "./components/MentorMenteePage";
+
 import StickyHeader from "../../common/StickyHeader";
+
+const MentorMenteePage = dynamic(() => import("./components/MentorMenteePage"), {
+  loading: () => <div className="min-h-screen" />,
+});
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('mentor-mentee');
@@ -10,9 +15,9 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  const handleNavigation = (page: string) => {
+  const handleNavigation = useCallback((page: string) => {
     setCurrentPage(page);
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden w-full">

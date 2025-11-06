@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 import ACSLogo from "./ACSLogo";
 
-export function NavigationHeader({
+export const NavigationHeader = memo(function NavigationHeader({
   currentPage = "home",
   onNavigate,
 }: {
@@ -21,20 +21,23 @@ export function NavigationHeader({
     tinikling: "https://campusgroups.rit.edu/ACS/tinikling/",
   };
 
-  const linkCls = (key: string) =>
-    `font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[10px] md:text-[12px] text-center text-nowrap cursor-pointer transition-colors hover:text-blue-600 ${
-      activeSection === key ? "text-blue-600" : "text-black"
-    }`;
+  const linkCls = useCallback(
+    (key: string) =>
+      `font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[10px] md:text-[12px] text-center text-nowrap cursor-pointer transition-colors hover:text-blue-600 ${
+        activeSection === key ? "text-blue-600" : "text-black"
+      }`,
+    [activeSection]
+  );
 
   // Hard navigate the parent/top frame to a specific URL (bypasses CG link rewriting)
-  const navigateTop = (url: string) => {
+  const navigateTop = useCallback((url: string) => {
     try {
       if (window.top) window.top.location.assign(url);
       else window.location.assign(url);
     } catch {
       window.location.assign(url);
     }
-  };
+  }, []);
 
   // Generic anchor that can optionally force navigation via JS (to avoid CG rewriting)
   const NavLink = ({
@@ -116,4 +119,4 @@ export function NavigationHeader({
       </div>
     </div>
   );
-}
+});
