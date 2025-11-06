@@ -1,77 +1,114 @@
 /**
- * Security utilities for input validation and sanitization
+ * Security utilities for input validation and sanitization.
+ * All inputs from users should pass through these validators.
  */
 
-// Email validation
+const RFC_5322_MAX_EMAIL_LENGTH = 254;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email) && email.length <= 254;
+  // RFC 5322 specifies 254 chars max for email addresses
+  return EMAIL_PATTERN.test(email) && email.length <= RFC_5322_MAX_EMAIL_LENGTH;
 };
 
-// Sanitize string input to prevent XSS
-export const sanitizeString = (input: string, maxLength: number = 500): string => {
-  if (typeof input !== 'string') {
+export const sanitizeUserInput = (userInput: string, maxLength: number = 500): string => {
+  if (typeof userInput !== 'string') {
     throw new Error('Input must be a string');
   }
 
-  return input
+  // Strip angle brackets to prevent basic XSS via HTML injection
+  // More sophisticated XSS prevention should be done at render time
+  return userInput
     .trim()
     .slice(0, maxLength)
-    .replace(/[<>]/g, ''); // Remove potential HTML tags
+    .replace(/[<>]/g, '');
 };
 
-// Validate form data structure
-export const validateFormData = (
-  data: Record<string, unknown>,
-  requiredFields: string[]
-): { valid: boolean; errors: string[] } => {
-  const errors: string[] = [];
+type ValidationResult = {
+  isValid: boolean;
+  missingFields: string[];
+};
 
-  for (const field of requiredFields) {
-    if (!data[field] || (typeof data[field] === 'string' && !data[field].toString().trim())) {
-      errors.push(`${field} is required`);
+export const validateRequiredFields = (
+  formData: Record<string, unknown>,
+  requiredFieldNames: string[]
+): ValidationResult => {
+  const missingFields: string[] = [];
+
+  for (const fieldName of requiredFieldNames) {
+    const fieldValue = formData[fieldName];
+    const isEmpty = !fieldValue ||
+                    (typeof fieldValue === 'string' && !fieldValue.trim());
+
+    if (isEmpty) {
+      missingFields.push(fieldName);
     }
   }
 
   return {
-    valid: errors.length === 0,
-    errors,
+    isValid: missingFields.length === 0,
+    missingFields,
   };
 };
 
-// Rate limiting helper (simple in-memory implementation)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-export const checkRateLimit = (
-  identifier: string,
-  maxRequests: number,
-  windowMs: number
-): { allowed: boolean; remaining: number } => {
-  const now = Date.now();
-  const record = rateLimitMap.get(identifier);
-
-  if (!record || now > record.resetTime) {
-    rateLimitMap.set(identifier, {
-      count: 1,
-      resetTime: now + windowMs,
-    });
-    return { allowed: true, remaining: maxRequests - 1 };
-  }
-
-  if (record.count >= maxRequests) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  record.count++;
-  return { allowed: true, remaining: maxRequests - record.count };
+/**
+ * Simple in-memory rate limiter.
+ * Limitation: Resets on server restart and doesn't work across multiple instances.
+ * For production with multiple servers, use Redis or a similar shared store.
+ */
+type RateLimitRecord = {
+  requestCount: number;
+  windowExpiresAt: number;
 };
 
-// Clean up old rate limit entries periodically
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, value] of rateLimitMap.entries()) {
-    if (now > value.resetTime) {
-      rateLimitMap.delete(key);
+const clientRateLimitRecords = new Map<string, RateLimitRecord>();
+
+type RateLimitResult = {
+  isAllowed: boolean;
+  remainingRequests: number;
+};
+
+export const checkRateLimit = (
+  clientIdentifier: string,
+  maxRequestsPerWindow: number,
+  windowDurationMs: number
+): RateLimitResult => {
+  const currentTime = Date.now();
+  const existingRecord = clientRateLimitRecords.get(clientIdentifier);
+
+  // No record or window expired - start fresh window
+  if (!existingRecord || currentTime > existingRecord.windowExpiresAt) {
+    clientRateLimitRecords.set(clientIdentifier, {
+      requestCount: 1,
+      windowExpiresAt: currentTime + windowDurationMs,
+    });
+    return {
+      isAllowed: true,
+      remainingRequests: maxRequestsPerWindow - 1
+    };
+  }
+
+  // Rate limit exceeded
+  if (existingRecord.requestCount >= maxRequestsPerWindow) {
+    return {
+      isAllowed: false,
+      remainingRequests: 0
+    };
+  }
+
+  // Increment and allow
+  existingRecord.requestCount++;
+  return {
+    isAllowed: true,
+    remainingRequests: maxRequestsPerWindow - existingRecord.requestCount
+  };
+};
+
+export const cleanupExpiredRateLimitRecords = (): void => {
+  const currentTime = Date.now();
+  for (const [clientId, record] of clientRateLimitRecords.entries()) {
+    if (currentTime > record.windowExpiresAt) {
+      clientRateLimitRecords.delete(clientId);
     }
   }
-}, 60000); // Clean up every minute
+};
