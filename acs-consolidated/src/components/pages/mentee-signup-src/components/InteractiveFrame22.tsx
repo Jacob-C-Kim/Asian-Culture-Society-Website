@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ACSLogo from "./ACSLogo";
+import ACSLogo from "@/components/common/ACSLogo";
 
 export function NavigationHeader({
   currentPage = "home",
