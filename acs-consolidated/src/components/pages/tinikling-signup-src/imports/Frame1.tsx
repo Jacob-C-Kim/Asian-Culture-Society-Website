@@ -1,5 +1,6 @@
 import svgPaths from "./svg-61ju42v1aq";
-import imgTransparentLogo11 from "figma:asset/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
+import calendarSvgPaths from "./svg-onqcmwzw98";
+import imgTransparentLogo11 from "../assets/cf24fa2e75050490ba08976eeb14a37355b03c67.png";
 
 function Frame22() {
   return (
@@ -180,7 +181,7 @@ function CalendarDays() {
     <div className="absolute h-6 left-[305.5px] top-[100px] w-[21px]" data-name="calendar-days">
       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 21 24">
         <g id="calendar-days">
-          <path d={svgPaths.p3ca7b300} fill="var(--fill-0, #195259)" id="Primary" />
+          <path d={calendarSvgPaths.p3ca7b300} fill="var(--fill-0, #195259)" id="Primary" />
         </g>
       </svg>
     </div>

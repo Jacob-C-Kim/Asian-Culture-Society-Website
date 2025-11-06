@@ -1,5 +1,5 @@
 import EventsSection from "./EventsSection";
-import koiFishImage from "figma:asset/a5d3332fda9431ae902f1c45d60dc0351c6d5df0.png";
+import koiFishImage from "../assets/a5d3332fda9431ae902f1c45d60dc0351c6d5df0.png";
 
 function HeroSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
@@ -7,7 +7,7 @@ function HeroSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
       {/* Koi Fish Image positioned on the left */}
       <div className="absolute left-0 bottom-0 w-full h-full flex items-end justify-start">
         <img 
-          src={koiFishImage} 
+          src={koiFishImage.src} 
           alt="Koi Fish Illustration" 
           className="h-full w-auto object-contain object-left-bottom"
         />
