@@ -1,65 +1,27 @@
 /**
- * Sentry error monitoring configuration
+ * Sentry error monitoring utility functions
  *
- * To enable Sentry:
- * 1. Install: npm install @sentry/nextjs
- * 2. Run: npx @sentry/wizard@latest -i nextjs
- * 3. Add NEXT_PUBLIC_SENTRY_DSN to .env.local
- * 4. Uncomment the initialization code below
+ * Sentry is configured in:
+ * - sentry.client.config.ts (browser)
+ * - sentry.server.config.ts (server)
+ * - sentry.edge.config.ts (edge runtime)
+ *
+ * To enable in production:
+ * 1. Add NEXT_PUBLIC_SENTRY_DSN to .env.local
+ * 2. (Optional) Add SENTRY_ORG and SENTRY_PROJECT for source map uploads
  */
 
-export function initSentry() {
-  if (typeof window === 'undefined') return; // Server-side, skip
-
-  // Uncomment after installing @sentry/nextjs
-  /*
-  import * as Sentry from '@sentry/nextjs';
-
-  Sentry.init({
-    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    environment: process.env.NODE_ENV,
-
-    // Performance Monitoring
-    tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-
-    // Session Replay
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
-
-    // Filter sensitive data
-    beforeSend(event) {
-      // Remove sensitive headers
-      if (event.request?.headers) {
-        delete event.request.headers.cookie;
-        delete event.request.headers.authorization;
-      }
-      return event;
-    },
-
-    integrations: [
-      new Sentry.BrowserTracing(),
-      new Sentry.Replay({
-        maskAllText: true,
-        blockAllMedia: true,
-      }),
-    ],
-  });
-  */
-
-  // Placeholder for development
-  console.log('[Monitoring] Sentry monitoring placeholder (install @sentry/nextjs to enable)');
-}
+import * as Sentry from '@sentry/nextjs';
 
 /**
- * Capture custom error
+ * Capture custom error with context
  */
 export function captureError(error: Error, context?: Record<string, unknown>) {
-  if (process.env.NODE_ENV === 'production') {
-    // Uncomment after installing @sentry/nextjs
-    // Sentry.captureException(error, { extra: context });
-    console.error('[Sentry]', error, context);
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    Sentry.captureException(error, { extra: context });
   } else {
-    console.error('[Dev Error]', error, context);
+    // Fallback to console in development or when Sentry is not configured
+    console.error('[Error]', error, context);
   }
 }
 
@@ -67,11 +29,31 @@ export function captureError(error: Error, context?: Record<string, unknown>) {
  * Capture custom message
  */
 export function captureMessage(message: string, level: 'info' | 'warning' | 'error' = 'info') {
-  if (process.env.NODE_ENV === 'production') {
-    // Uncomment after installing @sentry/nextjs
-    // Sentry.captureMessage(message, level);
-    console.log(`[Sentry ${level}]`, message);
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    Sentry.captureMessage(message, level);
   } else {
-    console.log(`[Dev ${level}]`, message);
+    console.log(`[${level}]`, message);
+  }
+}
+
+/**
+ * Set user context for error tracking
+ */
+export function setUser(user: { id: string; email?: string; username?: string } | null) {
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    Sentry.setUser(user);
+  }
+}
+
+/**
+ * Add breadcrumb for debugging
+ */
+export function addBreadcrumb(message: string, data?: Record<string, unknown>) {
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    Sentry.addBreadcrumb({
+      message,
+      data,
+      level: 'info',
+    });
   }
 }

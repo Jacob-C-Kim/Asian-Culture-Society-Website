@@ -126,33 +126,37 @@ npm run prepare
 
 ## 📊 Error Monitoring & Observability
 
-### Sentry Integration (Optional)
+### Sentry Integration ✅ Installed
 
-Error monitoring is configured but requires Sentry setup:
+Sentry is fully installed and configured. To enable error tracking in production:
 
 ```bash
-# 1. Install Sentry
-npm install @sentry/nextjs
-
-# 2. Run setup wizard
-npx @sentry/wizard@latest -i nextjs
-
-# 3. Add environment variable
+# 1. Get your DSN from https://sentry.io
+# 2. Add to .env.local
 echo "NEXT_PUBLIC_SENTRY_DSN=your-dsn-here" >> .env.local
 
-# 4. Uncomment initialization in src/lib/monitoring/sentry.ts
+# 3. (Optional) For source map uploads
+echo "SENTRY_ORG=your-org" >> .env.local
+echo "SENTRY_PROJECT=your-project" >> .env.local
 ```
 
-Features:
-- Automatic error tracking
-- Performance monitoring
-- Session replay for debugging
-- Sensitive data filtering
+**Configuration Files:**
+- `sentry.client.config.ts` - Browser-side error tracking
+- `sentry.server.config.ts` - Server-side error tracking
+- `sentry.edge.config.ts` - Edge runtime error tracking
+- `src/lib/monitoring/sentry.ts` - Utility functions
+
+**Features:**
+- ✅ Automatic error tracking
+- ✅ Performance monitoring (10% sample rate in production)
+- ✅ Session replay for debugging
+- ✅ Sensitive data filtering (cookies, auth headers removed)
+- ✅ Graceful degradation (works without DSN configured)
 
 ### Usage
 
 ```typescript
-import { captureError, captureMessage } from '@/lib/monitoring/sentry';
+import { captureError, captureMessage, setUser, addBreadcrumb } from '@/lib/monitoring/sentry';
 
 try {
   // Your code
