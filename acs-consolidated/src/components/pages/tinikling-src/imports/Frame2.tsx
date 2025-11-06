@@ -1,6 +1,3 @@
-import imgTransparentLogo11 from "../assets/acs-logo-transparent.png";
-import imgColumn2 from "../assets/tinikling-column-2.png";
-import imgColumn3 from "../assets/tinikling-column-3.png";
 
 function Frame5() {
   return (
@@ -11,7 +8,7 @@ function Frame5() {
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">schedule</p>
       </div>
-      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('${imgTransparentLogo11}')` }} />
+      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('/assets/logos/acs-logo-transparent.png')` }} />
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">our eboard</p>
       </div>
@@ -55,7 +52,7 @@ function Column1() {
 }
 
 function Column2() {
-  return <div className="bg-center bg-cover bg-no-repeat h-[340px] rounded-[18px] shrink-0 w-[308px]" data-name="Column 2" style={{ backgroundImage: `url('${imgColumn2}')` }} />;
+  return <div className="bg-center bg-cover bg-no-repeat h-[340px] rounded-[18px] shrink-0 w-[308px]" data-name="Column 2" style={{ backgroundImage: `url('/assets/images/tinikling-column-2.png')` }} />;
 }
 
 function Wrapper() {
@@ -81,7 +78,7 @@ function FirstThing() {
 }
 
 function Column3() {
-  return <div className="bg-center bg-cover bg-no-repeat h-[340px] rounded-[18px] shrink-0 w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('${imgColumn3}')` }} />;
+  return <div className="bg-center bg-cover bg-no-repeat h-[340px] rounded-[18px] shrink-0 w-[395px]" data-name="Column 2" style={{ backgroundImage: `url('/assets/images/tinikling-column-3.png')` }} />;
 }
 
 function Column4() {

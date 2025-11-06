@@ -1,4 +1,3 @@
-import imgScreenshot20250815At22629Pm1 from "../assets/idea-screenshot.png";
 
 function Frame8() {
   return (
@@ -35,7 +34,7 @@ export default function Idea1() {
         <p className="leading-[normal] whitespace-pre">Come to our events!</p>
       </div>
       <Frame7 />
-      <div className="absolute bg-[33.14%_35.71%] bg-no-repeat bg-size-[106.56%_105.28%] h-[265px] left-[100px] rounded-[15px] top-[107px] w-[226px]" data-name="Screenshot 2025-08-15 at 2.26.29 PM 1" style={{ backgroundImage: `url('${imgScreenshot20250815At22629Pm1}')` }} />
+      <div className="absolute bg-[33.14%_35.71%] bg-no-repeat bg-size-[106.56%_105.28%] h-[265px] left-[100px] rounded-[15px] top-[107px] w-[226px]" data-name="Screenshot 2025-08-15 at 2.26.29 PM 1" style={{ backgroundImage: `url('/assets/screenshots/idea-screenshot.png')` }} />
     </div>
   );
 }

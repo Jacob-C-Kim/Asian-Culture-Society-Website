@@ -1,13 +1,12 @@
 import EventsSection from "./EventsSection";
-import koiFishImage from "../assets/koi-fish.png";
 
 function HeroSection({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
     <div className="relative w-full min-h-[500px] md:min-h-[600px] overflow-hidden" style={{ backgroundColor: '#94D1D0', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Koi Fish Image positioned on the left */}
       <div className="absolute left-0 bottom-0 w-full h-full flex items-end justify-start">
-        <img 
-          src={koiFishImage.src} 
+        <img
+          src="/assets/images/koi-fish.png"
           alt="Koi Fish Illustration" 
           className="h-full w-auto object-contain object-left-bottom"
         />

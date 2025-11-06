@@ -1,6 +1,5 @@
 import svgPaths from "./svg-61ju42v1aq";
 import calendarSvgPaths from "./svg-onqcmwzw98";
-import imgTransparentLogo11 from "../assets/acs-logo-transparent.png";
 
 function Frame22() {
   return (
@@ -31,7 +30,7 @@ function Frame2() {
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">schedule</p>
       </div>
-      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('${imgTransparentLogo11}')` }} />
+      <div className="bg-center bg-cover bg-no-repeat shrink-0 size-[61px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('/assets/logos/acs-logo-transparent.png')` }} />
       <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[12px] text-black text-center text-nowrap">
         <p className="leading-[normal] whitespace-pre">our eboard</p>
       </div>
@@ -302,7 +301,7 @@ function Frame21() {
   return (
     <div className="bg-[#23464b] h-[243px] relative shrink-0 w-full">
       <div className="h-[243px] overflow-clip relative w-full">
-        <div className="absolute bg-center bg-cover bg-no-repeat left-8 size-[61px] top-[63px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('${imgTransparentLogo11}')` }} />
+        <div className="absolute bg-center bg-cover bg-no-repeat left-8 size-[61px] top-[63px]" data-name="Transparent Logo (1) 1" style={{ backgroundImage: `url('/assets/logos/acs-logo-transparent.png')` }} />
         <div className="absolute font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] leading-[0] left-8 not-italic text-[16px] text-nowrap text-white top-[124px]">
           <p className="leading-[normal] whitespace-pre">Asian Culture Society</p>
         </div>
