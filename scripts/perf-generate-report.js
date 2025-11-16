@@ -13,7 +13,6 @@ const path = require("path");
 
 const OUTPUT_DIR = path.join(process.cwd(), "performance-reports");
 const AGGREGATED_FILE = path.join(OUTPUT_DIR, "aggregated-results.json");
-const HISTORY_FILE = path.join(OUTPUT_DIR, "history.json");
 const THRESHOLDS_FILE = path.join(process.cwd(), "config", "performance-thresholds.json");
 
 /**

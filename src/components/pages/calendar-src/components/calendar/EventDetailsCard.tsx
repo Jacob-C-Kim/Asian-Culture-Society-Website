@@ -261,7 +261,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
         {events.length > 1 && isMobile && showSwipeHint && (
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
             <div
-              className={`flex flex-col items-center gap-2 transition-opacity duration-500 opacity-30`}
+              className={`flex flex-col items-center gap-2 opacity-30 transition-opacity duration-500`}
             >
               <svg
                 className="h-6 w-6 animate-bounce text-[#195259]"

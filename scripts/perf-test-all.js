@@ -182,8 +182,14 @@ function saveHistory(results, summary) {
     history = history.slice(-30);
   }
 
-  // Write updated history back to file
-  fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2));
+  // Write updated history back to file atomically
+  try {
+    const tempFile = `${HISTORY_FILE}.tmp`;
+    fs.writeFileSync(tempFile, JSON.stringify(history, null, 2));
+    fs.renameSync(tempFile, HISTORY_FILE);
+  } catch (e) {
+    console.warn("Could not save history file:", e.message);
+  }
 }
 
 /**
