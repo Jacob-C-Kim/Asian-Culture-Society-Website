@@ -12,16 +12,13 @@ export const isValidEmail = (email: string): boolean => {
 };
 
 export const sanitizeUserInput = (userInput: string, maxLength: number = 500): string => {
-  if (typeof userInput !== 'string') {
-    throw new Error('Input must be a string');
+  if (typeof userInput !== "string") {
+    throw new Error("Input must be a string");
   }
 
   // Strip angle brackets to prevent basic XSS via HTML injection
   // More sophisticated XSS prevention should be done at render time
-  return userInput
-    .trim()
-    .slice(0, maxLength)
-    .replace(/[<>]/g, '');
+  return userInput.trim().slice(0, maxLength).replace(/[<>]/g, "");
 };
 
 type ValidationResult = {
@@ -37,8 +34,7 @@ export const validateRequiredFields = (
 
   for (const fieldName of requiredFieldNames) {
     const fieldValue = formData[fieldName];
-    const isEmpty = !fieldValue ||
-                    (typeof fieldValue === 'string' && !fieldValue.trim());
+    const isEmpty = !fieldValue || (typeof fieldValue === "string" && !fieldValue.trim());
 
     if (isEmpty) {
       missingFields.push(fieldName);
@@ -84,7 +80,7 @@ export const checkRateLimit = (
     });
     return {
       isAllowed: true,
-      remainingRequests: maxRequestsPerWindow - 1
+      remainingRequests: maxRequestsPerWindow - 1,
     };
   }
 
@@ -92,7 +88,7 @@ export const checkRateLimit = (
   if (existingRecord.requestCount >= maxRequestsPerWindow) {
     return {
       isAllowed: false,
-      remainingRequests: 0
+      remainingRequests: 0,
     };
   }
 
@@ -100,7 +96,7 @@ export const checkRateLimit = (
   existingRecord.requestCount++;
   return {
     isAllowed: true,
-    remainingRequests: maxRequestsPerWindow - existingRecord.requestCount
+    remainingRequests: maxRequestsPerWindow - existingRecord.requestCount,
   };
 };
 

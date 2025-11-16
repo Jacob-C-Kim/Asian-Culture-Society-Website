@@ -20,7 +20,8 @@ export const events: Event[] = [
     location: "Bamboo Room",
     date: "August 29th, 2025",
     dateObject: new Date(2025, 7, 29), // Month is 0-indexed
-    description: "Kick off the semester at our First General Body Meeting (GBM)! We'll start the year with fun icebreakers and a chance to meet new people, connect with returning members, and get to know the community."
+    description:
+      "Kick off the semester at our First General Body Meeting (GBM)! We'll start the year with fun icebreakers and a chance to meet new people, connect with returning members, and get to know the community.",
   },
   {
     id: 2,
@@ -29,7 +30,8 @@ export const events: Event[] = [
     location: "Upper Dance Studio",
     date: "August 30th, 2025",
     dateObject: new Date(2025, 7, 30),
-    description: "Come check out our Tinikling Open Practice! This is a casual session where anyone can try out tinikling, meet new people, and experience one of the most iconic traditional Filipino dances. No experience is required. Just come have fun, learn the basics, and see if joining the team is right for you."
+    description:
+      "Come check out our Tinikling Open Practice! This is a casual session where anyone can try out tinikling, meet new people, and experience one of the most iconic traditional Filipino dances. No experience is required. Just come have fun, learn the basics, and see if joining the team is right for you.",
   },
   {
     id: 3,
@@ -38,7 +40,8 @@ export const events: Event[] = [
     location: "Greek Lawn",
     date: "August 31st, 2025",
     dateObject: new Date(2025, 7, 31),
-    description: "Celebrate summer with an evening of culture and community in collaboration with Wadaiko. Explore booths with games and activities, meet new people, and enjoy a live Wadaiko performance that brings the excitement of traditional Japanese drumming to campus."
+    description:
+      "Celebrate summer with an evening of culture and community in collaboration with Wadaiko. Explore booths with games and activities, meet new people, and enjoy a live Wadaiko performance that brings the excitement of traditional Japanese drumming to campus.",
   },
   {
     id: 4,
@@ -47,7 +50,8 @@ export const events: Event[] = [
     location: "Ontario Beach Park",
     date: "September 13th, 2025",
     dateObject: new Date(2025, 8, 13),
-    description: "Spend the afternoon at the beach with pizza, volleyball, spikeball, and time to relax by the water. Beach Day is all about playing games, enjoying the outdoors, and having a fun evening with friends before the semester gets busy."
+    description:
+      "Spend the afternoon at the beach with pizza, volleyball, spikeball, and time to relax by the water. Beach Day is all about playing games, enjoying the outdoors, and having a fun evening with friends before the semester gets busy.",
   },
   {
     id: 5,
@@ -56,16 +60,18 @@ export const events: Event[] = [
     location: "SHED 4350",
     date: "September 7th, 2025",
     dateObject: new Date(2025, 8, 7),
-    description: "Start your Mentor/Mentee journey with our Speed Dating event! This session gives participants a chance to rotate through short one-on-one conversations. Mentors and mentees will be able to introduce themselves, ask questions, and get to know multiple people in a structured, timed format before being paired for the semester."
-  }
+    description:
+      "Start your Mentor/Mentee journey with our Speed Dating event! This session gives participants a chance to rotate through short one-on-one conversations. Mentors and mentees will be able to introduce themselves, ask questions, and get to know multiple people in a structured, timed format before being paired for the semester.",
+  },
 ];
 
 // Helper function to get events for a specific date
 export const getEventsForDate = (date: Date): Event[] => {
-  return events.filter(event => 
-    event.dateObject.getDate() === date.getDate() &&
-    event.dateObject.getMonth() === date.getMonth() &&
-    event.dateObject.getFullYear() === date.getFullYear()
+  return events.filter(
+    (event) =>
+      event.dateObject.getDate() === date.getDate() &&
+      event.dateObject.getMonth() === date.getMonth() &&
+      event.dateObject.getFullYear() === date.getFullYear()
   );
 };
 
@@ -76,5 +82,5 @@ export const hasEventsOnDate = (date: Date): boolean => {
 
 // Helper function to get all event dates for calendar highlighting
 export const getEventDates = (): Date[] => {
-  return events.map(event => event.dateObject);
+  return events.map((event) => event.dateObject);
 };

@@ -1,5 +1,5 @@
-import CalendarPage from './CalendarPage'
+import CalendarPage from "./CalendarPage";
 
 export default function Calendar() {
-  return <CalendarPage />
+  return <CalendarPage />;
 }

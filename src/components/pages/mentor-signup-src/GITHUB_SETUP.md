@@ -16,6 +16,7 @@
 First, create these essential files for your React project:
 
 **Create `package.json`:**
+
 ```json
 {
   "name": "asian-culture-society-website",
@@ -49,16 +50,18 @@ First, create these essential files for your React project:
 ```
 
 **Create `vite.config.ts`:**
+
 ```typescript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-})
+});
 ```
 
 **Create `tsconfig.json`:**
+
 ```json
 {
   "compilerOptions": {
@@ -84,6 +87,7 @@ export default defineConfig({
 ```
 
 **Create `tsconfig.node.json`:**
+
 ```json
 {
   "compilerOptions": {
@@ -267,6 +271,7 @@ your-project/
 ```
 
 **Create `src/main.tsx`:**
+
 ```typescript
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -334,17 +339,20 @@ git push origin main
 You can deploy your website for free using:
 
 **Netlify:**
+
 1. Go to [netlify.com](https://netlify.com)
 2. Connect your GitHub repository
 3. Set build command: `npm run build`
 4. Set publish directory: `dist`
 
 **Vercel:**
+
 1. Go to [vercel.com](https://vercel.com)
 2. Import your GitHub repository
 3. Vercel will auto-detect it's a Vite project
 
 **GitHub Pages:**
+
 1. Go to your repository settings
 2. Scroll to "Pages" section
 3. Select source as "GitHub Actions"
@@ -381,15 +389,18 @@ git checkout main
 ## Troubleshooting
 
 **If you get authentication errors:**
+
 - Use GitHub's personal access tokens instead of passwords
 - Or set up SSH keys for easier authentication
 
 **If git push fails:**
+
 - Make sure you're in the correct directory
 - Check that the remote URL is correct: `git remote -v`
 - Try `git pull origin main` first, then push
 
 **File too large errors:**
+
 - Add large files to `.gitignore`
 - Use Git LFS for large assets if needed
 

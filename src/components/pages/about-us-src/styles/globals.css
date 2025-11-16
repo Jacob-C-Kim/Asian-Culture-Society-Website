@@ -203,19 +203,19 @@
     border-radius: 12px !important;
     font-weight: 700 !important;
   }
-  
+
   .calendar-with-events .has-event:hover {
     background-color: #2563eb !important;
     color: white !important;
     transform: scale(1.02) !important;
   }
-  
+
   .calendar-with-events .rdp-day_selected.has-event {
     background-color: #1d4ed8 !important;
     color: white !important;
     border-radius: 12px !important;
   }
-  
+
   .calendar-with-events .rdp-day_selected {
     background-color: #1d4ed8 !important;
     color: white !important;

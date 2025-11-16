@@ -8,7 +8,7 @@ const AboutUsPage = dynamic(() => import("./components/AboutUsPage"), {
 });
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('about-us');
+  const [currentPage, setCurrentPage] = useState("about-us");
 
   // Reset scroll position when navigating to a new page
   useEffect(() => {
@@ -21,12 +21,9 @@ export default function App() {
 
   // About Us page with sticky header behavior (same as homepage and calendar)
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden w-full">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-white">
       <StickyHeader currentPage={currentPage}>
-        <NavigationHeader
-          currentPage={currentPage}
-          onNavigate={handleNavigation}
-        />
+        <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
       </StickyHeader>
 
       <AboutUsPage />

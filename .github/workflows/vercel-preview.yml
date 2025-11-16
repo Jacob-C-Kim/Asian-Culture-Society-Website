@@ -55,7 +55,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const deploymentUrl = '${{ steps.deploy.outputs.deployment_url }}';
-            const comment = `## 🚀 Preview Deployment Ready!
+            const comment = `## [START] Preview Deployment Ready!
 
             Your preview deployment is ready at:
             **${deploymentUrl}**

@@ -7,12 +7,14 @@ You have two versions of your website that you can run locally:
 This is your current React/Tailwind implementation in Figma Make.
 
 ### Prerequisites
+
 - Node.js (version 16 or higher)
 - npm or yarn package manager
 
 ### Setup Steps
 
 1. **Create a new React project with Vite:**
+
    ```bash
    npm create vite@latest asian-culture-society -- --template react-ts
    cd asian-culture-society
@@ -20,26 +22,25 @@ This is your current React/Tailwind implementation in Figma Make.
    ```
 
 2. **Install required dependencies:**
+
    ```bash
    npm install tailwindcss @tailwindcss/typography
    npm install -D @types/react @types/react-dom
    ```
 
 3. **Setup Tailwind CSS:**
-   
+
    Create `tailwind.config.js`:
+
    ```javascript
    /** @type {import('tailwindcss').Config} */
    export default {
-     content: [
-       "./index.html",
-       "./src/**/*.{js,ts,jsx,tsx}",
-     ],
+     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
      theme: {
        extend: {},
      },
      plugins: [],
-   }
+   };
    ```
 
 4. **Copy your files:**
@@ -49,6 +50,7 @@ This is your current React/Tailwind implementation in Figma Make.
    - Copy the logo image file (if available) to `src/assets/`
 
 5. **Update the main.tsx file:**
+
    ```typescript
    import React from 'react'
    import ReactDOM from 'react-dom/client'
@@ -63,22 +65,25 @@ This is your current React/Tailwind implementation in Figma Make.
    ```
 
 6. **Handle the Figma asset import:**
-   
+
    In `src/components/InteractiveFrame22.tsx`, replace:
+
    ```typescript
    import imgTransparentLogo11 from "figma:asset/acs-logo-transparent.png";
    ```
-   
+
    With:
+
    ```typescript
    // Option A: Use a placeholder
    const imgTransparentLogo11 = "https://via.placeholder.com/61x61/cccccc/000000?text=LOGO";
-   
+
    // Option B: Use a local image (if you have the logo file)
    // import imgTransparentLogo11 from "../assets/logo.png";
    ```
 
 7. **Run the development server:**
+
    ```bash
    npm run dev
    ```
@@ -96,22 +101,23 @@ This uses the HTML/CSS/JS files I created earlier.
 
 1. **Use the existing files in your project:**
    - `index.html`
-   - `styles.css` 
+   - `styles.css`
    - `script.js`
 
 2. **Run locally:**
-   
+
    **Method A - Double-click:**
    Simply double-click `index.html` to open in your browser
-   
+
    **Method B - Local server (recommended):**
+
    ```bash
    # If you have Python installed
    python -m http.server 8000
-   
+
    # If you have Node.js installed
    npx serve .
-   
+
    # If you have PHP installed
    php -S localhost:8000
    ```
@@ -123,13 +129,19 @@ This uses the HTML/CSS/JS files I created earlier.
 
 1. **Replace the placeholder logo:**
    In `index.html`, line 26, replace:
+
    ```html
-   <img src="https://via.placeholder.com/61x61/cccccc/000000?text=LOGO" alt="Asian Culture Society Logo" class="logo-image">
+   <img
+     src="https://via.placeholder.com/61x61/cccccc/000000?text=LOGO"
+     alt="Asian Culture Society Logo"
+     class="logo-image"
+   />
    ```
-   
+
    With your actual logo:
+
    ```html
-   <img src="path/to/your/logo.png" alt="Asian Culture Society Logo" class="logo-image">
+   <img src="path/to/your/logo.png" alt="Asian Culture Society Logo" class="logo-image" />
    ```
 
 2. **Modify content:**
@@ -143,12 +155,14 @@ This uses the HTML/CSS/JS files I created earlier.
 ## Which Option Should You Choose?
 
 ### Choose React Version (Option 1) if:
+
 - You want to continue developing with modern tools
 - You plan to add more interactive features
 - You want to integrate with APIs or backend services
 - You're comfortable with React development
 
 ### Choose HTML Version (Option 2) if:
+
 - You want something simple and quick
 - You don't need complex interactivity
 - You want to deploy to basic web hosting
@@ -159,11 +173,13 @@ This uses the HTML/CSS/JS files I created earlier.
 ## Troubleshooting
 
 ### React Version Issues:
+
 - **Import errors:** Make sure all file paths are correct relative to `src/`
 - **Tailwind not working:** Ensure `globals.css` is imported in `main.tsx`
 - **Logo not showing:** Replace the Figma asset import with a local image or placeholder
 
 ### HTML Version Issues:
+
 - **Fonts not loading:** Check internet connection (uses Google Fonts)
 - **Logo not showing:** Update the image path in `index.html`
 - **Styling issues:** Ensure all CSS files are in the same directory
@@ -173,7 +189,8 @@ This uses the HTML/CSS/JS files I created earlier.
 ## Next Steps
 
 Once you have it running locally, you can:
+
 - Add more pages/sections
-- Implement real navigation between pages  
+- Implement real navigation between pages
 - Add contact forms or event listings
 - Deploy to hosting services like Netlify, Vercel, or traditional web hosting

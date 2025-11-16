@@ -1,5 +1,5 @@
-import AboutUsPage from './AboutUsPage'
+import AboutUsPage from "./AboutUsPage";
 
 export default function AboutUs() {
-  return <AboutUsPage />
+  return <AboutUsPage />;
 }

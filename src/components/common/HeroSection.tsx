@@ -24,26 +24,24 @@ export const HeroSection = memo(function HeroSection({
 } = {}) {
   return (
     <div
-      className={`box-border content-stretch flex flex-col gap-[72px] items-center justify-start px-0 relative bg-white z-10 ${
+      className={`relative z-10 box-border flex flex-col content-stretch items-center justify-start gap-[72px] bg-white px-0 ${
         fullScreen ? "min-h-screen w-full" : "size-full"
       }`}
       style={{
-        paddingTop: includeHeaderSpace
-          ? `calc(${topPadding} + ${headerSpaceHeight})`
-          : topPadding,
+        paddingTop: includeHeaderSpace ? `calc(${topPadding} + ${headerSpaceHeight})` : topPadding,
         paddingBottom: bottomPadding,
       }}
     >
-      <div className="content-stretch flex flex-col gap-[5px] items-center justify-center relative shrink-0 flex-1">
-        <div className="content-stretch flex flex-col items-center justify-start leading-[0] relative shrink-0 text-black">
-          <div className="font-['Lexend:Regular',_sans-serif] font-normal relative shrink-0 text-[16px] md:text-[18px] text-center">
+      <div className="relative flex flex-1 shrink-0 flex-col content-stretch items-center justify-center gap-[5px]">
+        <div className="relative flex shrink-0 flex-col content-stretch items-center justify-start leading-[0] text-black">
+          <div className="relative shrink-0 text-center font-['Lexend:Regular',_sans-serif] text-[16px] font-normal md:text-[18px]">
             <p className="leading-[normal]">{subtitle}</p>
           </div>
-          <div className="font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] font-bold not-italic relative shrink-0 text-[28px] md:text-[40px] text-center">
-            <p className="leading-[normal] font-bold px-4">{title}</p>
+          <div className="relative shrink-0 text-center font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[28px] font-bold not-italic md:text-[40px]">
+            <p className="px-4 font-bold leading-[normal]">{title}</p>
           </div>
         </div>
-        <div className="font-['Lexend:Regular',_sans-serif] font-normal leading-[normal] relative shrink-0 text-[12px] text-black text-center max-w-[600px] px-4 w-full">
+        <div className="relative w-full max-w-[600px] shrink-0 px-4 text-center font-['Lexend:Regular',_sans-serif] text-[12px] font-normal leading-[normal] text-black">
           <p className="leading-[normal]">{description}</p>
         </div>
       </div>

@@ -9,7 +9,7 @@ const MentorMenteePage = dynamic(() => import("./components/MentorMenteePage"), 
 });
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('mentor-mentee');
+  const [currentPage, setCurrentPage] = useState("mentor-mentee");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,7 +20,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden w-full">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-white">
       <StickyHeader currentPage={currentPage}>
         <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
       </StickyHeader>

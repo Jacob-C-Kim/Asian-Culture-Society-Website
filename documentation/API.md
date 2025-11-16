@@ -3,6 +3,7 @@
 ## Overview
 
 The application provides secure REST API endpoints for form submissions with:
+
 - Input validation and sanitization
 - Rate limiting (10 requests per minute per IP)
 - CORS protection
@@ -24,6 +25,7 @@ Check if the API is healthy.
 **Endpoint:** `GET /api/health`
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -33,6 +35,7 @@ Check if the API is healthy.
 ```
 
 **Status Codes:**
+
 - `200 OK`: Service is healthy
 
 ---
@@ -44,11 +47,13 @@ Submit a mentor application.
 **Endpoint:** `POST /api/submit/mentor`
 
 **Headers:**
+
 ```
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "name": "John Doe",
@@ -61,16 +66,19 @@ Content-Type: application/json
 ```
 
 **Required Fields:**
+
 - `name` (max 100 chars)
 - `email` (valid email, max 254 chars)
 - `major` (max 100 chars)
 - `year` (max 50 chars)
 
 **Optional Fields:**
+
 - `interests` (max 500 chars)
 - `availability` (max 500 chars)
 
 **Success Response:**
+
 ```json
 {
   "success": true,
@@ -81,6 +89,7 @@ Content-Type: application/json
 **Error Responses:**
 
 Validation Error (400):
+
 ```json
 {
   "error": "Validation failed",
@@ -89,6 +98,7 @@ Validation Error (400):
 ```
 
 Invalid Email (400):
+
 ```json
 {
   "error": "Invalid email format"
@@ -96,6 +106,7 @@ Invalid Email (400):
 ```
 
 Rate Limit Exceeded (429):
+
 ```json
 {
   "error": "Too many requests. Please try again later."
@@ -103,6 +114,7 @@ Rate Limit Exceeded (429):
 ```
 
 **Headers:**
+
 - `X-RateLimit-Remaining`: Number of remaining requests
 
 ---
@@ -114,11 +126,13 @@ Submit a mentee application.
 **Endpoint:** `POST /api/submit/mentee`
 
 **Headers:**
+
 ```
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "name": "Jane Smith",
@@ -131,12 +145,14 @@ Content-Type: application/json
 ```
 
 **Required Fields:**
+
 - `name` (max 100 chars)
 - `email` (valid email, max 254 chars)
 - `major` (max 100 chars)
 - `year` (max 50 chars)
 
 **Optional Fields:**
+
 - `goals` (max 500 chars)
 - `preferences` (max 500 chars)
 
@@ -151,11 +167,13 @@ Submit a Tinikling dance workshop registration.
 **Endpoint:** `POST /api/submit/tinikling`
 
 **Headers:**
+
 ```
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "name": "Alex Johnson",
@@ -166,10 +184,12 @@ Content-Type: application/json
 ```
 
 **Required Fields:**
+
 - `name` (max 100 chars)
 - `email` (valid email, max 254 chars)
 
 **Optional Fields:**
+
 - `experience`: "beginner", "intermediate", or "advanced" (max 50 chars)
 - `notes` (max 500 chars)
 
@@ -186,6 +206,7 @@ All API endpoints are rate-limited to prevent abuse:
 - **Response:** 429 Too Many Requests when exceeded
 
 **Rate Limit Headers:**
+
 ```
 X-RateLimit-Remaining: 7
 Retry-After: 60
@@ -196,6 +217,7 @@ Retry-After: 60
 ### Input Validation
 
 All inputs are:
+
 1. Validated for required fields
 2. Sanitized to prevent XSS attacks
 3. Limited to maximum lengths
@@ -204,6 +226,7 @@ All inputs are:
 ### Email Validation
 
 Emails must:
+
 - Match RFC 5322 format
 - Be 254 characters or less
 - Contain @ symbol and valid domain
@@ -211,6 +234,7 @@ Emails must:
 ### XSS Protection
 
 All string inputs are sanitized:
+
 - HTML tags are stripped (`<` and `>` removed)
 - Strings are trimmed and limited to max length
 - SQL injection patterns are filtered
@@ -227,6 +251,7 @@ All errors return JSON with:
 ```
 
 **HTTP Status Codes:**
+
 - `200 OK`: Success
 - `400 Bad Request`: Invalid input
 - `405 Method Not Allowed`: Wrong HTTP method
@@ -240,10 +265,10 @@ All errors return JSON with:
 ```javascript
 async function submitMentorApplication(data) {
   try {
-    const response = await fetch('/api/submit/mentor', {
-      method: 'POST',
+    const response = await fetch("/api/submit/mentor", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
@@ -256,16 +281,16 @@ async function submitMentorApplication(data) {
     const result = await response.json();
     console.log(result.message);
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error("Error:", error.message);
   }
 }
 
 // Usage
 submitMentorApplication({
-  name: 'John Doe',
-  email: 'john@example.com',
-  major: 'Computer Science',
-  year: 'Senior'
+  name: "John Doe",
+  email: "john@example.com",
+  major: "Computer Science",
+  year: "Senior",
 });
 ```
 
@@ -289,6 +314,7 @@ curl http://localhost:3000/api/health
 ## CORS
 
 API endpoints accept requests from:
+
 - Same origin
 - `https://campusgroups.rit.edu`
 - `https://*.campusgroups.com`
@@ -297,6 +323,7 @@ API endpoints accept requests from:
 ## Future Enhancements
 
 Planned features:
+
 - [ ] Database integration
 - [ ] Email notifications
 - [ ] Admin dashboard API

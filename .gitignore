@@ -1,36 +1,23 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+> acs-consolidated@0.1.0 build
+> next build
 
-# testing
-/coverage
+   ▲ Next.js 15.5.6
 
-# next.js
-/.next/
-/out/
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 21.8s
+   Linting and checking validity of types ...
+Failed to compile.
 
-# production
-/build
+./src/components/pages/HomePage.tsx:4:54
+Type error: Cannot find module '../../../ACS-Website/src/components/InteractiveFrame22' or its corresponding type declarations.
 
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+[0m [90m 2 |[39m
+ [90m 3 |[39m [36mimport[39m { useState[33m,[39m useEffect[33m,[39m useRef } [36mfrom[39m [32m"react"[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m [33mInteractiveFrame22[39m[33m,[39m { [33mNavigationHeader[39m } [36mfrom[39m [32m"../../../ACS-Website/src/components/InteractiveFrame22"[39m[33m;[39m
+ [90m   |[39m                                                      [31m[1m^[22m[39m
+ [90m 5 |[39m [36mimport[39m [33mEventsSection[39m [36mfrom[39m [32m"../../../ACS-Website/src/components/EventsSection"[39m[33m;[39m
+ [90m 6 |[39m [36mimport[39m [33mFooter[39m [36mfrom[39m [32m"../../../ACS-Website/src/components/Footer"[39m[33m;[39m
+ [90m 7 |[39m [36mimport[39m [33mCalendarPage[39m [36mfrom[39m [32m"../../../ACS-Website/src/components/CalendarPage"[39m[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null
+node_modules/

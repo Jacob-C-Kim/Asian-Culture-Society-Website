@@ -1,5 +1,5 @@
-import MentorSignUpPage from './MentorSignUpPage'
+import MentorSignUpPage from "./MentorSignUpPage";
 
 export default function MentorSignUp() {
-  return <MentorSignUpPage />
+  return <MentorSignUpPage />;
 }

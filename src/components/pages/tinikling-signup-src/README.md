@@ -23,35 +23,43 @@ To view the website locally:
 
 1. Open `index.html` in any modern web browser
 2. Or use a local server (recommended):
+
    ```bash
    # Using Python 3
    python -m http.server 8000
-   
+
    # Using Node.js (if you have http-server installed)
    npx http-server
-   
+
    # Using PHP
    php -S localhost:8000
    ```
+
 3. Navigate to `http://localhost:8000` in your browser
 
 ## Deployment Options
 
 ### 1. Static Hosting (Recommended)
+
 Upload all files to any static hosting service:
+
 - **Netlify**: Drag and drop the folder to netlify.com/drop
 - **Vercel**: Connect to a GitHub repo or drag and drop
 - **GitHub Pages**: Push to a GitHub repo and enable Pages
 - **Surge.sh**: Use `surge` command line tool
 
 ### 2. Traditional Web Hosting
+
 Upload files via FTP to any web hosting provider:
+
 - cPanel hosting
 - Shared hosting providers
 - Your own server
 
 ### 3. CDN/Cloud Storage
+
 Upload to cloud storage with static hosting:
+
 - AWS S3 + CloudFront
 - Google Cloud Storage
 - Azure Static Web Apps
@@ -59,17 +67,21 @@ Upload to cloud storage with static hosting:
 ## Customization
 
 ### Colors
+
 To change the color scheme, modify the CSS variables in `styles.css`:
+
 - Button colors: `.events-button` background-color and hover states
 - Text colors: Update color properties in various classes
 - Hover effects: Modify `:hover` pseudo-classes
 
 ### Content
+
 - Update text in `index.html`
 - Add more navigation items by duplicating `.nav-item` elements
 - Modify the description in the `.description` section
 
 ### Functionality
+
 - Add more interactive features in `script.js`
 - Implement actual page routing by adding content sections
 - Connect to APIs or forms as needed
@@ -77,6 +89,7 @@ To change the color scheme, modify the CSS variables in `styles.css`:
 ## Browser Support
 
 This website supports all modern browsers:
+
 - Chrome 60+
 - Firefox 60+
 - Safari 12+
@@ -85,6 +98,7 @@ This website supports all modern browsers:
 ## Performance
 
 The website is optimized for performance:
+
 - Minimal CSS and JavaScript
 - Responsive design
 - Fast loading times
@@ -93,6 +107,7 @@ The website is optimized for performance:
 ## Next Steps
 
 Consider adding:
+
 - Individual pages for each navigation section
 - Contact forms
 - Event listings with dynamic content
@@ -103,6 +118,7 @@ Consider adding:
 ## Fonts
 
 The website uses Google Fonts (Lexend). If you need to work offline or want faster loading:
+
 1. Download the font files
 2. Update the `@font-face` declarations in `styles.css`
 3. Remove the Google Fonts link from `index.html`

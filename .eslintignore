@@ -25,3 +25,6 @@ public/
 **/*.test.tsx
 **/*.spec.ts
 **/*.spec.tsx
+
+# Supabase Functions (Deno runtime, not Node.js)
+acs-consolidated/supabase-functions

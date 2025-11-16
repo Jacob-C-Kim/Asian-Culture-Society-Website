@@ -1,5 +1,5 @@
-import MentorMenteePage from './MentorMenteePage'
+import MentorMenteePage from "./MentorMenteePage";
 
 export default function MentorMentee() {
-  return <MentorMenteePage />
+  return <MentorMenteePage />;
 }

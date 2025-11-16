@@ -14,7 +14,7 @@ const CalendarPage = dynamic(() => import("./components/CalendarPage"), {
 });
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState("home");
 
   // Reset scroll position when navigating to a new page
   useEffect(() => {
@@ -26,16 +26,13 @@ export default function App() {
   }, []);
 
   // For calendar page, we want the same sticky header behavior
-  const isCalendarPage = currentPage === 'calendar';
+  const isCalendarPage = currentPage === "calendar";
 
   if (isCalendarPage) {
     return (
-      <div className="min-h-screen bg-white relative overflow-x-hidden w-full">
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-white">
         <StickyHeader currentPage={currentPage}>
-          <NavigationHeader
-            currentPage={currentPage}
-            onNavigate={handleNavigation}
-          />
+          <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
         </StickyHeader>
 
         <CalendarPage />
@@ -45,12 +42,9 @@ export default function App() {
 
   // Home page with sticky header behavior
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden w-full">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-white">
       <StickyHeader currentPage={currentPage}>
-        <NavigationHeader
-          currentPage={currentPage}
-          onNavigate={handleNavigation}
-        />
+        <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
       </StickyHeader>
 
       <HeroSection />

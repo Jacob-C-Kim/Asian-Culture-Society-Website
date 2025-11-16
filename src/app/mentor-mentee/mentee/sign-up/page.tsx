@@ -1,5 +1,5 @@
-import MenteeSignUpPage from './MenteeSignUpPage'
+import MenteeSignUpPage from "./MenteeSignUpPage";
 
 export default function MenteeSignUp() {
-  return <MenteeSignUpPage />
+  return <MenteeSignUpPage />;
 }

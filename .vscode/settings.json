@@ -1,0 +1,47 @@
+{
+  "files.exclude": {
+    // Hide symlinks from file explorer (actual files are in organized folders)
+    "jest.config.js": true,
+    "jest.setup.js": true,
+    "postcss.config.js": true,
+    "tailwind.config.js": true,
+    "tsconfig.json": true,
+    "sentry.client.config.ts": true,
+    "sentry.edge.config.ts": true,
+    "sentry.server.config.ts": true,
+    "preview-page.sh": true,
+    "README.md": true,
+    "next.config.js": true,
+    "vercel.json": true,
+
+    // Hide build artifacts and temp files
+    "tsconfig.tsbuildinfo": true,
+    ".next": true,
+    "node_modules": true,
+    "build.log": true,
+    "performance-reports": true,
+
+    // Hide git/config directories from main view
+    ".git": true,
+    ".husky": true,
+
+    // Hide other config files
+    ".dockerignore": true,
+    ".eslintignore": true,
+    ".eslintrc.json": true,
+    ".prettierignore": true,
+    ".prettierrc.json": true,
+    "next-env.d.ts": true,
+    "package-lock.json": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/build": true,
+    "**/dist": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true
+  }
+}

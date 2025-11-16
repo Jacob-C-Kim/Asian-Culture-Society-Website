@@ -1,0 +1,168 @@
+name: Performance Testing
+
+on:
+  schedule:
+    # Run nightly at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'API test duration (seconds)'
+        required: false
+        default: '30'
+      connections:
+        description: 'API test concurrent connections'
+        required: false
+        default: '50'
+
+jobs:
+  comprehensive-performance:
+    name: Comprehensive Performance Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start Next.js server
+        run: npm run start &
+        env:
+          PORT: 3000
+
+      - name: Wait for server to be ready
+        run: |
+          echo "Waiting for server to start..."
+          timeout 60 bash -c 'until curl -f http://localhost:3000/api/health; do sleep 2; done'
+          echo "Server is ready!"
+
+      - name: Run build performance test
+        run: ./scripts/perf-test-build.sh
+
+      - name: Run page performance tests
+        run: node scripts/perf-test-pages.js
+        env:
+          BASE_URL: http://localhost:3000
+
+      - name: Run API performance tests (extended)
+        run: node scripts/perf-test-api.js
+        env:
+          BASE_URL: http://localhost:3000
+          TEST_DURATION: ${{ github.event.inputs.duration || '30' }}
+          TEST_CONNECTIONS: ${{ github.event.inputs.connections || '50' }}
+
+      - name: Aggregate results
+        run: node scripts/perf-test-all.js
+
+      - name: Generate HTML report
+        run: node scripts/perf-generate-report.js
+
+      - name: Upload performance reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-reports-${{ github.run_number }}
+          path: performance-reports/
+          retention-days: 90
+
+      - name: Load history and check for degradation
+        id: check_degradation
+        run: |
+          if [ -f performance-reports/aggregated-results.json ]; then
+            node -e "
+              const data = require('./performance-reports/aggregated-results.json');
+              const comparison = data.comparison;
+              let degraded = false;
+              let message = '';
+              
+              if (comparison) {
+                // Check if any metric degraded by more than 10%
+                if (comparison.pages.loadTime > 10) {
+                  degraded = true;
+                  message += 'Page load time increased by ' + comparison.pages.loadTime.toFixed(1) + '%\n';
+                }
+                if (comparison.api.latency > 15) {
+                  degraded = true;
+                  message += 'API latency increased by ' + comparison.api.latency.toFixed(1) + '%\n';
+                }
+                if (comparison.build.totalTime > 20) {
+                  degraded = true;
+                  message += 'Build time increased by ' + comparison.build.totalTime.toFixed(1) + '%\n';
+                }
+              }
+              
+              console.log('degraded=' + degraded);
+              console.log('message=' + message);
+            " | tee -a $GITHUB_OUTPUT
+          fi
+
+      - name: Create issue on performance degradation
+        if: steps.check_degradation.outputs.degraded == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const aggregated = JSON.parse(fs.readFileSync('performance-reports/aggregated-results.json', 'utf8'));
+            const summary = aggregated.summary;
+            const comparison = aggregated.comparison;
+            
+            let body = '## [WARN] Performance Degradation Detected\n\n';
+            body += 'The nightly performance tests have detected a significant performance regression.\n\n';
+            
+            body += '### Current Performance\n\n';
+            body += '#### [INFO] Pages\n';
+            body += `- Avg Load Time: ${summary.pages.avgLoadTime}ms\n`;
+            body += `- Avg LCP: ${summary.pages.avgLCP}ms\n\n`;
+            
+            body += '#### [API] API\n';
+            body += `- Avg Latency: ${summary.api.avgLatency}ms\n`;
+            body += `- Avg P95: ${summary.api.avgP95}ms\n\n`;
+            
+            body += '#### [BUILD] Build\n';
+            body += `- Total Time: ${summary.build.totalTimeReadable}\n\n`;
+            
+            if (comparison) {
+              body += '### Changes vs Previous Run\n\n';
+              if (comparison.pages.loadTime > 10) {
+                body += `- [WARN] Page load time: +${comparison.pages.loadTime.toFixed(1)}%\n`;
+              }
+              if (comparison.api.latency > 15) {
+                body += `- [WARN] API latency: +${comparison.api.latency.toFixed(1)}%\n`;
+              }
+              if (comparison.build.totalTime > 20) {
+                body += `- [WARN] Build time: +${comparison.build.totalTime.toFixed(1)}%\n`;
+              }
+            }
+            
+            body += '\n[INFO] See workflow run for detailed reports.\n';
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '[WARN] Performance Degradation Detected - ' + new Date().toISOString().split('T')[0],
+              body: body,
+              labels: ['performance', 'automated']
+            });
+
+      - name: Post to Slack (optional)
+        if: always()
+        run: |
+          echo "Performance test completed. Results uploaded to artifacts."
+          # Add Slack webhook integration here if needed
+          # curl -X POST -H 'Content-type: application/json' \
+          #   --data '{"text":"Performance tests completed"}' \
+          #   ${{ secrets.SLACK_WEBHOOK_URL }}
+

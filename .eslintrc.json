@@ -21,7 +21,21 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "warn",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "import/no-anonymous-default-export": [
+      "warn",
+      {
+        "allowObject": true
+      }
+    ]
   },
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "build/", "dist/", "coverage/"]
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "build/",
+    "dist/",
+    "coverage/",
+    "acs-consolidated/"
+  ]
 }

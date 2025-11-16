@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
@@ -65,17 +65,17 @@ export const NavigationHeader = memo(function NavigationHeader({
         }
       }}
     >
-      <p className={`leading-[normal] whitespace-pre ${labelMobile ? "hidden sm:block" : ""}`}>
+      <p className={`whitespace-pre leading-[normal] ${labelMobile ? "hidden sm:block" : ""}`}>
         {labelDesktop}
       </p>
       {labelMobile && (
-        <p className="leading-[normal] whitespace-pre block sm:hidden">{labelMobile}</p>
+        <p className="block whitespace-pre leading-[normal] sm:hidden">{labelMobile}</p>
       )}
     </a>
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex items-center justify-center gap-2 md:gap-8 px-2 md:px-6 relative">
+    <div className="relative mx-auto flex w-full max-w-7xl items-center justify-center gap-2 px-2 md:gap-8 md:px-6">
       {/* Logo → CG home */}
       <a
         href={routes.home}
@@ -85,7 +85,7 @@ export const NavigationHeader = memo(function NavigationHeader({
           setActiveSection("home");
           onNavigate?.("home");
         }}
-        className="md:hidden cursor-pointer"
+        className="cursor-pointer md:hidden"
       >
         <ACSLogo size={48} />
       </a>
@@ -97,24 +97,20 @@ export const NavigationHeader = memo(function NavigationHeader({
           setActiveSection("home");
           onNavigate?.("home");
         }}
-        className="hidden md:block cursor-pointer"
+        className="hidden cursor-pointer md:block"
       >
         <ACSLogo size={61} />
       </a>
 
       {/* Navigation */}
-      <div className="flex gap-2 md:gap-6 items-center">
+      <div className="flex items-center gap-2 md:gap-6">
         {/* Force About Us to the exact /ACS/about-us/ path to bypass CG rewriting */}
         <NavLink keyName="about-us" labelDesktop="About Us" forceTopHref />
 
         {/* Calendar goes to /ACS/acs-calendar/ */}
         <NavLink keyName="calendar" labelDesktop="Calendar" />
 
-        <NavLink
-          keyName="mentor-mentee"
-          labelDesktop="Mentor/Mentee"
-          labelMobile="Mentor"
-        />
+        <NavLink keyName="mentor-mentee" labelDesktop="Mentor/Mentee" labelMobile="Mentor" />
         <NavLink keyName="tinikling" labelDesktop="Tinikling" />
       </div>
     </div>
