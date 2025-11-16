@@ -9,7 +9,7 @@ This monorepo consolidates the ACS website with best practices for code quality,
 ### Project Structure
 
 ```
-acs-consolidated/
+/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   ├── components/
@@ -22,6 +22,7 @@ acs-consolidated/
 │   │   └── validators/         # Zod validation schemas
 │   └── config/                 # Environment configuration
 ├── public/                     # Static assets
+├── archive/                    # Archived/legacy files
 └── .github/workflows/          # CI/CD pipelines
 ```
 
@@ -35,7 +36,6 @@ acs-consolidated/
 ### Installation
 
 ```bash
-cd acs-consolidated
 npm install
 ```
 

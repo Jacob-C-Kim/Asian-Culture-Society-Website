@@ -7,7 +7,7 @@ title = "ACS Website Gitleaks Config"
 # These are false positives from legacy test files, not real production secrets
 [extend]
 excludePaths = [
-    "acs-consolidated",
+    "archive",
     "**/supabase/info.tsx",
 ]
 

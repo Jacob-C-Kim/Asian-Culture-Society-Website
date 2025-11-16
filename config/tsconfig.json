@@ -24,5 +24,5 @@
     "types": ["@testing-library/jest-dom", "jest", "node"]
   },
   "include": ["next-env.d.ts", "config/jest.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "acs-consolidated/supabase-functions"]
+  "exclude": ["node_modules", "archive"]
 }
