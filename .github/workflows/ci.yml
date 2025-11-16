@@ -112,9 +112,14 @@ jobs:
       - name: Comment PR with performance summary
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
+        continue-on-error: true
         with:
           script: |
             const fs = require('fs');
+            if (!fs.existsSync('performance-reports/aggregated-results.json')) {
+              console.log('Performance reports not available yet');
+              return;
+            }
             const aggregated = JSON.parse(fs.readFileSync('performance-reports/aggregated-results.json', 'utf8'));
             const summary = aggregated.summary;
             

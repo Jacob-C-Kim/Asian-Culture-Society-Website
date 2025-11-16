@@ -8,6 +8,8 @@ jobs:
   lighthouse:
     name: Lighthouse Performance Audit
     runs-on: ubuntu-latest
+    # Disabled temporarily - requires production deployment URL
+    if: false
 
     steps:
       - name: Checkout code

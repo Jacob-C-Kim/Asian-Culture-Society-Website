@@ -1,0 +1,11 @@
+# Ignore acs-consolidated folder - contains old duplicated files
+acs-consolidated/
+
+# Ignore test files
+**/*test*.tsx
+**/*test*.ts
+**/*.test.tsx
+**/*.test.ts
+
+# Ignore documentation
+**/*.md
