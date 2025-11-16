@@ -283,13 +283,13 @@ function Frame19() {
   return (
     <div className="relative h-2.5 w-[130px] shrink-0">
       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 130 10">
-        <g id="Frame 19">
+        <g id="Frame-19">
           <circle
             cx="5"
             cy="5"
             fill="var(--fill-0, white)"
             fillOpacity="0.5"
-            id="Ellipse 1"
+            id="Ellipse-1"
             r="5"
           />
           <circle
@@ -297,10 +297,10 @@ function Frame19() {
             cy="5"
             fill="var(--fill-0, white)"
             fillOpacity="0.5"
-            id="Ellipse 3"
+            id="Ellipse-3"
             r="5"
           />
-          <g id="Frame 20">
+          <g id="Frame-20">
             <rect
               fill="var(--fill-0, white)"
               fillOpacity="0.7"
@@ -315,7 +315,7 @@ function Frame19() {
             cy="5"
             fill="var(--fill-0, white)"
             fillOpacity="0.5"
-            id="Ellipse 4"
+            id="Ellipse-4"
             r="5"
           />
           <circle
@@ -323,7 +323,7 @@ function Frame19() {
             cy="5"
             fill="var(--fill-0, white)"
             fillOpacity="0.5"
-            id="Ellipse 2"
+            id="Ellipse-2"
             r="5"
           />
         </g>

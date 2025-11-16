@@ -37,6 +37,7 @@ jobs:
 
       - name: Deploy to Vercel Preview
         id: deploy
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
         run: |
           # Install Vercel CLI if not available
           npm install --global vercel@latest

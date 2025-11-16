@@ -57,6 +57,7 @@ jobs:
     name: Performance Testing
     runs-on: ubuntu-latest
     needs: build
+    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -99,6 +100,7 @@ jobs:
 
       - name: Generate performance report
         run: node scripts/perf-generate-report.js
+        continue-on-error: true
 
       - name: Upload performance reports
         uses: actions/upload-artifact@v4

@@ -12,7 +12,7 @@ function AboutUs() {
             preserveAspectRatio="none"
             viewBox="0 0 394 1"
           >
-            <line id="Line 1" stroke="var(--stroke-0, #195259)" x2="394" y1="0.5" y2="0.5" />
+            <line id="Line-1" stroke="var(--stroke-0, #195259)" x2="394" y1="0.5" y2="0.5" />
           </svg>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function AboutUs1() {
           preserveAspectRatio="none"
           viewBox="0 0 194 194"
         >
-          <circle cx="97" cy="97" fill="var(--fill-0, #D9D9D9)" id="Ellipse 8" r="97" />
+          <circle cx="97" cy="97" fill="var(--fill-0, #D9D9D9)" id="Ellipse-8" r="97" />
         </svg>
       </div>
       <div className="absolute left-[602px] top-[206.5px] flex h-[37px] w-[92px] translate-x-[-50%] translate-y-[-50%] flex-col justify-center text-center font-['Lexend:Bold',_sans-serif] text-[18px] font-bold leading-[0] text-black">

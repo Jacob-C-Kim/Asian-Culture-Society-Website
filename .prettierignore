@@ -16,3 +16,6 @@ pnpm-lock.yaml
 # Generated files
 *.min.js
 *.min.css
+
+# Ignore consolidated folder (contains duplicated files)
+acs-consolidated/
