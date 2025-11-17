@@ -52,6 +52,9 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          SENTRY_SUPPRESS_INSTRUMENTATION_FILE_WARNING: 1
+          SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: 1
 
   performance-test:
     name: Performance Testing
@@ -76,6 +79,9 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          SENTRY_SUPPRESS_INSTRUMENTATION_FILE_WARNING: 1
+          SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: 1
 
       - name: Start Next.js server
         run: npm run start &

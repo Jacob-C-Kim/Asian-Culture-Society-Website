@@ -24,6 +24,9 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          SENTRY_SUPPRESS_INSTRUMENTATION_FILE_WARNING: 1
+          SENTRY_SUPPRESS_GLOBAL_ERROR_HANDLER_FILE_WARNING: 1
 
       - name: Start Next.js server
         run: |
@@ -52,8 +55,8 @@ jobs:
             http://localhost:3000
             http://localhost:3000/about-us
             http://localhost:3000/calendar
-          uploadArtifacts: true
-          temporaryPublicStorage: true
+          uploadArtifacts: false
+          temporaryPublicStorage: false
           runs: 3
 
       - name: Stop Next.js server
