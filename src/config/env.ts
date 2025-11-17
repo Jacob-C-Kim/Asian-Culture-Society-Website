@@ -7,9 +7,6 @@ const envSchema = z.object({
   // Application URLs
   NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
 
-  // Security
-  NEXTAUTH_SECRET: z.string().min(32).optional(),
-
   // Rate Limiting
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().positive().default(10),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().positive().default(60000),
