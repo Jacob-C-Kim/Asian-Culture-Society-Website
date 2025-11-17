@@ -1,7 +1,7 @@
 /**
  * @file src/instrumentation.ts
  * @brief Next.js instrumentation file for Sentry initialization
- * 
+ *
  * This file is automatically loaded by Next.js and initializes Sentry
  * for server-side error tracking and monitoring.
  */
@@ -9,8 +9,8 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     // Server-side Sentry initialization
-    const { init } = await import("@sentry/nextjs");
-    
+    const { init, captureRequestError } = await import("@sentry/nextjs");
+
     init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
@@ -33,7 +33,7 @@ export async function register() {
   if (process.env.NEXT_RUNTIME === "edge") {
     // Edge runtime Sentry initialization
     const { init } = await import("@sentry/nextjs");
-    
+
     init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
@@ -43,3 +43,12 @@ export async function register() {
   }
 }
 
+/**
+ * @brief Captures errors from nested React Server Components
+ * @param error - The error that occurred
+ * @param request - The request object
+ */
+export async function onRequestError(error: Error, request: { path: string; method: string }) {
+  const { captureRequestError } = await import("@sentry/nextjs");
+  captureRequestError(error, request);
+}
