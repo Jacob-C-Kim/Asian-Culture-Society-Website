@@ -24,7 +24,6 @@
     // Hide git/config directories from main view
     ".git": true,
     ".husky": true,
-    "git": true,
 
     // Hide other config files
     ".dockerignore": true,
