@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface CSVDataTableProps {
   csvUrl: string;
@@ -93,7 +93,7 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
     return rows;
   };
 
-  const fetchCSVData = async () => {
+  const fetchCSVData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -212,11 +212,11 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [csvUrl]);
 
   useEffect(() => {
     fetchCSVData();
-  }, [csvUrl]);
+  }, [fetchCSVData]);
 
   // Auto-retry once after 5 seconds if failed (but not for 404 errors)
   useEffect(() => {
@@ -229,7 +229,7 @@ export default function CSVDataTable({ csvUrl }: CSVDataTableProps) {
 
       return () => clearTimeout(retryTimer);
     }
-  }, [error, retryCount, showFallback]);
+  }, [error, retryCount, showFallback, fetchCSVData]);
 
   if (loading) {
     return (

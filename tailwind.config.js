@@ -1,1 +1,1 @@
-config/tailwind.config.js
+config/style/tailwind.config.js

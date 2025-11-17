@@ -1,1 +1,1 @@
-config/jest.config.js
+config/test/jest.config.js

@@ -12,6 +12,7 @@ function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) 
     >
       {/* Koi Fish Image positioned on the left */}
       <div className="absolute bottom-0 left-0 flex h-full w-full items-end justify-start">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/assets/images/koi-fish.png"
           alt="Koi Fish Illustration"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import svgPaths from "../../imports/svg-onqcmwzw98";
 // Unused: import { getEventsForDate } from "../../data/events";
 import { getAllEventsForDate, formatDate } from "../../utils/calendarHelpers";
@@ -47,6 +47,18 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     }
   }, [selectedDate, isMobile, events.length]);
 
+  // Handle scrolling through events
+  const handleScroll = useCallback(
+    (direction: "up" | "down") => {
+      if (direction === "down" && safeIndex < events.length - 1) {
+        setCurrentEventIndex(safeIndex + 1);
+      } else if (direction === "up" && safeIndex > 0) {
+        setCurrentEventIndex(safeIndex - 1);
+      }
+    },
+    [safeIndex, events.length]
+  );
+
   // Listen for global navigation events
   useEffect(() => {
     if (!events.length) return;
@@ -61,21 +73,12 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     document.addEventListener("navigateEvent", handleNavigateEvent as EventListener);
     return () =>
       document.removeEventListener("navigateEvent", handleNavigateEvent as EventListener);
-  }, [events.length, safeIndex]);
+  }, [events.length, handleScroll]);
 
   // NOW do early returns AFTER all hooks
   if (!selectedDate) return null;
   if (!events || events.length === 0) return null;
   if (!currentEvent) return null;
-
-  // Handle scrolling through events
-  const handleScroll = (direction: "up" | "down") => {
-    if (direction === "down" && safeIndex < events.length - 1) {
-      setCurrentEventIndex(safeIndex + 1);
-    } else if (direction === "up" && safeIndex > 0) {
-      setCurrentEventIndex(safeIndex - 1);
-    }
-  };
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {

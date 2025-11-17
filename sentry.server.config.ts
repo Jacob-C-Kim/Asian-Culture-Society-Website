@@ -1,1 +1,1 @@
-config/sentry.server.config.ts
+config/monitoring/sentry.server.config.ts

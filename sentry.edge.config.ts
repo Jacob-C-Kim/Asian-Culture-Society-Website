@@ -1,1 +1,1 @@
-config/sentry.edge.config.ts
+config/monitoring/sentry.edge.config.ts

@@ -1,13 +1,1 @@
-# Gitleaks configuration file
-# This file tells gitleaks to ignore certain paths and patterns
-
-title = "ACS Website Gitleaks Config"
-
-# Exclude paths from scanning
-# These are false positives from legacy test files, not real production secrets
-[extend]
-excludePaths = [
-    "archive",
-    "**/supabase/info.tsx",
-]
-
+.github/git/.gitleaks.toml

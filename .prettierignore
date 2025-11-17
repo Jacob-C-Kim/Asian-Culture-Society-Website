@@ -19,3 +19,4 @@ pnpm-lock.yaml
 
 # Ignore archive folder (contains legacy/archived files)
 archive/
+acs-consolidated/

@@ -1,1 +1,1 @@
-config/next.config.js
+config/build/next.config.js
