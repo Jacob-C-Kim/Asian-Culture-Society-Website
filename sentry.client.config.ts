@@ -1,1 +1,0 @@
-config/monitoring/sentry.client.config.ts
