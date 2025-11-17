@@ -3,6 +3,13 @@
  * This ensures all required environment variables are present at build time
  */
 
+/**
+ * @brief Gets an environment variable with optional default value
+ * @param key - The environment variable key
+ * @param defaultValue - Optional default value if key is not set
+ * @return The environment variable value as a string
+ * @throws Error if the variable is missing and no default is provided
+ */
 const getEnvVar = (key: string, defaultValue?: string): string => {
   const value = process.env[key] || defaultValue;
 

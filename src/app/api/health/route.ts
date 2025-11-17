@@ -3,7 +3,11 @@
  */
 import { NextResponse } from "next/server";
 
-export async function GET() {
+/**
+ * @brief Health check endpoint handler
+ * @return Promise<NextResponse> JSON response with health status
+ */
+export async function GET(): Promise<NextResponse> {
   return NextResponse.json(
     {
       status: "healthy",

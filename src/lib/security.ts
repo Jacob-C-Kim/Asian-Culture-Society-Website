@@ -11,6 +11,13 @@ export const isValidEmail = (email: string): boolean => {
   return EMAIL_PATTERN.test(email) && email.length <= RFC_5322_MAX_EMAIL_LENGTH;
 };
 
+/**
+ * @brief Sanitizes user input by trimming, limiting length, and removing angle brackets
+ * @param userInput - The user input string to sanitize
+ * @param maxLength - Maximum allowed length (default: 500)
+ * @return Sanitized string
+ * @throws Error if input is not a string
+ */
 export const sanitizeUserInput = (userInput: string, maxLength: number = 500): string => {
   if (typeof userInput !== "string") {
     throw new Error("Input must be a string");

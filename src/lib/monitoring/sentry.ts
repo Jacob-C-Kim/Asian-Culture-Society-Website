@@ -15,8 +15,11 @@ import * as Sentry from "@sentry/nextjs";
 
 /**
  * Capture custom error with context
+ * @param error - The error to capture
+ * @param context - Optional context data
+ * @return void
  */
-export function captureError(error: Error, context?: Record<string, unknown>) {
+export function captureError(error: Error, context?: Record<string, unknown>): void {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.captureException(error, { extra: context });
   } else {
@@ -27,8 +30,14 @@ export function captureError(error: Error, context?: Record<string, unknown>) {
 
 /**
  * Capture custom message
+ * @param message - The message to capture
+ * @param level - The severity level
+ * @return void
  */
-export function captureMessage(message: string, level: "info" | "warning" | "error" = "info") {
+export function captureMessage(
+  message: string,
+  level: "info" | "warning" | "error" = "info"
+): void {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.captureMessage(message, level);
   } else {
@@ -38,8 +47,10 @@ export function captureMessage(message: string, level: "info" | "warning" | "err
 
 /**
  * Set user context for error tracking
+ * @param user - User information or null to clear
+ * @return void
  */
-export function setUser(user: { id: string; email?: string; username?: string } | null) {
+export function setUser(user: { id: string; email?: string; username?: string } | null): void {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.setUser(user);
   }
@@ -47,8 +58,11 @@ export function setUser(user: { id: string; email?: string; username?: string } 
 
 /**
  * Add breadcrumb for debugging
+ * @param message - The breadcrumb message
+ * @param data - Optional breadcrumb data
+ * @return void
  */
-export function addBreadcrumb(message: string, data?: Record<string, unknown>) {
+export function addBreadcrumb(message: string, data?: Record<string, unknown>): void {
   if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.addBreadcrumb({
       message,
