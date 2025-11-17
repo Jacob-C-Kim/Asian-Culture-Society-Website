@@ -10,7 +10,8 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     setDidError(true);
   };
 
-  const { src, alt, style: _style, className, ...rest } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { src, alt, style, className, ...rest } = props;
 
   return didError ? (
     <div className={`inline-block bg-gray-100 text-center align-middle ${className ?? ""}`}>
