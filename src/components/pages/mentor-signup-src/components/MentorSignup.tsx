@@ -1,4 +1,4 @@
-import { useMobileDetection } from "../hooks/useMobileDetection";
+import { useMobileDetection } from "@/hooks/useMobileDetection";
 
 export default function MentorSignup() {
   const isMobile = useMobileDetection();

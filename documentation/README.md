@@ -22,7 +22,6 @@ This monorepo consolidates the ACS website with best practices for code quality,
 │   │   └── validators/         # Zod validation schemas
 │   └── config/                 # Environment configuration
 ├── public/                     # Static assets
-├── archive/                    # Archived/legacy files
 └── .github/workflows/          # CI/CD pipelines
 ```
 
