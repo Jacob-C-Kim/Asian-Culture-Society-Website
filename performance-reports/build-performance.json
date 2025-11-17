@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-11-16T21:59:51.324Z",
+  "times": {
+    "install_ms": 0,
+    "typecheck_ms": 1951,
+    "build_ms": 36002,
+    "total_ms": 37953
+  },
+  "times_readable": {
+    "install": "0.00s",
+    "typecheck": "1.95s",
+    "build": "36.00s",
+    "total": "37.95s"
+  },
+  "bundle": {
+    "next_dir_size": "478M"
+  }
+}

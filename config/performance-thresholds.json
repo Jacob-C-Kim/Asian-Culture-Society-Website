@@ -1,0 +1,15 @@
+{
+  "pages": {
+    "LCP": 2500,
+    "FCP": 1800,
+    "TBT": 200,
+    "CLS": 0.1
+  },
+  "api": {
+    "p95_latency_ms": 500,
+    "p99_latency_ms": 1000
+  },
+  "build": {
+    "max_time_seconds": 180
+  }
+}

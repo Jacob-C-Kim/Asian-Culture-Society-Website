@@ -1,0 +1,1 @@
+config/monitoring/sentry.edge.config.ts

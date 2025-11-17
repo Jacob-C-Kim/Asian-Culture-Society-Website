@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Development server with hot reload
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: acs-website-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    env_file:
+      - .env.local
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - acs-network-dev
+    command: npm run dev
+
+networks:
+  acs-network-dev:
+    driver: bridge
