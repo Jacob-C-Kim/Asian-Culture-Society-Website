@@ -34,7 +34,7 @@ Sentry.init({
   ],
 
   // Filter sensitive data
-  beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+  beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
     // Remove sensitive headers
     if (event.request?.headers) {
       delete event.request.headers.cookie;

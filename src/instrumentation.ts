@@ -18,7 +18,7 @@ export async function register(): Promise<void> {
       tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
       debug: false,
       enabled: !!process.env.NEXT_PUBLIC_SENTRY_DSN,
-      beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
+      beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
         // Remove sensitive data from server events
         if (event.request) {
           delete event.request.cookies;
