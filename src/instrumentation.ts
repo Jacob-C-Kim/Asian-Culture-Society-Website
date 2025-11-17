@@ -47,7 +47,7 @@ export async function register() {
  * @brief Captures errors from nested React Server Components
  * @param error - The error that occurred
  * @param request - The request object (Next.js RequestInfo type)
- * @param context - Additional context for the error
+ * @param context - Additional context for the error (optional)
  */
 export async function onRequestError(
   error: Error,
@@ -56,8 +56,18 @@ export async function onRequestError(
     method: string;
     headers: Record<string, string | string[] | undefined>;
   },
-  context?: Record<string, unknown>
+  context?: {
+    routerKind?: string;
+    routePath?: string;
+    routeType?: string;
+    severity?: "fatal" | "error" | "warning" | "info" | "debug";
+    [key: string]: unknown;
+  }
 ) {
   const { captureRequestError } = await import("@sentry/nextjs");
-  captureRequestError(error, request, context || {});
+  if (context) {
+    captureRequestError(error, request, context);
+  } else {
+    captureRequestError(error, request);
+  }
 }
