@@ -99,6 +99,7 @@ const CampusGroupsButton = memo(function CampusGroupsButton() {
     >
       <div className="box-border flex h-[43px] items-center justify-start gap-2.5 overflow-clip px-4 py-2.5 md:px-[30px]">
         <div className="relative flex h-[25px] w-[25px] shrink-0 items-center justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/logos/campus-groups-logo.png"
             alt="CampusGroups Logo"

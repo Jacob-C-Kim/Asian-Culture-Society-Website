@@ -136,10 +136,13 @@ function calculateSummary(results) {
         validApis.reduce((sum, a) => sum + a.latency.average, 0) / validApis.length
       ).toFixed(2);
       // Calculate P95 average, handling undefined values
-      const p95Values = validApis.map((a) => a.latency.p95).filter((p) => p !== undefined && !isNaN(p));
-      summary.api.avgP95 = p95Values.length > 0 
-        ? Math.round(p95Values.reduce((sum, p) => sum + p, 0) / p95Values.length)
-        : 0;
+      const p95Values = validApis
+        .map((a) => a.latency.p95)
+        .filter((p) => p !== undefined && !isNaN(p));
+      summary.api.avgP95 =
+        p95Values.length > 0
+          ? Math.round(p95Values.reduce((sum, p) => sum + p, 0) / p95Values.length)
+          : 0;
       summary.api.avgP99 = Math.round(
         validApis.reduce((sum, a) => sum + (a.latency.p99 || 0), 0) / validApis.length
       );
@@ -322,7 +325,7 @@ async function runAllTests() {
     // Check if page and API tests have been run (they require a server)
     const pagesFile = path.join(OUTPUT_DIR, "page-performance.json");
     const apiFile = path.join(OUTPUT_DIR, "api-performance.json");
-    
+
     if (!fs.existsSync(pagesFile)) {
       console.log("\n");
       console.log("  [WARN] Page performance test not run (requires server)");

@@ -55,7 +55,6 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
-          artifactName: lighthouse_results
 
       - name: Stop Next.js server
         if: always()

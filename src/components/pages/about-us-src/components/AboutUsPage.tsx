@@ -35,6 +35,7 @@ export default function AboutUsPage() {
           {/* Right side - ACS Logo */}
           <div className="flex flex-col items-center">
             <div className="relative size-[194px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/logos/acs-logo-transparent.png"
                 alt="Asian Culture Society Logo"
@@ -58,6 +59,7 @@ export default function AboutUsPage() {
         {/* ACS Logo */}
         <div className="mb-8">
           <div className="relative size-[150px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/logos/acs-logo-transparent.png"
               alt="Asian Culture Society Logo"
