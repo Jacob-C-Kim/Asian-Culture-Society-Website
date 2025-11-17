@@ -3,17 +3,17 @@ name: Performance Testing
 on:
   schedule:
     # Run nightly at 2 AM UTC
-    - cron: '0 2 * * *'
+    - cron: "0 2 * * *"
   workflow_dispatch:
     inputs:
       duration:
-        description: 'API test duration (seconds)'
+        description: "API test duration (seconds)"
         required: false
-        default: '30'
+        default: "30"
       connections:
-        description: 'API test concurrent connections'
+        description: "API test concurrent connections"
         required: false
-        default: '50'
+        default: "50"
 
 permissions:
   contents: read
@@ -32,8 +32,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Install dependencies
         run: npm ci
@@ -43,6 +52,8 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
 
       - name: Start Next.js server
         run: npm run start &
@@ -123,22 +134,22 @@ jobs:
             const aggregated = JSON.parse(fs.readFileSync('performance-reports/aggregated-results.json', 'utf8'));
             const summary = aggregated.summary;
             const comparison = aggregated.comparison;
-            
+
             let body = '## [WARN] Performance Degradation Detected\n\n';
             body += 'The nightly performance tests have detected a significant performance regression.\n\n';
-            
+
             body += '### Current Performance\n\n';
             body += '#### [INFO] Pages\n';
             body += `- Avg Load Time: ${summary.pages.avgLoadTime}ms\n`;
             body += `- Avg LCP: ${summary.pages.avgLCP}ms\n\n`;
-            
+
             body += '#### [API] API\n';
             body += `- Avg Latency: ${summary.api.avgLatency}ms\n`;
             body += `- Avg P95: ${summary.api.avgP95}ms\n\n`;
-            
+
             body += '#### [BUILD] Build\n';
             body += `- Total Time: ${summary.build.totalTimeReadable}\n\n`;
-            
+
             if (comparison) {
               body += '### Changes vs Previous Run\n\n';
               if (comparison.pages.loadTime > 10) {
@@ -151,9 +162,9 @@ jobs:
                 body += `- [WARN] Build time: +${comparison.build.totalTime.toFixed(1)}%\n`;
               }
             }
-            
+
             body += '\n[INFO] See workflow run for detailed reports.\n';
-            
+
             github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -170,4 +181,3 @@ jobs:
           # curl -X POST -H 'Content-type: application/json' \
           #   --data '{"text":"Performance tests completed"}' \
           #   ${{ secrets.SLACK_WEBHOOK_URL }}
-
