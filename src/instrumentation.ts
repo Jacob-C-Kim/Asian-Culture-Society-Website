@@ -47,8 +47,13 @@ export async function register() {
  * @brief Captures errors from nested React Server Components
  * @param error - The error that occurred
  * @param request - The request object
+ * @param context - Additional context for the error
  */
-export async function onRequestError(error: Error, request: { path: string; method: string }) {
+export async function onRequestError(
+  error: Error,
+  request: { path: string; method: string },
+  context?: Record<string, unknown>
+) {
   const { captureRequestError } = await import("@sentry/nextjs");
-  captureRequestError(error, request);
+  captureRequestError(error, request, context || {});
 }
