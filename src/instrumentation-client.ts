@@ -7,6 +7,7 @@
  */
 
 import * as Sentry from "@sentry/nextjs";
+import type { ErrorEvent, EventHint } from "@sentry/nextjs";
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -33,7 +34,7 @@ Sentry.init({
   ],
 
   // Filter sensitive data
-  beforeSend(event) {
+  beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
     // Remove sensitive headers
     if (event.request?.headers) {
       delete event.request.headers.cookie;

@@ -6,7 +6,9 @@
  * for server-side error tracking and monitoring.
  */
 
-export async function register() {
+import type { ErrorEvent, EventHint } from "@sentry/nextjs";
+
+export async function register(): Promise<void> {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     // Server-side Sentry initialization
     const { init } = await import("@sentry/nextjs");
@@ -16,7 +18,7 @@ export async function register() {
       tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
       debug: false,
       enabled: !!process.env.NEXT_PUBLIC_SENTRY_DSN,
-      beforeSend(event) {
+      beforeSend(event: ErrorEvent, hint: EventHint): ErrorEvent | null {
         // Remove sensitive data from server events
         if (event.request) {
           delete event.request.cookies;
@@ -63,7 +65,7 @@ export async function onRequestError(
     severity?: "fatal" | "error" | "warning" | "info" | "debug";
     [key: string]: unknown;
   }
-) {
+): Promise<void> {
   const { captureRequestError } = await import("@sentry/nextjs");
   // captureRequestError requires 3 arguments: error, request, and context
   // Provide default context if not provided, ensuring all required fields are present
