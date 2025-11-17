@@ -47,3 +47,9 @@ Sentry.init({
   // Don't send events if DSN is not configured
   enabled: !!process.env.NEXT_PUBLIC_SENTRY_DSN,
 });
+
+/**
+ * @brief Hook to instrument Next.js router transitions
+ * @description Required by Sentry SDK to track navigation events
+ */
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
