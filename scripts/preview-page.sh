@@ -148,8 +148,8 @@ echo -e "${YELLOW}[INFO] Starting Next.js development server...${NC}"
 echo -e "${YELLOW}[INFO] This may take a moment on first run${NC}"
 echo ""
 
-# Start server in background
-npm run dev &
+# Start server in background with output redirection
+npm run dev > /tmp/nextjs-preview.log 2>&1 &
 SERVER_PID=$!
 
 # Wait for server to be ready
@@ -162,13 +162,31 @@ while ! is_server_running; do
     COUNTER=$((COUNTER + 1))
     if [ $COUNTER -ge $MAX_WAIT ]; then
         echo -e "${RED}[ERROR] Server failed to start within ${MAX_WAIT} seconds${NC}"
+        echo -e "${RED}[ERROR] Last 20 lines of server output:${NC}"
+        tail -20 /tmp/nextjs-preview.log 2>/dev/null || echo "No log file found"
         kill $SERVER_PID 2>/dev/null || true
+        exit 1
+    fi
+    # Check if the process is still running
+    if ! kill -0 $SERVER_PID 2>/dev/null; then
+        echo -e "${RED}[ERROR] Server process died unexpectedly${NC}"
+        echo -e "${RED}[ERROR] Last 20 lines of server output:${NC}"
+        tail -20 /tmp/nextjs-preview.log 2>/dev/null || echo "No log file found"
         exit 1
     fi
 done
 
 # Give it an extra second to fully initialize
 sleep 2
+
+# Verify server is actually responding
+if ! curl -s -f http://localhost:3000/api/health > /dev/null 2>&1; then
+    echo -e "${RED}[ERROR] Server is running but not responding to requests${NC}"
+    echo -e "${RED}[ERROR] Last 20 lines of server output:${NC}"
+    tail -20 /tmp/nextjs-preview.log 2>/dev/null || echo "No log file found"
+    kill $SERVER_PID 2>/dev/null || true
+    exit 1
+fi
 
 echo -e "${GREEN}[SUCCESS] Server is ready${NC}"
 echo -e "${GREEN}[INFO] Opening ${PAGE_NAME} in browser...${NC}"
