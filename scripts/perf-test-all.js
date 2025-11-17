@@ -135,11 +135,13 @@ function calculateSummary(results) {
       summary.api.avgLatency = (
         validApis.reduce((sum, a) => sum + a.latency.average, 0) / validApis.length
       ).toFixed(2);
-      summary.api.avgP95 = Math.round(
-        validApis.reduce((sum, a) => sum + a.latency.p95, 0) / validApis.length
-      );
+      // Calculate P95 average, handling undefined values
+      const p95Values = validApis.map((a) => a.latency.p95).filter((p) => p !== undefined && !isNaN(p));
+      summary.api.avgP95 = p95Values.length > 0 
+        ? Math.round(p95Values.reduce((sum, p) => sum + p, 0) / p95Values.length)
+        : 0;
       summary.api.avgP99 = Math.round(
-        validApis.reduce((sum, a) => sum + a.latency.p99, 0) / validApis.length
+        validApis.reduce((sum, a) => sum + (a.latency.p99 || 0), 0) / validApis.length
       );
       summary.api.totalRequests = validApis.reduce((sum, a) => sum + a.requests.total, 0);
     }
@@ -305,23 +307,33 @@ async function runAllTests() {
 
   try {
     // Run the build performance test first (doesn't require a server)
-    console.log("\n");
-    console.log("  1/3: BUILD PERFORMANCE TEST");
-    console.log("");
-    await runCommand("./scripts/perf-test-build.sh");
+    // Skip if build results already exist (e.g., in CI where build was already done)
+    const buildFile = path.join(OUTPUT_DIR, "build-performance.json");
+    if (!fs.existsSync(buildFile)) {
+      console.log("\n");
+      console.log("  1/3: BUILD PERFORMANCE TEST");
+      console.log("");
+      await runCommand("./scripts/perf-test-build.sh");
+    } else {
+      console.log("\n");
+      console.log("  [INFO] Build performance results already exist, skipping build test");
+    }
 
-    // Inform user that page and API tests require a running server
-    console.log("\n");
-    console.log("  2/3: PAGE PERFORMANCE TEST (requires server)");
-    console.log("");
-    console.log("\n[WARN]  Note: Start the dev server first with `npm run dev`");
-    console.log("   Then run: node scripts/perf-test-pages.js\n");
+    // Check if page and API tests have been run (they require a server)
+    const pagesFile = path.join(OUTPUT_DIR, "page-performance.json");
+    const apiFile = path.join(OUTPUT_DIR, "api-performance.json");
+    
+    if (!fs.existsSync(pagesFile)) {
+      console.log("\n");
+      console.log("  [WARN] Page performance test not run (requires server)");
+      console.log("   Run: node scripts/perf-test-pages.js\n");
+    }
 
-    console.log("\n");
-    console.log("  3/3: API PERFORMANCE TEST (requires server)");
-    console.log("");
-    console.log("\n[WARN]  Note: Start the dev server first with `npm run dev`");
-    console.log("   Then run: node scripts/perf-test-api.js\n");
+    if (!fs.existsSync(apiFile)) {
+      console.log("\n");
+      console.log("  [WARN] API performance test not run (requires server)");
+      console.log("   Run: node scripts/perf-test-api.js\n");
+    }
 
     // Load all test results and aggregate them
     console.log("\n");

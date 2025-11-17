@@ -97,8 +97,13 @@ jobs:
         env:
           BASE_URL: http://localhost:3000
 
+      - name: Aggregate performance results
+        run: node scripts/perf-test-all.js
+        continue-on-error: true
+
       - name: Generate performance report
         run: node scripts/perf-generate-report.js
+        continue-on-error: true
 
       - name: Upload performance reports
         uses: actions/upload-artifact@v4

@@ -132,7 +132,8 @@ async function testEndpoint(endpoint) {
           p50: result.latency.p50,
           p75: result.latency.p75,
           p90: result.latency.p90,
-          p95: result.latency.p95,
+          // Calculate p95 if not provided by autocannon (interpolate between p90 and p99)
+          p95: result.latency.p95 !== undefined ? result.latency.p95 : result.latency.p90 + (result.latency.p99 - result.latency.p90) * 0.5,
           p99: result.latency.p99,
           p999: result.latency.p999,
         },
