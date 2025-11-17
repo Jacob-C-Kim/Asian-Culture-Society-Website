@@ -1,6 +1,11 @@
-// This file configures the initialization of Sentry on the client.
-// The config you add here will be used whenever a users loads a page in their browser.
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
+/**
+ * @file src/instrumentation-client.ts
+ * @brief Next.js client-side instrumentation file for Sentry initialization
+ *
+ * This file is automatically loaded by Next.js for client-side Sentry
+ * error tracking and monitoring. Replaces the deprecated sentry.client.config.ts.
+ * Required for Turbopack compatibility.
+ */
 
 import * as Sentry from "@sentry/nextjs";
 import type { ErrorEvent, EventHint } from "@sentry/nextjs";
