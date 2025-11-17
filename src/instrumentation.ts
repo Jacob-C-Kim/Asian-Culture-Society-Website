@@ -66,12 +66,20 @@ export async function onRequestError(
 ) {
   const { captureRequestError } = await import("@sentry/nextjs");
   // captureRequestError requires 3 arguments: error, request, and context
-  // Provide default context if not provided
-  const errorContext = context || {
-    routerKind: "app",
-    routePath: request.path,
-    routeType: "page",
-    severity: "error" as const,
-  };
+  // Provide default context if not provided, ensuring all required fields are present
+  const errorContext = context
+    ? {
+        routerKind: context.routerKind || "app",
+        routePath: context.routePath || request.path,
+        routeType: context.routeType || "page",
+        severity: context.severity || ("error" as const),
+        ...context,
+      }
+    : {
+        routerKind: "app",
+        routePath: request.path,
+        routeType: "page",
+        severity: "error" as const,
+      };
   captureRequestError(error, request, errorContext);
 }
