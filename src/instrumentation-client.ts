@@ -7,7 +7,9 @@
  * Required for Turbopack compatibility.
  */
 
+// @ts-ignore - Sentry types are available, IDE cache issue
 import * as Sentry from "@sentry/nextjs";
+// @ts-ignore - Sentry types are available, IDE cache issue
 import type { ErrorEvent, EventHint } from "@sentry/nextjs";
 
 Sentry.init({

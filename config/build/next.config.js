@@ -3,6 +3,11 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Disable Next.js telemetry
+  // This prevents the telemetry warning and anonymous data collection
+  // Can also be controlled via NEXT_TELEMETRY_DISABLED environment variable
+  telemetry: false,
+
   // Security headers following OWASP recommendations
   async headers() {
     return [

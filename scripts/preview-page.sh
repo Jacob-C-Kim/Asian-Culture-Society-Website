@@ -146,12 +146,12 @@ fi
 # Start the development server
 echo -e "${YELLOW}[INFO] Starting Next.js development server...${NC}"
 echo -e "${YELLOW}[INFO] This may take a moment on first run${NC}"
-echo ""
-
+    echo ""
+    
 # Start server in background with output redirection
 npm run dev > /tmp/nextjs-preview.log 2>&1 &
 SERVER_PID=$!
-
+    
 # Wait for server to be ready
 echo -e "${BLUE}[INFO] Waiting for server to start...${NC}"
 MAX_WAIT=60
@@ -172,13 +172,13 @@ while ! is_server_running; do
         echo -e "${RED}[ERROR] Server process died unexpectedly${NC}"
         echo -e "${RED}[ERROR] Last 20 lines of server output:${NC}"
         tail -20 /tmp/nextjs-preview.log 2>/dev/null || echo "No log file found"
-        exit 1
-    fi
-done
-
-# Give it an extra second to fully initialize
-sleep 2
-
+            exit 1
+        fi
+    done
+    
+    # Give it an extra second to fully initialize
+    sleep 2
+    
 # Verify server is actually responding
 if ! curl -s -f http://localhost:3000/api/health > /dev/null 2>&1; then
     echo -e "${RED}[ERROR] Server is running but not responding to requests${NC}"
@@ -195,10 +195,10 @@ echo ""
 open_browser "$FULL_URL"
 
 echo -e "${GREEN}[SUCCESS] Browser opened to: ${FULL_URL}${NC}"
-echo ""
+    echo ""
 echo -e "${YELLOW}[INFO] The development server is running in the background${NC}"
 echo -e "${YELLOW}[INFO] Press Ctrl+C to stop the server${NC}"
-echo ""
-
+    echo ""
+    
 # Wait for user to stop the server
 wait $SERVER_PID
