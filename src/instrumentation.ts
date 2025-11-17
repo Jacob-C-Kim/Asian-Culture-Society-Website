@@ -51,7 +51,11 @@ export async function register() {
  */
 export async function onRequestError(
   error: Error,
-  request: { path: string; method: string; headers: Headers },
+  request: {
+    path: string;
+    method: string;
+    headers: Record<string, string | string[] | undefined>;
+  },
   context?: Record<string, unknown>
 ) {
   const { captureRequestError } = await import("@sentry/nextjs");
