@@ -32,5 +32,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "archive", "acs-consolidated"]
+  "exclude": ["node_modules", "acs-consolidated"]
 }
