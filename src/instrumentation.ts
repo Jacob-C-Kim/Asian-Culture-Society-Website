@@ -9,7 +9,7 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs") {
     // Server-side Sentry initialization
-    const { init, captureRequestError } = await import("@sentry/nextjs");
+    const { init } = await import("@sentry/nextjs");
 
     init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
