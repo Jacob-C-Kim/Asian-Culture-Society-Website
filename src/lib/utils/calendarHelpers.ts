@@ -1,5 +1,3 @@
-import { getEventsForDate } from "../data/events";
-
 // Helper function to parse start time from time string
 export const parseStartTime = (timeString: string): number => {
   // Extract start time from strings like "5:00 PM - 7:00 PM"
@@ -18,7 +16,16 @@ export const parseStartTime = (timeString: string): number => {
 };
 
 // Get all events for the selected date using the new data structure
-export const getAllEventsForDate = (date: Date) => {
+// Accepts getEventsForDate function as parameter to work with page-specific events
+export const getAllEventsForDate = (
+  date: Date,
+  getEventsForDate: (date: Date) => Array<{
+    title: string;
+    time: string;
+    location: string;
+    description: string;
+  }>
+) => {
   const eventsForDate = getEventsForDate(date);
 
   if (eventsForDate.length === 0) {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import svgPaths from "../../imports/svg-onqcmwzw98";
-// Unused: import { getEventsForDate } from "../../data/events";
-import { getAllEventsForDate, formatDate } from "../../utils/calendarHelpers";
+import { getEventsForDate } from "../../data/events";
+import { getAllEventsForDate, formatDate } from "@/lib/utils/calendarHelpers";
 
 interface EventDetailsCardProps {
   selectedDate: Date | undefined;
@@ -18,7 +18,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
   const [showSwipeHint, setShowSwipeHint] = useState(true);
 
   // Get events safely (can be empty if no selectedDate)
-  const events = selectedDate ? getAllEventsForDate(selectedDate) : [];
+  const events = selectedDate ? getAllEventsForDate(selectedDate, getEventsForDate) : [];
   const safeIndex = Math.max(0, Math.min(currentEventIndex, Math.max(0, events.length - 1)));
   const currentEvent = events[safeIndex];
 
