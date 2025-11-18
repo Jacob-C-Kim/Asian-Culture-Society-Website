@@ -3,12 +3,19 @@ import { hasEventsOnDate, getEventsForDate } from "@/lib/data/events";
 import EventDetailsCard from "./calendar/EventDetailsCard";
 import CalendarWidget from "./calendar/CalendarWidget";
 
+/**
+ * @brief Main calendar page component with interactive date selection and event display
+ * @return {JSX.Element} Calendar page component
+ */
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [showEventCard, setShowEventCard] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check if mobile on mount and resize
+  /**
+   * @brief Checks if the viewport is mobile (<=768px) and updates state
+   * @return {void}
+   */
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -19,6 +26,11 @@ export default function CalendarPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  /**
+   * @brief Handles date selection from the calendar widget
+   * @params {Date | undefined} date - The selected date or undefined
+   * @return {void}
+   */
   const handleDateSelect = (date: Date | undefined) => {
     // Check if the clicked date has events
     const isEventDate = date && hasEventsOnDate(date);
@@ -45,6 +57,10 @@ export default function CalendarPage() {
     }
   };
 
+  /**
+   * @brief Closes the event details card and resets selected date
+   * @return {void}
+   */
   const handleCloseEvent = () => {
     // Start fade out immediately, then clear date after fade completes
     setShowEventCard(false);
@@ -55,7 +71,10 @@ export default function CalendarPage() {
     }, 100);
   };
 
-  // Handle escape key to close event details and global arrow key navigation
+  /**
+   * @brief Handles global keyboard events for ESC (close) and arrow keys (navigate events)
+   * @return {void}
+   */
   useEffect(() => {
     const handleGlobalKeyPress = (e: KeyboardEvent) => {
       if (e.key === "Escape" && selectedDate) {
@@ -90,7 +109,10 @@ export default function CalendarPage() {
     return () => document.removeEventListener("keydown", handleGlobalKeyPress);
   }, [selectedDate, showEventCard]);
 
-  // Reset event card visibility when date changes
+  /**
+   * @brief Resets event card visibility when selected date is cleared
+   * @return {void}
+   */
   useEffect(() => {
     if (!selectedDate) {
       setShowEventCard(false);
@@ -100,9 +122,9 @@ export default function CalendarPage() {
   const hasSelectedDate = selectedDate !== undefined;
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden">
+    <main className="min-h-screen w-full overflow-x-hidden">
       {/* White background section - only as tall as navigation bar */}
-      <div className="h-16 w-full bg-white"></div>
+      <div className="h-16 w-full bg-white" aria-hidden="true" />
 
       {/* Turquoise background section */}
       <div className="min-h-[calc(100vh-64px)] w-full bg-[#69d7e5]">
@@ -124,32 +146,24 @@ export default function CalendarPage() {
                 {/* Event details card - below calendar on mobile */}
                 {hasSelectedDate && (
                   <div
-                    className={`w-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                      showEventCard ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                    className={`w-full transition-all duration-500 ease-calendar-ease ${
+                      showEventCard ? "translate-y-0 opacity-100 delay-200" : "translate-y-4 opacity-0 delay-0"
                     }`}
-                    style={{
-                      transitionDelay: showEventCard ? "200ms" : "0ms",
-                    }}
                   >
                     <EventDetailsCard selectedDate={selectedDate} onClose={handleCloseEvent} />
                   </div>
                 )}
               </div>
             ) : (
-              /* Desktop Layout */
+              /* Desktop Layout - Using CSS Grid for positioning */
               <div className="relative h-[620px] w-full">
-                {/* Calendar container - slides left when date selected */}
+                {/* Calendar container - slides from center to left when date selected */}
                 <div
-                  className="absolute transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-                  style={{
-                    left: hasSelectedDate ? "50px" : "50%",
-                    top: hasSelectedDate ? "50%" : "55%",
-                    transform: hasSelectedDate
-                      ? "translateY(-50%)"
-                      : "translateX(-50%) translateY(-50%)",
-                    width: hasSelectedDate ? "600px" : "650px",
-                    zIndex: 20,
-                  }}
+                  className={`absolute z-20 transition-all duration-500 ease-calendar-ease ${
+                    hasSelectedDate
+                      ? "left-[50px] top-1/2 w-[600px] -translate-y-1/2"
+                      : "left-1/2 top-[55%] w-[650px] -translate-x-1/2 -translate-y-1/2"
+                  }`}
                 >
                   <CalendarWidget
                     selectedDate={selectedDate}
@@ -160,17 +174,11 @@ export default function CalendarPage() {
 
                 {/* Event details card - positioned to the right of calendar */}
                 <div
-                  className="absolute w-[360px] transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-                  style={{
-                    right: "30px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    opacity: showEventCard ? 1 : 0,
-                    visibility: showEventCard || selectedDate ? "visible" : "hidden",
-                    transitionDelay: showEventCard ? "150ms" : "0ms",
-                    zIndex: showEventCard ? 15 : 5,
-                    pointerEvents: showEventCard ? "auto" : "none",
-                  }}
+                  className={`absolute right-[30px] top-1/2 w-[360px] -translate-y-1/2 transition-all duration-500 ease-calendar-ease ${
+                    showEventCard
+                      ? "pointer-events-auto z-[15] opacity-100 delay-150"
+                      : "pointer-events-none z-[5] opacity-0 delay-0"
+                  } ${showEventCard || selectedDate ? "visible" : "invisible"}`}
                 >
                   {hasSelectedDate && (
                     <EventDetailsCard selectedDate={selectedDate} onClose={handleCloseEvent} />
@@ -181,6 +189,6 @@ export default function CalendarPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
