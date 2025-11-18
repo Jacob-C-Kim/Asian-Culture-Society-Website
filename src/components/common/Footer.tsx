@@ -1,7 +1,7 @@
 import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
-import svgPaths from "../pages/home-src/imports/svg-61ju42v1aq";
-import discordSvgPaths from "../pages/home-src/imports/svg-pgq3ktlc4j";
+import svgPaths from "@/lib/assets/svg/instagram-icon";
+import discordSvgPaths from "@/lib/assets/svg/discord-icon";
 
 const InstagramButton = memo(function InstagramButton() {
   const [isHovered, setIsHovered] = useState(false);
