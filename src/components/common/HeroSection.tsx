@@ -1,7 +1,27 @@
-import { memo } from "react";
+import { memo, CSSProperties } from "react";
+
+interface HeroSectionProps {
+  /** The main title text */
+  title?: string;
+  /** The subtitle text */
+  subtitle?: string;
+  /** The description text */
+  description?: string;
+  /** Whether to include space for the header */
+  includeHeaderSpace?: boolean;
+  /** Height of the header space */
+  headerSpaceHeight?: string;
+  /** Top padding */
+  topPadding?: string;
+  /** Bottom padding */
+  bottomPadding?: string;
+  /** Whether to use full screen height */
+  fullScreen?: boolean;
+}
 
 /**
  * Reusable Hero/Welcome Section Component
+ * Displays a centered hero section with title, subtitle, and description
  */
 export const HeroSection = memo(function HeroSection({
   title = "asian culture society",
@@ -12,39 +32,35 @@ export const HeroSection = memo(function HeroSection({
   topPadding = "50px",
   bottomPadding = "150px",
   fullScreen = false,
-}: {
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  includeHeaderSpace?: boolean;
-  headerSpaceHeight?: string;
-  topPadding?: string;
-  bottomPadding?: string;
-  fullScreen?: boolean;
-} = {}) {
+}: HeroSectionProps = {}) {
+  const containerStyle: CSSProperties = {
+    paddingTop: includeHeaderSpace ? `calc(${topPadding} + ${headerSpaceHeight})` : topPadding,
+    paddingBottom: bottomPadding,
+  };
+
   return (
-    <div
-      className={`relative z-10 box-border flex flex-col content-stretch items-center justify-start gap-[72px] bg-white px-0 ${
+    <section
+      className={`relative z-10 flex flex-col items-center justify-start gap-18 bg-white px-0 ${
         fullScreen ? "min-h-screen w-full" : "size-full"
       }`}
-      style={{
-        paddingTop: includeHeaderSpace ? `calc(${topPadding} + ${headerSpaceHeight})` : topPadding,
-        paddingBottom: bottomPadding,
-      }}
+      style={containerStyle}
     >
-      <div className="relative flex flex-1 shrink-0 flex-col content-stretch items-center justify-center gap-[5px]">
-        <div className="relative flex shrink-0 flex-col content-stretch items-center justify-start leading-[0] text-black">
-          <div className="relative shrink-0 text-center font-['Lexend:Regular',_sans-serif] text-[16px] font-normal md:text-[18px]">
-            <p className="leading-[normal]">{subtitle}</p>
-          </div>
-          <div className="relative shrink-0 text-center font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[28px] font-bold not-italic md:text-[40px]">
-            <p className="px-4 font-bold leading-[normal]">{title}</p>
-          </div>
-        </div>
-        <div className="relative w-full max-w-[600px] shrink-0 px-4 text-center font-['Lexend:Regular',_sans-serif] text-[12px] font-normal leading-[normal] text-black">
-          <p className="leading-[normal]">{description}</p>
-        </div>
+      <div className="relative flex flex-1 flex-col items-center justify-center gap-[5px]">
+        {/* Title and subtitle */}
+        <header className="relative flex flex-col items-center justify-start text-black">
+          <p className="text-center font-lexend text-[16px] font-normal md:text-[18px]">
+            {subtitle}
+          </p>
+          <h1 className="px-4 text-center font-avant-garde text-[28px] font-bold not-italic md:text-[40px]">
+            {title}
+          </h1>
+        </header>
+
+        {/* Description */}
+        <p className="w-full max-w-[600px] px-4 text-center font-lexend text-[12px] font-normal text-black">
+          {description}
+        </p>
       </div>
-    </div>
+    </section>
   );
 });
