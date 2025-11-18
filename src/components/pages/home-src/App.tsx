@@ -6,7 +6,7 @@ import Footer from "@/components/common/Footer";
 import StickyHeader from "../../common/StickyHeader";
 
 // Lazy load heavy components
-const EventsSection = dynamic(() => import("./components/EventsSection"), {
+const EventsSection = dynamic(() => import("@/components/common/EventsSection"), {
   loading: () => <div className="min-h-[200px]" />,
 });
 const CalendarPage = dynamic(() => import("./components/CalendarPage"), {

@@ -1,23 +1,88 @@
 import { useState, useRef, useEffect } from "react";
-import svgPaths from "../imports/svg-onqcmwzw98";
+import svgPaths from "@/components/pages/home-src/imports/svg-onqcmwzw98";
 import { Event, events, getSortedEvents } from "@/lib/data/events";
 
-// Helper function to get Mentor/Mentee specific events
-const getMentorMenteeEvents = (): Event[] => {
-  return events.filter((event) => event.title === "Speed Dating");
-};
+type FilterButtonType = "callback" | "hardNavigate" | "newTab";
 
-function FilterButtons({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
-  const handleCalendarClick = () => {
-    // Open the external CampusGroups calendar URL
-    window.open("https://campusgroups.rit.edu/ACS/acs-calendar/", "_blank", "noopener,noreferrer");
-  };
+interface EventsSectionProps {
+  onNavigate?: (page: string) => void;
+  filterButtonType?: FilterButtonType;
+  customEvents?: Event[];
+  useSortedEvents?: boolean;
+  placeholderTitle?: string;
+  placeholderMessage?: string;
+  isMentorMentee?: boolean;
+}
 
+function FilterButtons({
+  onNavigate,
+  filterButtonType = "callback",
+}: {
+  onNavigate?: (page: string) => void;
+  filterButtonType?: FilterButtonType;
+}) {
+  if (filterButtonType === "hardNavigate") {
+    const navigateToFullCalendar = () => {
+      try {
+        if (window.top) {
+          window.top.location.assign("https://campusgroups.rit.edu/ACS/acs-calendar/");
+        } else {
+          window.location.assign("https://campusgroups.rit.edu/ACS/acs-calendar/");
+        }
+      } catch {
+        window.location.assign("https://campusgroups.rit.edu/ACS/acs-calendar/");
+      }
+    };
+
+    return (
+      <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
+        <a
+          href="https://campusgroups.rit.edu/ACS/acs-calendar/"
+          target="_top"
+          rel="noopener"
+          className="text-decoration-none relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+          onClick={(e) => {
+            e.preventDefault();
+            navigateToFullCalendar();
+          }}
+        >
+          <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
+            <p className="whitespace-pre leading-[normal]">Full Calendar</p>
+          </div>
+        </a>
+      </div>
+    );
+  }
+
+  if (filterButtonType === "newTab") {
+    const handleCalendarClick = () => {
+      window.open("https://campusgroups.rit.edu/ACS/acs-calendar/", "_blank", "noopener,noreferrer");
+    };
+
+    return (
+      <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
+        <div
+          className="relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+          onClick={handleCalendarClick}
+        >
+          <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
+            <p className="whitespace-pre leading-[normal]">Full Calendar</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Default: callback
   return (
     <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
       <div
         className="relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
-        onClick={handleCalendarClick}
+        onClick={() => {
+          if (onNavigate) {
+            onNavigate("calendar");
+          }
+        }}
       >
         <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
           <p className="whitespace-pre leading-[normal]">Full Calendar</p>
@@ -26,8 +91,6 @@ function FilterButtons({ onNavigate: _onNavigate }: { onNavigate?: (page: string
     </div>
   );
 }
-
-// Event interface is now imported from /data/events.ts
 
 function EventCard({ event }: { event: Event }) {
   return (
@@ -84,22 +147,21 @@ function EventCard({ event }: { event: Event }) {
   );
 }
 
-// Placeholder card shown when no events are available
-function PlaceholderCard({ isMentorMentee = false }: { isMentorMentee?: boolean }) {
+function PlaceholderCard({
+  title = "No Events Yet",
+  message = "Events will be displayed here once they are added.",
+}: {
+  title?: string;
+  message?: string;
+}) {
   return (
     <div className="relative flex h-[265px] w-[280px] shrink-0 items-center justify-center rounded-[15px] bg-[#99e3ed] sm:w-[351px]">
       <div className="max-h-[200px] overflow-y-auto px-6 text-center">
         <div className="mb-2 font-['Lexend:Bold',_sans-serif] text-[18px] font-bold text-black">
-          <p className="leading-[1.2]">
-            {isMentorMentee ? "No Mentor/Mentee Events Yet" : "No Events Yet"}
-          </p>
+          <p className="leading-[1.2]">{title}</p>
         </div>
         <div className="font-['Lexend:Regular',_sans-serif] text-[12px] font-normal text-black">
-          <p className="leading-[1.4]">
-            {isMentorMentee
-              ? "Mentor/Mentee events will be displayed here once they are added."
-              : "Events will be displayed here once they are added."}
-          </p>
+          <p className="leading-[1.4]">{message}</p>
         </div>
       </div>
       <div
@@ -113,16 +175,19 @@ function PlaceholderCard({ isMentorMentee = false }: { isMentorMentee?: boolean 
 function EventsCarousel({
   currentSlide,
   setCurrentSlide,
-  isMentorMentee = false,
+  displayEvents,
+  placeholderTitle,
+  placeholderMessage,
 }: {
   currentSlide: number;
   setCurrentSlide: (slide: number) => void;
-  isMentorMentee?: boolean;
+  displayEvents: Event[];
+  placeholderTitle?: string;
+  placeholderMessage?: string;
 }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const lastScrollTimeRef = useRef<number>(0);
-  const sortedEvents = isMentorMentee ? getMentorMenteeEvents() : getSortedEvents(); // Get events based on context
-  const totalSlides = Math.max(sortedEvents.length, 1); // At least 1 slide for placeholder
+  const totalSlides = Math.max(displayEvents.length, 1);
   const [cardWidth, setCardWidth] = useState(351);
   const gap = 20;
   const slideWidth = cardWidth + gap;
@@ -133,10 +198,7 @@ function EventsCarousel({
       setCardWidth(newWidth);
     };
 
-    // Set initial width
     updateCardWidth();
-
-    // Listen for resize events
     window.addEventListener("resize", updateCardWidth);
     return () => window.removeEventListener("resize", updateCardWidth);
   }, []);
@@ -153,45 +215,34 @@ function EventsCarousel({
     }
   };
 
-  // Handle wheel/touchpad scrolling with balanced sensitivity
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
 
     const now = Date.now();
-    // Throttle scroll events - only allow one navigation per 500ms (reduced from 800ms)
     if (now - lastScrollTimeRef.current < 500) {
       return;
     }
 
-    // Balanced thresholds for good sensitivity without being too jumpy
-    const horizontalThreshold = 25; // Reduced from 50 for better sensitivity
-    const verticalThreshold = 40; // Reduced from 80 for better sensitivity
+    const horizontalThreshold = 25;
+    const verticalThreshold = 40;
 
-    // Horizontal scroll (touchpad two-finger swipe) - primary method
     if (Math.abs(e.deltaX) > horizontalThreshold && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
       lastScrollTimeRef.current = now;
       if (e.deltaX > 0) {
-        // Scroll right, show next slide
         nextSlide();
       } else {
-        // Scroll left, show previous slide
         prevSlide();
       }
-    }
-    // Vertical scroll as fallback - require moderate movement
-    else if (Math.abs(e.deltaY) > verticalThreshold && Math.abs(e.deltaX) < 15) {
+    } else if (Math.abs(e.deltaY) > verticalThreshold && Math.abs(e.deltaX) < 15) {
       lastScrollTimeRef.current = now;
       if (e.deltaY > 0) {
-        // Scroll down, show next slide
         nextSlide();
       } else {
-        // Scroll up, show previous slide
         prevSlide();
       }
     }
   };
 
-  // Handle touch events for mobile
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -204,13 +255,10 @@ function EventsCarousel({
     const touchEnd = e.changedTouches[0].clientX;
     const diff = touchStart - touchEnd;
 
-    // Minimum swipe distance
     if (Math.abs(diff) > 50) {
       if (diff > 0) {
-        // Swiped left, show next slide
         nextSlide();
       } else {
-        // Swiped right, show previous slide
         prevSlide();
       }
     }
@@ -234,14 +282,13 @@ function EventsCarousel({
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {sortedEvents.length > 0 ? (
-            sortedEvents.map((event) => <EventCard key={event.id} event={event} />)
+          {displayEvents.length > 0 ? (
+            displayEvents.map((event) => <EventCard key={event.id} event={event} />)
           ) : (
-            <PlaceholderCard isMentorMentee={isMentorMentee} />
+            <PlaceholderCard title={placeholderTitle} message={placeholderMessage} />
           )}
         </div>
 
-        {/* Left gradient fade overlay - smooth opacity transition (hidden on mobile) */}
         <div
           className={`pointer-events-none absolute bottom-0 left-0 top-0 z-10 hidden w-16 transition-opacity duration-300 md:block ${
             currentSlide > 0 ? "opacity-100" : "opacity-0"
@@ -251,7 +298,6 @@ function EventsCarousel({
           }}
         />
 
-        {/* Right gradient fade overlay - smooth opacity transition (hidden on mobile) */}
         <div
           className={`pointer-events-none absolute bottom-0 right-0 top-0 z-10 hidden w-16 transition-opacity duration-300 md:block ${
             currentSlide < totalSlides - 1 ? "opacity-100" : "opacity-0"
@@ -262,7 +308,6 @@ function EventsCarousel({
         />
       </div>
 
-      {/* Navigation buttons - positioned outside the carousel container */}
       <button
         onClick={prevSlide}
         className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/20 p-1.5 transition-all duration-200 hover:bg-white/40 md:left-2 md:p-2 ${
@@ -311,7 +356,6 @@ function PaginationDots({
   onSlideChange: (index: number) => void;
   totalSlides: number;
 }) {
-  // Only show pagination dots if there are multiple events
   if (totalSlides <= 1) return null;
 
   return (
@@ -332,32 +376,49 @@ function PaginationDots({
 
 export default function EventsSection({
   onNavigate,
+  filterButtonType = "callback",
+  customEvents,
+  useSortedEvents = true,
+  placeholderTitle,
+  placeholderMessage,
   isMentorMentee = false,
-}: {
-  onNavigate?: (page: string) => void;
-  isMentorMentee?: boolean;
-}) {
+}: EventsSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sortedEvents = isMentorMentee ? getMentorMenteeEvents() : getSortedEvents(); // Get events based on context
-  const totalSlides = Math.max(sortedEvents.length, 1);
+
+  // Determine which events to display
+  let displayEvents: Event[];
+  if (customEvents) {
+    displayEvents = customEvents;
+  } else if (isMentorMentee) {
+    // Filter for mentor/mentee specific events
+    displayEvents = getSortedEvents().filter((event) => event.title === "Speed Dating");
+  } else if (useSortedEvents) {
+    displayEvents = getSortedEvents();
+  } else {
+    // For calendar-src, use events directly (unsorted)
+    displayEvents = [...events];
+  }
+
+  const totalSlides = Math.max(displayEvents.length, 1);
+  
+  // Use custom placeholder text for mentor-mentee if not provided
+  const finalPlaceholderTitle = placeholderTitle || (isMentorMentee ? "No Mentor/Mentee Events Yet" : "No Events Yet");
+  const finalPlaceholderMessage = placeholderMessage || (isMentorMentee 
+    ? "Mentor/Mentee events will be displayed here once they are added." 
+    : "Events will be displayed here once they are added.");
 
   return (
-    <div
-      className="relative box-border flex w-full flex-col content-stretch items-center justify-start gap-[15px] overflow-hidden bg-[#69d7e5] px-0 pb-[30px] pt-[25px]"
-      data-section="mentor-mentee-events"
-      style={{
-        fontFamily:
-          'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      }}
-    >
+    <div className="relative box-border flex w-full flex-col content-stretch items-center justify-start gap-[15px] overflow-hidden bg-[#69d7e5] px-0 pb-[30px] pt-[25px]">
       <div className="relative flex shrink-0 flex-col justify-center px-4 text-center font-['Lexend:Medium',_sans-serif] text-[20px] font-medium leading-[0] text-black md:text-[25px]">
-        <p className="leading-[normal]">Mentor/Mentee Events</p>
+        <p className="leading-[normal]">Events and Announcements</p>
       </div>
-      <FilterButtons onNavigate={onNavigate} />
+      <FilterButtons onNavigate={onNavigate} filterButtonType={filterButtonType} />
       <EventsCarousel
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
-        isMentorMentee={isMentorMentee}
+        displayEvents={displayEvents}
+        placeholderTitle={finalPlaceholderTitle}
+        placeholderMessage={finalPlaceholderMessage}
       />
       <PaginationDots
         currentSlide={currentSlide}
@@ -367,3 +428,4 @@ export default function EventsSection({
     </div>
   );
 }
+

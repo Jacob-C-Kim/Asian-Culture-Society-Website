@@ -1,4 +1,4 @@
-import EventsSection from "./EventsSection";
+import EventsSection from "@/components/common/EventsSection";
 
 function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
