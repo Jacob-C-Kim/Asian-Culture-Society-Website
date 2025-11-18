@@ -56,7 +56,11 @@ function FilterButtons({
 
   if (filterButtonType === "newTab") {
     const handleCalendarClick = () => {
-      window.open("https://campusgroups.rit.edu/ACS/acs-calendar/", "_blank", "noopener,noreferrer");
+      window.open(
+        "https://campusgroups.rit.edu/ACS/acs-calendar/",
+        "_blank",
+        "noopener,noreferrer"
+      );
     };
 
     return (
@@ -400,12 +404,15 @@ export default function EventsSection({
   }
 
   const totalSlides = Math.max(displayEvents.length, 1);
-  
+
   // Use custom placeholder text for mentor-mentee if not provided
-  const finalPlaceholderTitle = placeholderTitle || (isMentorMentee ? "No Mentor/Mentee Events Yet" : "No Events Yet");
-  const finalPlaceholderMessage = placeholderMessage || (isMentorMentee 
-    ? "Mentor/Mentee events will be displayed here once they are added." 
-    : "Events will be displayed here once they are added.");
+  const finalPlaceholderTitle =
+    placeholderTitle || (isMentorMentee ? "No Mentor/Mentee Events Yet" : "No Events Yet");
+  const finalPlaceholderMessage =
+    placeholderMessage ||
+    (isMentorMentee
+      ? "Mentor/Mentee events will be displayed here once they are added."
+      : "Events will be displayed here once they are added.");
 
   return (
     <div className="relative box-border flex w-full flex-col content-stretch items-center justify-start gap-[15px] overflow-hidden bg-[#69d7e5] px-0 pb-[30px] pt-[25px]">
@@ -428,4 +435,3 @@ export default function EventsSection({
     </div>
   );
 }
-

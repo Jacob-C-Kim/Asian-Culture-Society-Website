@@ -7,12 +7,7 @@ interface MentorSignupProps {
   mobileHeight?: string;
 }
 
-export default function MentorSignup({
-  title,
-  formUrl,
-  height,
-  mobileHeight,
-}: MentorSignupProps) {
+export default function MentorSignup({ title, formUrl, height, mobileHeight }: MentorSignupProps) {
   const isMobile = useMobileDetection();
   const iframeHeight = isMobile && mobileHeight ? mobileHeight : height;
 
@@ -40,4 +35,3 @@ export default function MentorSignup({
     </div>
   );
 }
-
