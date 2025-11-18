@@ -147,7 +147,9 @@ export default function CalendarPage() {
                 {hasSelectedDate && (
                   <div
                     className={`w-full transition-all duration-500 ease-calendar-ease ${
-                      showEventCard ? "translate-y-0 opacity-100 delay-200" : "translate-y-4 opacity-0 delay-0"
+                      showEventCard
+                        ? "translate-y-0 opacity-100 delay-200"
+                        : "translate-y-4 opacity-0 delay-0"
                     }`}
                   >
                     <EventDetailsCard selectedDate={selectedDate} onClose={handleCloseEvent} />

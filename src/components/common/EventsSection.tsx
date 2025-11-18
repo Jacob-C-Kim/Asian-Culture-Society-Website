@@ -50,7 +50,7 @@ function FilterButtons({
           href="https://campusgroups.rit.edu/ACS/acs-calendar/"
           target="_top"
           rel="noopener"
-          className="relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip rounded-button bg-acs-teal-dark px-5 py-[7px] text-black no-underline shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+          className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] text-black no-underline shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
           onClick={(e) => {
             e.preventDefault();
             navigateToFullCalendar();
@@ -80,7 +80,7 @@ function FilterButtons({
     return (
       <div className="relative flex shrink-0 items-start justify-start gap-4.5">
         <button
-          className="relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip rounded-button bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+          className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
           onClick={handleCalendarClick}
           aria-label="Open full calendar in new tab"
         >
@@ -96,7 +96,7 @@ function FilterButtons({
   return (
     <div className="relative flex shrink-0 items-start justify-start gap-4.5">
       <button
-        className="relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip rounded-button bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+        className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
         onClick={() => {
           if (onNavigate) {
             onNavigate("calendar");
@@ -195,10 +195,8 @@ function PlaceholderCard({
   return (
     <div className="relative flex h-[265px] w-[280px] shrink-0 items-center justify-center rounded-card bg-acs-teal sm:w-[351px]">
       <div className="max-h-[200px] overflow-y-auto px-6 text-center">
-        <h3 className="mb-2 font-lexend text-[18px] font-bold text-black leading-[1.2]">
-          {title}
-        </h3>
-        <p className="font-lexend text-[12px] font-normal text-black leading-[1.4]">{message}</p>
+        <h3 className="mb-2 font-lexend text-[18px] font-bold leading-[1.2] text-black">{title}</h3>
+        <p className="font-lexend text-[12px] font-normal leading-[1.4] text-black">{message}</p>
       </div>
       <div
         aria-hidden="true"
