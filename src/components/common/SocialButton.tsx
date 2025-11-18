@@ -12,12 +12,20 @@ interface SocialButtonProps {
 }
 
 /**
- * Reusable social media button component
- * Displays an icon with text and links to an external URL
+ * @brief Reusable social media button component with hover effects
+ * @params {string} href - The URL to open when clicked
+ * @params {ReactNode} icon - The icon/image to display (SVG or img element)
+ * @params {string} label - The text label to display
+ * @params {string} [ariaLabel] - Optional aria-label for accessibility (defaults to label if not provided)
+ * @return {JSX.Element} Social media button component
  */
 const SocialButton = memo(function SocialButton({ href, icon, label, ariaLabel }: SocialButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
+  /**
+   * @brief Opens the social media link in a new browser tab
+   * @return {void}
+   */
   const handleClick = useCallback(() => {
     window.open(href, "_blank", "noopener,noreferrer");
   }, [href]);

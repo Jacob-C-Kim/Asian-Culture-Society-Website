@@ -1,3 +1,7 @@
+/**
+ * @brief About Us page component displaying organization information and logo
+ * @return {JSX.Element} About Us page component
+ */
 export default function AboutUsPage() {
   const description =
     "Asian Culture Society is the largest student organization at RIT, bringing together students who enjoy learning and sharing the history, culture, and art of Asian countries. We foster a welcoming community and create a space for anyone interested in Asian culture to connect, learn, and celebrate together. Along with our weekly activities, we host some of the biggest cultural events on campus, including our annual Night Market.";

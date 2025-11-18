@@ -4,7 +4,15 @@ import SocialButton from "./SocialButton";
 import svgPaths from "@/lib/assets/svg/instagram-icon";
 import discordSvgPaths from "@/lib/assets/svg/discord-icon";
 
+/**
+ * @brief Footer component with organization information and social media links
+ * @return {JSX.Element} Footer component
+ */
 const Footer = memo(function Footer() {
+  /**
+   * @brief Scrolls the page to the top with smooth animation
+   * @return {void}
+   */
   const handleScrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);

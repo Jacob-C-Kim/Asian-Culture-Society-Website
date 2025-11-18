@@ -1,5 +1,10 @@
 import EventsSection from "@/components/common/EventsSection";
 
+/**
+ * @brief Hero section for Mentor/Mentee program with koi fish background
+ * @params {function} [onNavigate] - Optional navigation callback function
+ * @return {JSX.Element} Hero section component
+ */
 function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
     <section className="relative min-h-[500px] w-full overflow-hidden bg-acs-teal-alt font-inter md:min-h-[600px]">
@@ -57,6 +62,10 @@ function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) 
   );
 }
 
+/**
+ * @brief Section displaying benefits for mentors and mentees with signup links
+ * @return {JSX.Element} Mentors section component
+ */
 function MentorsSection() {
   return (
     <section className="min-h-[415px] bg-white py-16 font-inter">
@@ -153,6 +162,12 @@ function MentorsSection() {
   );
 }
 
+/**
+ * @brief Main Mentor/Mentee program page with hero, benefits, and events sections
+ * @params {function} [onNavigate] - Optional navigation callback function
+ * @params {boolean} [hideHeader] - Optional flag to hide header (unused, reserved for future use)
+ * @return {JSX.Element} Mentor/Mentee page component
+ */
 export default function MentorMenteePage({
   onNavigate,
   hideHeader: _hideHeader,

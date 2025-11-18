@@ -8,6 +8,12 @@ interface EventDetailsCardProps {
   onClose: () => void;
 }
 
+/**
+ * @brief Displays detailed information about events on a selected date with navigation for multiple events
+ * @params {Date | undefined} selectedDate - The selected date to display events for
+ * @params {function} onClose - Callback function to close the event details card
+ * @return {JSX.Element | null} Event details card component or null if no date/events selected
+ */
 export default function EventDetailsCard({ selectedDate, onClose }: EventDetailsCardProps) {
   // ALL HOOKS MUST BE AT THE TOP - React Rules of Hooks
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
@@ -47,7 +53,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     }
   }, [selectedDate, isMobile, events.length]);
 
-  // Handle scrolling through events
+  /**
+   * @brief Handles scrolling/navigation between multiple events on the same date
+   * @params {string} direction - Direction to scroll: "up" (previous event) or "down" (next event)
+   * @return {void}
+   */
   const handleScroll = useCallback(
     (direction: "up" | "down") => {
       if (direction === "down" && safeIndex < events.length - 1) {
@@ -80,7 +90,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
   if (!events || events.length === 0) return null;
   if (!currentEvent) return null;
 
-  // Handle keyboard navigation
+  /**
+   * @brief Handles keyboard arrow keys for event navigation (desktop only)
+   * @params {React.KeyboardEvent} e - Keyboard event object
+   * @return {void}
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (events.length <= 1) return;
 
@@ -95,6 +109,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     }
   };
 
+  /**
+   * @brief Handles touch start event for mobile swipe gesture detection
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchStart = (e: React.TouchEvent) => {
     if (events.length <= 1 || !isMobile) return;
     setTouchEnd(null);
@@ -105,6 +124,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     });
   };
 
+  /**
+   * @brief Handles touch move event to track swipe gesture
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchMove = (e: React.TouchEvent) => {
     if (events.length <= 1 || !isMobile) return;
     setTouchEnd({
@@ -113,6 +137,10 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     });
   };
 
+  /**
+   * @brief Handles touch end event to complete swipe gesture and navigate events
+   * @return {void}
+   */
   const handleTouchEnd = () => {
     setIsSwipeActive(false);
 

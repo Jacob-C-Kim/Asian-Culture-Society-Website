@@ -20,8 +20,16 @@ interface HeroSectionProps {
 }
 
 /**
- * Reusable Hero/Welcome Section Component
- * Displays a centered hero section with title, subtitle, and description
+ * @brief Reusable Hero/Welcome Section Component with customizable content and spacing
+ * @params {string} [title="asian culture society"] - The main title text
+ * @params {string} [subtitle="welcome to"] - The subtitle text displayed above the title
+ * @params {string} [description="RIT's largest Asian club..."] - The description text displayed below the title
+ * @params {boolean} [includeHeaderSpace=true] - Whether to include space for the header
+ * @params {string} [headerSpaceHeight="61px"] - Height of the header space
+ * @params {string} [topPadding="50px"] - Top padding value
+ * @params {string} [bottomPadding="150px"] - Bottom padding value
+ * @params {boolean} [fullScreen=false] - Whether to use full screen height
+ * @return {JSX.Element} Hero section component
  */
 export const HeroSection = memo(function HeroSection({
   title = "asian culture society",
