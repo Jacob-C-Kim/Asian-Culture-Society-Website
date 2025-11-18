@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { hasEventsOnDate, getEventsForDate } from "../data/events";
+import { hasEventsOnDate, getEventsForDate } from "@/lib/data/events";
 import EventDetailsCard from "./calendar/EventDetailsCard";
 import CalendarWidget from "./calendar/CalendarWidget";
 

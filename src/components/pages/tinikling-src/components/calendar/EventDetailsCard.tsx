@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import svgPaths from "../../imports/svg-onqcmwzw98";
-// Unused: import { getEventsForDate } from "../../data/events";
-import { getEventsForDate } from "../../data/events";
+// Unused: import { getEventsForDate } from "@/lib/data/events";
+import { getEventsForDate } from "@/lib/data/events";
 import { getAllEventsForDate, formatDate } from "@/lib/utils/calendarHelpers";
 
 interface EventDetailsCardProps {

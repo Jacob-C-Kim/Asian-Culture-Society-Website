@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import svgPaths from "../imports/svg-onqcmwzw98";
-import { Event, events, getSortedEvents } from "../data/events";
+import { Event, events, getSortedEvents } from "@/lib/data/events";
 
 // Helper function to get Mentor/Mentee specific events
 const getMentorMenteeEvents = (): Event[] => {

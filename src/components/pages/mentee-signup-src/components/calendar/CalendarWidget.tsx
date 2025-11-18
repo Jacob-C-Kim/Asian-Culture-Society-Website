@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
-import { getEventDates } from "../../data/events";
+import { getEventDates } from "@/lib/data/events";
 
 interface CalendarWidgetProps {
   selectedDate: Date | undefined;

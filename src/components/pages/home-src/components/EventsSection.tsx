@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import svgPaths from "../imports/svg-onqcmwzw98";
-import { Event, getSortedEvents } from "../data/events";
+import { Event, getSortedEvents } from "@/lib/data/events";
 
 function FilterButtons({ onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
