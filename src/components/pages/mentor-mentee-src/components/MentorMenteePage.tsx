@@ -1,18 +1,15 @@
 import EventsSection from "@/components/common/EventsSection";
 
+/**
+ * @brief Hero section for Mentor/Mentee program with koi fish background
+ * @params {function} [onNavigate] - Optional navigation callback function
+ * @return {JSX.Element} Hero section component
+ */
 function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) => void }) {
   return (
-    <div
-      className="relative min-h-[500px] w-full overflow-hidden md:min-h-[600px]"
-      style={{
-        backgroundColor: "#94D1D0",
-        fontFamily:
-          'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      }}
-    >
+    <section className="relative min-h-[500px] w-full overflow-hidden bg-acs-teal-alt font-inter md:min-h-[600px]">
       {/* Koi Fish Image positioned on the left */}
       <div className="absolute bottom-0 left-0 flex h-full w-full items-end justify-start">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/assets/images/koi-fish.png"
           alt="Koi Fish Illustration"
@@ -28,81 +25,78 @@ function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) 
             className="text-[48px] font-black tracking-tight text-white md:text-[64px] lg:text-[80px]"
             style={{
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8), 0px 0px 8px rgba(0, 0, 0, 0.6)",
-              fontFamily:
-                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
             }}
           >
             Mentor/Mentee
           </h1>
 
           {/* Description */}
-          <div className="max-w-3xl">
-            <p
-              className="text-[18px] font-bold leading-relaxed text-white md:text-[20px] lg:text-[22px]"
-              style={{
-                textShadow: "1px 1px 3px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.5)",
-                fontFamily:
-                  'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              }}
-            >
-              The Mentor/Mentee Program connects upperclassmen with newer members to foster
-              community, guidance, and growth. Mentors provide support in academics, campus life,
-              and cultural involvement, while mentees gain a friend and resource to help them
-              navigate college.
-            </p>
-          </div>
+          <p
+            className="max-w-3xl text-[18px] font-bold leading-relaxed text-white md:text-[20px] lg:text-[22px]"
+            style={{
+              textShadow: "1px 1px 3px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            The Mentor/Mentee Program connects upperclassmen with newer members to foster
+            community, guidance, and growth. Mentors provide support in academics, campus life, and
+            cultural involvement, while mentees gain a friend and resource to help them navigate
+            college.
+          </p>
 
           {/* Events Button */}
           <button
             className="mt-4 rounded-xl border-2 border-gray-700 bg-gray-800 px-10 py-4 text-[16px] font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-900 hover:shadow-2xl md:text-[18px]"
-            style={{
-              fontFamily:
-                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-            }}
             onClick={() => {
               const eventsSection = document.querySelector('[data-section="mentor-mentee-events"]');
               if (eventsSection) {
                 eventsSection.scrollIntoView({ behavior: "smooth", block: "start" });
               }
             }}
+            aria-label="Scroll to Mentor/Mentee events section"
           >
             Events
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
+/**
+ * @brief Section displaying benefits for mentors and mentees with signup links
+ * @return {JSX.Element} Mentors section component
+ */
 function MentorsSection() {
   return (
-    <div
-      className="min-h-[415px] bg-white py-16"
-      style={{
-        fontFamily:
-          'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      }}
-    >
+    <section className="min-h-[415px] bg-white py-16 font-inter">
       <div className="container mx-auto px-6 md:px-12">
         <div className="flex flex-col items-stretch justify-center gap-8 md:flex-row">
           {/* Mentors Column */}
-          <div className="flex max-w-md flex-1 flex-col items-center text-center">
+          <article className="flex max-w-md flex-1 flex-col items-center text-center">
             <h2 className="mb-6 text-[24px] font-medium text-black md:text-[28px]">Mentors</h2>
             <ul className="flex-grow space-y-3 text-left text-[16px] text-black md:text-[18px]">
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Meet new people and make real connections
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Build leadership and mentoring skills
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Share your experience and help someone out
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Extra Mentor/Mentee specific events
               </li>
             </ul>
@@ -113,35 +107,39 @@ function MentorsSection() {
                 href="https://campusgroups.rit.edu/ACS/mentor-sign-up/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block min-w-[240px] rounded-xl bg-[#94D1D0] px-8 py-4 text-center text-[16px] font-bold text-white no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#82C7C7] hover:shadow-xl md:text-[18px]"
-                style={{
-                  fontFamily:
-                    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                }}
+                className="inline-block min-w-[240px] rounded-xl bg-acs-teal-alt px-8 py-4 text-center text-[16px] font-bold text-white no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#82C7C7] hover:shadow-xl md:text-[18px]"
               >
                 Sign Up As A Mentor
               </a>
             </div>
-          </div>
+          </article>
 
           {/* Mentees Column */}
-          <div className="flex max-w-md flex-1 flex-col items-center text-center">
+          <article className="flex max-w-md flex-1 flex-col items-center text-center">
             <h2 className="mb-6 text-[24px] font-medium text-black md:text-[28px]">Mentees</h2>
             <ul className="flex-grow space-y-3 text-left text-[16px] text-black md:text-[18px]">
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>A friendly mentor to help you
-                navigate campus life
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
+                A friendly mentor to help you navigate campus life
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Tips on classes, clubs, and making the most of college
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Someone you can go to for advice or questions
               </li>
               <li className="flex items-start">
-                <span className="mr-3 mt-1 text-[#94D1D0]">•</span>
+                <span className="mr-3 mt-1 text-acs-teal-alt" aria-hidden="true">
+                  •
+                </span>
                 Extra Mentor/Mentee specific events
               </li>
             </ul>
@@ -152,22 +150,24 @@ function MentorsSection() {
                 href="https://campusgroups.rit.edu/ACS/mentee-sign-up/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block min-w-[240px] rounded-xl bg-[#2C3E50] px-8 py-4 text-center text-[16px] font-bold text-white no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#1A252F] hover:shadow-xl md:text-[18px]"
-                style={{
-                  fontFamily:
-                    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                }}
+                className="inline-block min-w-[240px] rounded-xl bg-acs-slate px-8 py-4 text-center text-[16px] font-bold text-white no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#1A252F] hover:shadow-xl md:text-[18px]"
               >
                 Sign Up As A Mentee
               </a>
             </div>
-          </div>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
+/**
+ * @brief Main Mentor/Mentee program page with hero, benefits, and events sections
+ * @params {function} [onNavigate] - Optional navigation callback function
+ * @params {boolean} [hideHeader] - Optional flag to hide header (unused, reserved for future use)
+ * @return {JSX.Element} Mentor/Mentee page component
+ */
 export default function MentorMenteePage({
   onNavigate,
   hideHeader: _hideHeader,
@@ -176,14 +176,14 @@ export default function MentorMenteePage({
   hideHeader?: boolean;
 }) {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-white">
+    <main className="flex min-h-screen w-full flex-col bg-white">
       {/* White section at the top to prevent navigation gap during sticky transition */}
-      <div className="h-20 w-full bg-white"></div>
+      <div className="h-20 w-full bg-white" aria-hidden="true" />
       <HeroSection onNavigate={onNavigate} />
       <MentorsSection />
       <div className="w-full">
         <EventsSection onNavigate={onNavigate} isMentorMentee={true} />
       </div>
-    </div>
+    </main>
   );
 }

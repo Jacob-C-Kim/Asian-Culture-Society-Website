@@ -3,6 +3,12 @@
 import { useState, memo, useCallback } from "react";
 import ACSLogo from "./ACSLogo";
 
+/**
+ * @brief Main navigation header component with logo and navigation links
+ * @params {string} [currentPage="home"] - The currently active page
+ * @params {function} [onNavigate] - Optional callback function when navigation occurs
+ * @return {JSX.Element} Navigation header component
+ */
 export const NavigationHeader = memo(function NavigationHeader({
   currentPage = "home",
   onNavigate,
@@ -21,15 +27,24 @@ export const NavigationHeader = memo(function NavigationHeader({
     tinikling: "https://campusgroups.rit.edu/ACS/tinikling/",
   };
 
+  /**
+   * @brief Generates CSS class names for navigation links based on active state
+   * @params {string} key - The route key to generate classes for
+   * @return {string} Combined CSS class names
+   */
   const linkCls = useCallback(
     (key: string) =>
-      `font-['Lexend:Regular',_sans-serif] font-normal leading-[0] relative shrink-0 text-[10px] md:text-[12px] text-center text-nowrap cursor-pointer transition-colors hover:text-blue-600 ${
+      `font-lexend font-normal relative shrink-0 text-[10px] md:text-[12px] text-center text-nowrap cursor-pointer transition-colors hover:text-blue-600 ${
         activeSection === key ? "text-blue-600" : "text-black"
       }`,
     [activeSection]
   );
 
-  // Hard navigate the parent/top frame to a specific URL (bypasses CG link rewriting)
+  /**
+   * @brief Navigates the parent/top frame to a specific URL, bypassing CampusGroups link rewriting
+   * @params {string} url - The URL to navigate to
+   * @return {void}
+   */
   const navigateTop = useCallback((url: string) => {
     try {
       if (window.top) window.top.location.assign(url);
@@ -39,12 +54,19 @@ export const NavigationHeader = memo(function NavigationHeader({
     }
   }, []);
 
-  // Generic anchor that can optionally force navigation via JS (to avoid CG rewriting)
+  /**
+   * @brief Navigation link component with optional forced top-level navigation
+   * @params {string} keyName - The route key name
+   * @params {string} labelDesktop - The label to display on desktop
+   * @params {string} [labelMobile] - Optional mobile-specific label
+   * @params {boolean} [forceTopHref] - When true, prevents default and uses navigateTop()
+   * @return {JSX.Element} Navigation link component
+   */
   const NavLink = ({
     keyName,
     labelDesktop,
     labelMobile,
-    forceTopHref, // when true, preventDefault and use navigateTop()
+    forceTopHref,
   }: {
     keyName: keyof typeof routes;
     labelDesktop: string;
@@ -65,18 +87,18 @@ export const NavigationHeader = memo(function NavigationHeader({
         }
       }}
     >
-      <p className={`whitespace-pre leading-[normal] ${labelMobile ? "hidden sm:block" : ""}`}>
+      <span className={`whitespace-pre leading-[normal] ${labelMobile ? "hidden sm:block" : ""}`}>
         {labelDesktop}
-      </p>
+      </span>
       {labelMobile && (
-        <p className="block whitespace-pre leading-[normal] sm:hidden">{labelMobile}</p>
+        <span className="block whitespace-pre leading-[normal] sm:hidden">{labelMobile}</span>
       )}
     </a>
   );
 
   return (
-    <div className="relative mx-auto flex w-full max-w-7xl items-center justify-center gap-2 px-2 md:gap-8 md:px-6">
-      {/* Logo → CG home */}
+    <nav className="relative mx-auto flex w-full max-w-7xl items-center justify-center gap-2 px-2 md:gap-8 md:px-6">
+      {/* Logo → CG home - Mobile */}
       <a
         href={routes.home}
         target="_top"
@@ -86,9 +108,12 @@ export const NavigationHeader = memo(function NavigationHeader({
           onNavigate?.("home");
         }}
         className="cursor-pointer md:hidden"
+        aria-label="Asian Culture Society Home"
       >
         <ACSLogo size={48} />
       </a>
+
+      {/* Logo → CG home - Desktop */}
       <a
         href={routes.home}
         target="_top"
@@ -98,11 +123,12 @@ export const NavigationHeader = memo(function NavigationHeader({
           onNavigate?.("home");
         }}
         className="hidden cursor-pointer md:block"
+        aria-label="Asian Culture Society Home"
       >
         <ACSLogo size={61} />
       </a>
 
-      {/* Navigation */}
+      {/* Navigation Links */}
       <div className="flex items-center gap-2 md:gap-6">
         {/* Force About Us to the exact /ACS/about-us/ path to bypass CG rewriting */}
         <NavLink keyName="about-us" labelDesktop="About Us" forceTopHref />
@@ -113,6 +139,6 @@ export const NavigationHeader = memo(function NavigationHeader({
         <NavLink keyName="mentor-mentee" labelDesktop="Mentor/Mentee" labelMobile="Mentor" />
         <NavLink keyName="tinikling" labelDesktop="Tinikling" />
       </div>
-    </div>
+    </nav>
   );
 });

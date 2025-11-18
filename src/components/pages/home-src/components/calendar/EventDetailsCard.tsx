@@ -8,6 +8,12 @@ interface EventDetailsCardProps {
   onClose: () => void;
 }
 
+/**
+ * @brief Displays detailed information about events on a selected date with navigation for multiple events
+ * @params {Date | undefined} selectedDate - The selected date to display events for
+ * @params {function} onClose - Callback function to close the event details card
+ * @return {JSX.Element | null} Event details card component or null if no date/events selected
+ */
 export default function EventDetailsCard({ selectedDate, onClose }: EventDetailsCardProps) {
   // ALL HOOKS MUST BE AT THE TOP - React Rules of Hooks
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
@@ -47,7 +53,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     }
   }, [selectedDate, isMobile, events.length]);
 
-  // Handle scrolling through events
+  /**
+   * @brief Handles scrolling/navigation between multiple events on the same date
+   * @params {string} direction - Direction to scroll: "up" (previous event) or "down" (next event)
+   * @return {void}
+   */
   const handleScroll = useCallback(
     (direction: "up" | "down") => {
       if (direction === "down" && safeIndex < events.length - 1) {
@@ -80,7 +90,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
   if (!events || events.length === 0) return null;
   if (!currentEvent) return null;
 
-  // Handle keyboard navigation
+  /**
+   * @brief Handles keyboard arrow keys for event navigation (desktop only)
+   * @params {React.KeyboardEvent} e - Keyboard event object
+   * @return {void}
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (events.length <= 1) return;
 
@@ -95,6 +109,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     }
   };
 
+  /**
+   * @brief Handles touch start event for mobile swipe gesture detection
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchStart = (e: React.TouchEvent) => {
     if (events.length <= 1 || !isMobile) return;
     setTouchEnd(null);
@@ -105,6 +124,11 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     });
   };
 
+  /**
+   * @brief Handles touch move event to track swipe gesture
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchMove = (e: React.TouchEvent) => {
     if (events.length <= 1 || !isMobile) return;
     setTouchEnd({
@@ -113,6 +137,10 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     });
   };
 
+  /**
+   * @brief Handles touch end event to complete swipe gesture and navigate events
+   * @return {void}
+   */
   const handleTouchEnd = () => {
     setIsSwipeActive(false);
 
@@ -153,8 +181,8 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
   return (
     <div className="relative">
       {/* Event card */}
-      <div
-        className={`relative w-full rounded-[15px] border border-white bg-[#99e3ed] transition-all duration-300 ease-out hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+      <article
+        className={`relative w-full rounded-card border border-white bg-acs-teal transition-smooth hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
           isMobile ? "h-[360px] hover:scale-[1.01]" : "h-[400px] hover:scale-[1.02]"
         } ${isSwipeActive && isMobile ? "scale-[0.98] brightness-95" : ""}`}
         onKeyDown={events.length > 1 && !isMobile ? handleKeyDown : undefined}
@@ -169,16 +197,16 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
             : undefined
         }
       >
-        {/* Close X button in top left */}
+        {/* Close button - Positioned in top-left corner */}
         <button
           onClick={onClose}
-          className={`absolute left-[18px] top-[18px] z-10 flex items-center justify-center rounded-full border border-white bg-[rgba(255,255,255,0.5)] transition-all duration-200 hover:scale-110 hover:bg-[rgba(255,255,255,0.8)] ${
+          className={`absolute left-[18px] top-[18px] z-10 flex items-center justify-center rounded-full border border-white bg-white/50 transition-all duration-200 hover:scale-110 hover:bg-white/80 ${
             isMobile ? "h-10 w-10 active:scale-95" : "h-8 w-8"
           }`}
           aria-label="Close event details"
         >
           <svg
-            className={`text-[#195259] ${isMobile ? "h-5 w-5" : "h-4 w-4"}`}
+            className={`text-acs-navy ${isMobile ? "h-5 w-5" : "h-4 w-4"}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -192,11 +220,12 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
           </svg>
         </button>
 
-        {/* Calendar icon in top right */}
+        {/* Calendar icon - Positioned in top-right corner */}
         <div
-          className={`absolute right-[18px] top-[18px] flex items-center justify-center rounded-[15px] border border-white bg-[rgba(255,255,255,0.5)] ${
+          className={`absolute right-[18px] top-[18px] flex items-center justify-center rounded-card border border-white bg-white/50 ${
             isMobile ? "size-10" : "size-9"
           }`}
+          aria-hidden="true"
         >
           <div className={`relative ${isMobile ? "h-7 w-6" : "h-6 w-[21px]"}`}>
             <svg
@@ -212,62 +241,61 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
           </div>
         </div>
 
-        {/* Event content */}
-        <div
-          className={`absolute left-[18px] flex w-[calc(100%-80px)] flex-col content-stretch items-start justify-start gap-1 ${
+        {/* Event content - Title, time, and date */}
+        <header
+          className={`absolute left-[18px] flex w-[calc(100%-80px)] flex-col items-start justify-start gap-1 ${
             isMobile ? "top-[55px]" : "top-[60px]"
           }`}
         >
-          <div
-            className={`relative w-full shrink-0 font-['Lexend:Bold',_sans-serif] font-bold text-black ${
+          <h2
+            className={`w-full font-lexend font-bold text-black ${
               isMobile ? "text-[16px]" : "text-[18px]"
             }`}
           >
-            <p className="leading-[1.2]">{currentEvent.title}</p>
-          </div>
+            <span className="leading-[1.2]">{currentEvent.title}</span>
+          </h2>
 
-          <div
-            className={`relative w-full shrink-0 font-['Lexend:Medium',_sans-serif] font-medium text-black ${
+          <p
+            className={`w-full font-lexend font-medium text-black ${
               isMobile ? "text-[11px]" : "text-[12px]"
             }`}
           >
-            <p className="leading-[1.3]">
+            <span className="leading-[1.3]">
               {currentEvent.time} @ {currentEvent.location}
-            </p>
-          </div>
+            </span>
+          </p>
 
-          <div
-            className={`relative w-full shrink-0 font-['Lexend:Medium',_sans-serif] font-medium text-black ${
+          <time
+            dateTime={selectedDate.toISOString()}
+            className={`w-full font-lexend font-medium text-black ${
               isMobile ? "text-[11px]" : "text-[12px]"
             }`}
           >
-            <p className="leading-[1.3]">{formatDate(selectedDate)}</p>
-          </div>
-        </div>
+            <span className="leading-[1.3]">{formatDate(selectedDate)}</span>
+          </time>
+        </header>
 
-        {/* Description */}
+        {/* Event description - Scrollable content area */}
         <div
           className={`absolute left-[18px] w-[calc(100%-36px)] overflow-y-auto text-black ${
             isMobile ? "top-[155px] h-[130px] text-[11px]" : "top-[175px] h-[140px] text-[12px]"
           }`}
         >
-          <div
-            className={`pr-2 font-['Lexend:Regular',_sans-serif] font-normal ${
+          <p
+            className={`pr-2 font-lexend font-normal ${
               isMobile ? "text-[11px]" : "text-[12px]"
             }`}
           >
-            <p className="leading-[1.4]">{currentEvent.description}</p>
-          </div>
+            <span className="leading-[1.4]">{currentEvent.description}</span>
+          </p>
         </div>
 
-        {/* Swipe indicator for mobile */}
+        {/* Swipe indicator for mobile - Shows when multiple events */}
         {events.length > 1 && isMobile && showSwipeHint && (
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-            <div
-              className={`flex flex-col items-center gap-2 opacity-30 transition-opacity duration-500`}
-            >
+            <div className="flex flex-col items-center gap-2 opacity-30 transition-opacity duration-500">
               <svg
-                className="h-6 w-6 animate-bounce text-[#195259]"
+                className="h-6 w-6 animate-bounce text-acs-navy"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -279,9 +307,9 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                   d="M7 11l5-5m0 0l5 5m-5-5v12"
                 />
               </svg>
-              <div className="text-xs font-medium text-[#195259]">Swipe up/down</div>
+              <div className="text-xs font-medium text-acs-navy">Swipe up/down</div>
               <svg
-                className="h-6 w-6 animate-bounce text-[#195259]"
+                className="h-6 w-6 animate-bounce text-acs-navy"
                 style={{ animationDelay: "0.5s" }}
                 fill="none"
                 stroke="currentColor"
@@ -298,37 +326,37 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
           </div>
         )}
 
-        {/* Event counter if multiple events */}
+        {/* Event counter - Shows current event number when multiple events */}
         {events.length > 1 && (
-          <div
+          <footer
             className={`absolute left-[18px] right-[18px] flex items-center justify-between ${
               isMobile ? "bottom-[10px]" : "bottom-[14px]"
             }`}
           >
             <div
-              className={`font-['Lexend:Medium',_sans-serif] font-medium text-[#195259] ${
+              className={`font-lexend font-medium text-acs-navy ${
                 isMobile ? "text-[11px]" : "text-[12px]"
               }`}
             >
               {safeIndex + 1} of {events.length} events
             </div>
             <div
-              className={`font-['Lexend:Regular',_sans-serif] text-[#195259] ${
+              className={`font-lexend text-acs-navy ${
                 isMobile ? "text-[9px]" : "text-[10px]"
               }`}
             >
               {isMobile ? "Swipe or tap buttons" : "Use ↑↓ keys or buttons"}
             </div>
-          </div>
+          </footer>
         )}
-      </div>
+      </article>
 
-      {/* Arrow navigation buttons for multiple events */}
+      {/* Navigation buttons - Shows when multiple events */}
       {events.length > 1 && (
         <>
           {isMobile ? (
             /* Mobile: Horizontal buttons at the bottom */
-            <div className="absolute bottom-[50px] left-1/2 flex -translate-x-1/2 transform gap-4">
+            <nav className="absolute bottom-[50px] left-1/2 flex -translate-x-1/2 transform gap-4" aria-label="Event navigation">
               <button
                 onClick={() => {
                   handleScroll("up");
@@ -338,7 +366,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                 className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 active:scale-95 ${
                   safeIndex === 0
                     ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                    : "cursor-pointer bg-[rgba(255,255,255,0.8)] text-[#195259] shadow-md hover:bg-[rgba(255,255,255,0.9)]"
+                    : "cursor-pointer bg-white/80 text-acs-navy shadow-md hover:bg-white/90"
                 }`}
                 aria-label="Previous event"
               >
@@ -360,7 +388,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                 className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-200 active:scale-95 ${
                   safeIndex === events.length - 1
                     ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                    : "cursor-pointer bg-[rgba(255,255,255,0.8)] text-[#195259] shadow-md hover:bg-[rgba(255,255,255,0.9)]"
+                    : "cursor-pointer bg-white/80 text-acs-navy shadow-md hover:bg-white/90"
                 }`}
                 aria-label="Next event"
               >
@@ -373,17 +401,17 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                   />
                 </svg>
               </button>
-            </div>
+            </nav>
           ) : (
             /* Desktop: Vertical buttons on the right */
-            <div className="absolute right-[-40px] top-1/2 flex -translate-y-1/2 transform flex-col gap-2">
+            <nav className="absolute right-[-40px] top-1/2 flex -translate-y-1/2 transform flex-col gap-2" aria-label="Event navigation">
               <button
                 onClick={() => handleScroll("up")}
                 disabled={safeIndex === 0}
                 className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 ${
                   safeIndex === 0
                     ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                    : "cursor-pointer bg-[#99e3ed] text-[#195259] hover:bg-[#8bd4e0]"
+                    : "cursor-pointer bg-acs-teal text-acs-navy hover:bg-acs-teal-dark"
                 }`}
                 aria-label="Previous event"
               >
@@ -402,7 +430,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                 className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 ${
                   safeIndex === events.length - 1
                     ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                    : "cursor-pointer bg-[#99e3ed] text-[#195259] hover:bg-[#8bd4e0]"
+                    : "cursor-pointer bg-acs-teal text-acs-navy hover:bg-acs-teal-dark"
                 }`}
                 aria-label="Next event"
               >
@@ -415,7 +443,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
                   />
                 </svg>
               </button>
-            </div>
+            </nav>
           )}
         </>
       )}
