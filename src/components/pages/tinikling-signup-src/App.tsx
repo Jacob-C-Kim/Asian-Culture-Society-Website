@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavigationHeader } from "@/components/common/NavigationHeader";
-import MentorSignup from "./components/MentorSignup";
+import MentorSignup from "@/components/common/MentorSignup";
 import StickyHeader from "../../common/StickyHeader";
 
 export default function App() {
@@ -30,7 +30,11 @@ export default function App() {
       <StickyHeader currentPage={currentPage}>
         <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
       </StickyHeader>
-      <MentorSignup />
+      <MentorSignup
+        title="Join Tinikling"
+        formUrl="https://docs.google.com/forms/d/e/1FAIpQLScfquFwA6Ekz8o8byDmDJuO_3gkdRJg5oIF-mc5x-onRspdpg/viewform?embedded=true"
+        height="1507px"
+      />
     </div>
   );
 }

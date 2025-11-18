@@ -1,7 +1,7 @@
 "use client";
 
 import App from "../../components/pages/mentor-mentee-src/App";
-import "../../components/pages/mentor-mentee-src/index.css";
+import "@/styles/index.css";
 
 export default function MentorMenteePage() {
   return <App />;
