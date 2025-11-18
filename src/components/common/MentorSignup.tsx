@@ -1,24 +1,37 @@
 import { useMobileDetection } from "@/hooks/useMobileDetection";
 
-export default function MentorSignup() {
+interface MentorSignupProps {
+  title: string;
+  formUrl: string;
+  height: string;
+  mobileHeight?: string;
+}
+
+export default function MentorSignup({
+  title,
+  formUrl,
+  height,
+  mobileHeight,
+}: MentorSignupProps) {
   const isMobile = useMobileDetection();
+  const iframeHeight = isMobile && mobileHeight ? mobileHeight : height;
 
   return (
     <div className="px-4 py-12">
       <div className="mx-auto max-w-[960px]">
         {/* Simple Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Become a Mentee</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
         </div>
 
         {/* Clean Form Container */}
         <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
           <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLScoyiQV_rEM-eum6JgXbHiHT6DaE1tFaleRNratqJscwrkJ1Q/viewform?embedded=true"
-            title="Mentee Sign Up Form"
+            src={formUrl}
+            title={`${title} Form`}
             className="w-full border-0 bg-white"
             style={{
-              height: isMobile ? "1567px" : "1567px",
+              height: iframeHeight,
               borderRadius: "1rem",
             }}
           />
@@ -27,3 +40,4 @@ export default function MentorSignup() {
     </div>
   );
 }
+

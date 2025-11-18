@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavigationHeader } from "@/components/common/NavigationHeader";
-import MentorSignup from "./components/MentorSignup";
+import MentorSignup from "@/components/common/MentorSignup";
 import StickyHeader from "../../common/StickyHeader";
 
 export default function App() {
@@ -30,7 +30,11 @@ export default function App() {
       <StickyHeader currentPage={currentPage}>
         <NavigationHeader currentPage={currentPage} onNavigate={handleNavigation} />
       </StickyHeader>
-      <MentorSignup />
+      <MentorSignup
+        title="Become a Mentee"
+        formUrl="https://docs.google.com/forms/d/e/1FAIpQLScoyiQV_rEM-eum6JgXbHiHT6DaE1tFaleRNratqJscwrkJ1Q/viewform?embedded=true"
+        height="1567px"
+      />
     </div>
   );
 }
