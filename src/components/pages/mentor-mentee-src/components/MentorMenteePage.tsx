@@ -37,10 +37,9 @@ function HeroSection({ onNavigate: _onNavigate }: { onNavigate?: (page: string) 
               textShadow: "1px 1px 3px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.5)",
             }}
           >
-            The Mentor/Mentee Program connects upperclassmen with newer members to foster
-            community, guidance, and growth. Mentors provide support in academics, campus life, and
-            cultural involvement, while mentees gain a friend and resource to help them navigate
-            college.
+            The Mentor/Mentee Program connects upperclassmen with newer members to foster community,
+            guidance, and growth. Mentors provide support in academics, campus life, and cultural
+            involvement, while mentees gain a friend and resource to help them navigate college.
           </p>
 
           {/* Events Button */}

@@ -62,7 +62,8 @@ export const fontFamilies = {
   avantGarde: {
     bold: "'ITC Avant Garde Gothic', 'ITC_Avant_Garde_Gothic:Bold', sans-serif",
   },
-  inter: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  inter:
+    "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
 };
 
 export const borderRadius = {

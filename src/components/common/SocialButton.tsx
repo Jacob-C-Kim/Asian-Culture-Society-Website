@@ -19,7 +19,12 @@ interface SocialButtonProps {
  * @params {string} [ariaLabel] - Optional aria-label for accessibility (defaults to label if not provided)
  * @return {JSX.Element} Social media button component
  */
-const SocialButton = memo(function SocialButton({ href, icon, label, ariaLabel }: SocialButtonProps) {
+const SocialButton = memo(function SocialButton({
+  href,
+  icon,
+  label,
+  ariaLabel,
+}: SocialButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   /**
@@ -35,7 +40,7 @@ const SocialButton = memo(function SocialButton({ href, icon, label, ariaLabel }
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative w-full min-w-0 max-w-[236px] cursor-pointer rounded-button bg-white/10 transition-all duration-200 hover:scale-105 hover:bg-white/20 ${
+      className={`rounded-button relative w-full min-w-0 max-w-[236px] cursor-pointer bg-white/10 transition-all duration-200 hover:scale-105 hover:bg-white/20 ${
         isHovered ? "scale-105 bg-white/20" : ""
       }`}
       aria-label={ariaLabel || label}
@@ -55,7 +60,7 @@ const SocialButton = memo(function SocialButton({ href, icon, label, ariaLabel }
       {/* Border overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 rounded-button border border-solid border-white"
+        className="rounded-button pointer-events-none absolute inset-0 border border-solid border-white"
       />
     </button>
   );

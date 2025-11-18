@@ -182,7 +182,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
     <div className="relative">
       {/* Event card */}
       <article
-        className={`relative w-full rounded-card border border-white bg-acs-teal transition-smooth hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+        className={`transition-smooth relative w-full rounded-card border border-white bg-acs-teal hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
           isMobile ? "h-[360px] hover:scale-[1.01]" : "h-[400px] hover:scale-[1.02]"
         } ${isSwipeActive && isMobile ? "scale-[0.98] brightness-95" : ""}`}
         onKeyDown={events.length > 1 && !isMobile ? handleKeyDown : undefined}
@@ -281,11 +281,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
             isMobile ? "top-[155px] h-[130px] text-[11px]" : "top-[175px] h-[140px] text-[12px]"
           }`}
         >
-          <p
-            className={`pr-2 font-lexend font-normal ${
-              isMobile ? "text-[11px]" : "text-[12px]"
-            }`}
-          >
+          <p className={`pr-2 font-lexend font-normal ${isMobile ? "text-[11px]" : "text-[12px]"}`}>
             <span className="leading-[1.4]">{currentEvent.description}</span>
           </p>
         </div>
@@ -340,11 +336,7 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
             >
               {safeIndex + 1} of {events.length} events
             </div>
-            <div
-              className={`font-lexend text-acs-navy ${
-                isMobile ? "text-[9px]" : "text-[10px]"
-              }`}
-            >
+            <div className={`font-lexend text-acs-navy ${isMobile ? "text-[9px]" : "text-[10px]"}`}>
               {isMobile ? "Swipe or tap buttons" : "Use ↑↓ keys or buttons"}
             </div>
           </footer>
@@ -356,7 +348,10 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
         <>
           {isMobile ? (
             /* Mobile: Horizontal buttons at the bottom */
-            <nav className="absolute bottom-[50px] left-1/2 flex -translate-x-1/2 transform gap-4" aria-label="Event navigation">
+            <nav
+              className="absolute bottom-[50px] left-1/2 flex -translate-x-1/2 transform gap-4"
+              aria-label="Event navigation"
+            >
               <button
                 onClick={() => {
                   handleScroll("up");
@@ -404,7 +399,10 @@ export default function EventDetailsCard({ selectedDate, onClose }: EventDetails
             </nav>
           ) : (
             /* Desktop: Vertical buttons on the right */
-            <nav className="absolute right-[-40px] top-1/2 flex -translate-y-1/2 transform flex-col gap-2" aria-label="Event navigation">
+            <nav
+              className="absolute right-[-40px] top-1/2 flex -translate-y-1/2 transform flex-col gap-2"
+              aria-label="Event navigation"
+            >
               <button
                 onClick={() => handleScroll("up")}
                 disabled={safeIndex === 0}
