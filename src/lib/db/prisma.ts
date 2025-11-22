@@ -29,4 +29,16 @@
 // }
 
 // Placeholder export - remove when uncommenting above
-export const prisma = null as any;
+// Using a type that matches what PrismaClient would be, but as null until generated
+type PrismaClientType = {
+  event: {
+    findMany: () => Promise<unknown[]>;
+    findUnique: () => Promise<unknown | null>;
+    create: () => Promise<unknown>;
+    update: () => Promise<unknown>;
+    delete: () => Promise<unknown>;
+  };
+  $disconnect: () => Promise<void>;
+};
+
+export const prisma: PrismaClientType | null = null;
