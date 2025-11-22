@@ -14,6 +14,12 @@ interface EventsSectionProps {
   isMentorMentee?: boolean;
 }
 
+/**
+ * @brief Renders filter buttons for navigating to the full calendar
+ * @params {function} [onNavigate] - Callback function for navigation (optional)
+ * @params {FilterButtonType} [filterButtonType="callback"] - Type of navigation: "callback", "hardNavigate", or "newTab"
+ * @return {JSX.Element} Filter button component
+ */
 function FilterButtons({
   onNavigate,
   filterButtonType = "callback",
@@ -22,6 +28,10 @@ function FilterButtons({
   filterButtonType?: FilterButtonType;
 }) {
   if (filterButtonType === "hardNavigate") {
+    /**
+     * @brief Navigates to the full calendar page by assigning the window location
+     * @return {void}
+     */
     const navigateToFullCalendar = () => {
       try {
         if (window.top) {
@@ -35,26 +45,30 @@ function FilterButtons({
     };
 
     return (
-      <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
+      <div className="relative flex shrink-0 items-start justify-start gap-4.5">
         <a
           href="https://campusgroups.rit.edu/ACS/acs-calendar/"
           target="_top"
           rel="noopener"
-          className="text-decoration-none relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+          className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] text-black no-underline shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
           onClick={(e) => {
             e.preventDefault();
             navigateToFullCalendar();
           }}
         >
-          <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
-            <p className="whitespace-pre leading-[normal]">Full Calendar</p>
-          </div>
+          <span className="shrink-0 whitespace-nowrap font-avant-garde text-[14px] not-italic">
+            Full Calendar
+          </span>
         </a>
       </div>
     );
   }
 
   if (filterButtonType === "newTab") {
+    /**
+     * @brief Opens the calendar in a new browser tab
+     * @return {void}
+     */
     const handleCalendarClick = () => {
       window.open(
         "https://campusgroups.rit.edu/ACS/acs-calendar/",
@@ -64,68 +78,58 @@ function FilterButtons({
     };
 
     return (
-      <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
-        <div
-          className="relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+      <div className="relative flex shrink-0 items-start justify-start gap-4.5">
+        <button
+          className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
           onClick={handleCalendarClick}
+          aria-label="Open full calendar in new tab"
         >
-          <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
-            <p className="whitespace-pre leading-[normal]">Full Calendar</p>
-          </div>
-        </div>
+          <span className="shrink-0 whitespace-nowrap font-avant-garde text-[14px] not-italic text-black">
+            Full Calendar
+          </span>
+        </button>
       </div>
     );
   }
 
   // Default: callback
   return (
-    <div className="relative flex shrink-0 content-stretch items-start justify-start gap-[18px]">
-      <div
-        className="relative box-border flex shrink-0 cursor-pointer content-stretch items-center justify-center gap-2.5 overflow-clip rounded-[10px] bg-[#8bd4e0] px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
+    <div className="relative flex shrink-0 items-start justify-start gap-4.5">
+      <button
+        className="rounded-button relative box-border flex shrink-0 cursor-pointer items-center justify-center gap-2.5 overflow-clip bg-acs-teal-dark px-5 py-[7px] shadow-md transition-all duration-200 hover:bg-[#7bc7d3]"
         onClick={() => {
           if (onNavigate) {
             onNavigate("calendar");
           }
         }}
+        aria-label="Navigate to full calendar"
       >
-        <div className="relative shrink-0 text-nowrap font-['ITC_Avant_Garde_Gothic:Bold',_sans-serif] text-[14px] not-italic leading-[0] text-black">
-          <p className="whitespace-pre leading-[normal]">Full Calendar</p>
-        </div>
-      </div>
+        <span className="shrink-0 whitespace-nowrap font-avant-garde text-[14px] not-italic text-black">
+          Full Calendar
+        </span>
+      </button>
     </div>
   );
 }
 
+/**
+ * @brief Renders an event card with event details
+ * @params {Event} event - The event object containing title, time, location, date, and description
+ * @return {JSX.Element} Event card component
+ */
 function EventCard({ event }: { event: Event }) {
   return (
-    <div className="relative h-[265px] w-[280px] shrink-0 rounded-[15px] bg-[#99e3ed] sm:w-[351px]">
-      <div className="relative h-[265px] w-[280px] overflow-clip sm:w-[351px]">
-        <div className="absolute left-[18px] top-[94px] flex w-[237px] flex-col content-stretch items-start justify-start gap-1 text-black">
-          <div className="relative w-full shrink-0 font-['Lexend:Bold',_sans-serif] text-[18px] font-bold">
-            <p className="leading-[1.2]">{event.title}</p>
-          </div>
-          <div className="relative w-full shrink-0 font-['Lexend:Medium',_sans-serif] text-[12px] font-medium">
-            <p className="leading-[1.3]">
-              {event.time} @ {event.location}
-            </p>
-          </div>
-          <div className="relative w-full shrink-0 font-['Lexend:Medium',_sans-serif] text-[12px] font-medium">
-            {event.link ? (
-              <p className="cursor-pointer leading-[1.3] underline decoration-solid [text-underline-position:from-font] hover:text-blue-600">
-                {event.date}
-              </p>
-            ) : (
-              <p className="leading-[1.3]">{event.date}</p>
-            )}
-          </div>
-        </div>
-        <div className="absolute left-[298px] top-[94px] flex size-9 items-center justify-center rounded-[15px] bg-[rgba(255,255,255,0.5)]">
-          <div className="relative h-6 w-[21px]" data-name="calendar-days">
+    <article className="relative h-[265px] w-[280px] shrink-0 rounded-card bg-acs-teal sm:w-[351px]">
+      <div className="relative flex h-full w-full flex-col overflow-clip rounded-card px-[18px] pb-4 pt-[94px]">
+        {/* Calendar icon - top right */}
+        <div className="absolute right-[18px] top-[94px] flex size-9 items-center justify-center rounded-card bg-white/50">
+          <div className="relative h-6 w-[21px]">
             <svg
               className="block size-full"
               fill="none"
               preserveAspectRatio="none"
               viewBox="0 0 21 24"
+              aria-hidden="true"
             >
               <g id="calendar-days">
                 <path d={svgPaths.p3ca7b300} fill="var(--fill-0, #195259)" id="Primary" />
@@ -134,23 +138,53 @@ function EventCard({ event }: { event: Event }) {
           </div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-[15px] border border-solid border-white"
+            className="pointer-events-none absolute inset-0 rounded-card border border-solid border-white"
           />
         </div>
-        <div className="absolute left-[18px] top-[170px] h-[77px] w-[calc(100%-36px)] overflow-y-auto text-[12px] text-black">
-          <div className="pr-2 font-['Lexend:Regular',_sans-serif] font-normal">
-            <p className="leading-[1.4]">{event.description}</p>
+
+        {/* Event title, time, location, date */}
+        <div className="flex w-[calc(100%-50px)] flex-col gap-1 text-black">
+          <h3 className="w-full font-lexend text-[18px] font-bold leading-[1.2]">{event.title}</h3>
+          <p className="w-full font-lexend text-[12px] font-medium leading-[1.3]">
+            {event.time} @ {event.location}
+          </p>
+          <div className="w-full font-lexend text-[12px] font-medium">
+            {event.link ? (
+              <a
+                href={event.link}
+                className="cursor-pointer leading-[1.3] underline decoration-solid hover:text-blue-600"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {event.date}
+              </a>
+            ) : (
+              <p className="leading-[1.3]">{event.date}</p>
+            )}
           </div>
         </div>
+
+        {/* Description - scrollable */}
+        <div className="mt-[10px] h-[77px] w-full overflow-y-auto pr-2 text-[12px] text-black">
+          <p className="font-lexend font-normal leading-[1.4]">{event.description}</p>
+        </div>
       </div>
+
+      {/* Border overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 rounded-[15px] border border-solid border-white"
+        className="pointer-events-none absolute inset-0 rounded-card border border-solid border-white"
       />
-    </div>
+    </article>
   );
 }
 
+/**
+ * @brief Renders a placeholder card when no events are available
+ * @params {string} [title="No Events Yet"] - Title text for the placeholder
+ * @params {string} [message="Events will be displayed here once they are added."] - Message text for the placeholder
+ * @return {JSX.Element} Placeholder card component
+ */
 function PlaceholderCard({
   title = "No Events Yet",
   message = "Events will be displayed here once they are added.",
@@ -159,23 +193,28 @@ function PlaceholderCard({
   message?: string;
 }) {
   return (
-    <div className="relative flex h-[265px] w-[280px] shrink-0 items-center justify-center rounded-[15px] bg-[#99e3ed] sm:w-[351px]">
+    <div className="relative flex h-[265px] w-[280px] shrink-0 items-center justify-center rounded-card bg-acs-teal sm:w-[351px]">
       <div className="max-h-[200px] overflow-y-auto px-6 text-center">
-        <div className="mb-2 font-['Lexend:Bold',_sans-serif] text-[18px] font-bold text-black">
-          <p className="leading-[1.2]">{title}</p>
-        </div>
-        <div className="font-['Lexend:Regular',_sans-serif] text-[12px] font-normal text-black">
-          <p className="leading-[1.4]">{message}</p>
-        </div>
+        <h3 className="mb-2 font-lexend text-[18px] font-bold leading-[1.2] text-black">{title}</h3>
+        <p className="font-lexend text-[12px] font-normal leading-[1.4] text-black">{message}</p>
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 rounded-[15px] border border-solid border-white"
+        className="pointer-events-none absolute inset-0 rounded-card border border-solid border-white"
       />
     </div>
   );
 }
 
+/**
+ * @brief Renders a carousel of event cards with navigation controls
+ * @params {number} currentSlide - Current slide index
+ * @params {function} setCurrentSlide - Function to update the current slide
+ * @params {Event[]} displayEvents - Array of events to display
+ * @params {string} [placeholderTitle] - Title for placeholder card when no events
+ * @params {string} [placeholderMessage] - Message for placeholder card when no events
+ * @return {JSX.Element} Events carousel component
+ */
 function EventsCarousel({
   currentSlide,
   setCurrentSlide,
@@ -196,6 +235,10 @@ function EventsCarousel({
   const gap = 20;
   const slideWidth = cardWidth + gap;
 
+  /**
+   * @brief Updates card width based on window size (280px for mobile, 351px for desktop)
+   * @return {void}
+   */
   useEffect(() => {
     const updateCardWidth = () => {
       const newWidth = window.innerWidth < 640 ? 280 : 351;
@@ -207,18 +250,31 @@ function EventsCarousel({
     return () => window.removeEventListener("resize", updateCardWidth);
   }, []);
 
+  /**
+   * @brief Advances to the next slide
+   * @return {void}
+   */
   const nextSlide = () => {
     if (currentSlide < totalSlides - 1) {
       setCurrentSlide(currentSlide + 1);
     }
   };
 
+  /**
+   * @brief Goes to the previous slide
+   * @return {void}
+   */
   const prevSlide = () => {
     if (currentSlide > 0) {
       setCurrentSlide(currentSlide - 1);
     }
   };
 
+  /**
+   * @brief Handles mouse wheel scrolling for carousel navigation
+   * @params {React.WheelEvent} e - Wheel event object
+   * @return {void}
+   */
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
 
@@ -249,10 +305,20 @@ function EventsCarousel({
 
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
+  /**
+   * @brief Handles touch start event for mobile swipe navigation
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
   };
 
+  /**
+   * @brief Handles touch end event to complete swipe gesture
+   * @params {React.TouchEvent} e - Touch event object
+   * @return {void}
+   */
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStart === null) return;
 
@@ -277,10 +343,9 @@ function EventsCarousel({
       <div className="relative w-full overflow-hidden">
         <div
           ref={carouselRef}
-          className="flex select-none gap-5"
+          className="flex select-none gap-5 transition-transform duration-300 ease-out"
           style={{
             transform: `translateX(${currentTransform}px)`,
-            transition: "transform 300ms ease-out",
           }}
           onWheel={handleWheel}
           onTouchStart={handleTouchStart}
@@ -293,25 +358,24 @@ function EventsCarousel({
           )}
         </div>
 
+        {/* Left gradient fade */}
         <div
-          className={`pointer-events-none absolute bottom-0 left-0 top-0 z-10 hidden w-16 transition-opacity duration-300 md:block ${
+          className={`pointer-events-none absolute bottom-0 left-0 top-0 z-10 hidden w-16 bg-gradient-to-r from-[#69d7e5] via-[#69d7e5]/20 to-transparent transition-opacity duration-300 md:block ${
             currentSlide > 0 ? "opacity-100" : "opacity-0"
           }`}
-          style={{
-            background: "linear-gradient(to right, #69d7e5 0%, #69d7e5 20%, transparent 100%)",
-          }}
+          aria-hidden="true"
         />
 
+        {/* Right gradient fade */}
         <div
-          className={`pointer-events-none absolute bottom-0 right-0 top-0 z-10 hidden w-16 transition-opacity duration-300 md:block ${
+          className={`pointer-events-none absolute bottom-0 right-0 top-0 z-10 hidden w-16 bg-gradient-to-l from-[#69d7e5] via-[#69d7e5]/20 to-transparent transition-opacity duration-300 md:block ${
             currentSlide < totalSlides - 1 ? "opacity-100" : "opacity-0"
           }`}
-          style={{
-            background: "linear-gradient(to left, #69d7e5 0%, #69d7e5 20%, transparent 100%)",
-          }}
+          aria-hidden="true"
         />
       </div>
 
+      {/* Previous button */}
       <button
         onClick={prevSlide}
         className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/20 p-1.5 transition-all duration-200 hover:bg-white/40 md:left-2 md:p-2 ${
@@ -330,6 +394,7 @@ function EventsCarousel({
         </svg>
       </button>
 
+      {/* Next button */}
       <button
         onClick={nextSlide}
         className={`absolute right-0 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/20 p-1.5 transition-all duration-200 hover:bg-white/40 md:right-2 md:p-2 ${
@@ -351,6 +416,13 @@ function EventsCarousel({
   );
 }
 
+/**
+ * @brief Renders pagination dots for carousel navigation
+ * @params {number} currentSlide - Current slide index
+ * @params {function} onSlideChange - Callback function to change slides
+ * @params {number} totalSlides - Total number of slides
+ * @return {JSX.Element | null} Pagination dots component or null if only one slide
+ */
 function PaginationDots({
   currentSlide,
   onSlideChange,
@@ -363,7 +435,7 @@ function PaginationDots({
   if (totalSlides <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2">
+    <nav className="flex items-center justify-center gap-2" aria-label="Carousel pagination">
       {Array.from({ length: totalSlides }, (_, index) => (
         <button
           key={index}
@@ -372,12 +444,24 @@ function PaginationDots({
             currentSlide === index ? "h-2.5 w-8 bg-white/70" : "h-2.5 w-2.5 bg-white/50"
           }`}
           aria-label={`Go to slide ${index + 1}`}
+          aria-current={currentSlide === index ? "true" : "false"}
         />
       ))}
-    </div>
+    </nav>
   );
 }
 
+/**
+ * @brief Main events section component displaying event carousel with filtering options
+ * @params {function} [onNavigate] - Callback function for navigation (optional)
+ * @params {FilterButtonType} [filterButtonType="callback"] - Type of filter button navigation
+ * @params {Event[]} [customEvents] - Custom array of events to display (optional)
+ * @params {boolean} [useSortedEvents=true] - Whether to use sorted events
+ * @params {string} [placeholderTitle] - Custom placeholder title (optional)
+ * @params {string} [placeholderMessage] - Custom placeholder message (optional)
+ * @params {boolean} [isMentorMentee=false] - Whether to show mentor/mentee specific events
+ * @return {JSX.Element} Events section component
+ */
 export default function EventsSection({
   onNavigate,
   filterButtonType = "callback",
@@ -415,10 +499,15 @@ export default function EventsSection({
       : "Events will be displayed here once they are added.");
 
   return (
-    <div className="relative box-border flex w-full flex-col content-stretch items-center justify-start gap-[15px] overflow-hidden bg-[#69d7e5] px-0 pb-[30px] pt-[25px]">
-      <div className="relative flex shrink-0 flex-col justify-center px-4 text-center font-['Lexend:Medium',_sans-serif] text-[20px] font-medium leading-[0] text-black md:text-[25px]">
-        <p className="leading-[normal]">Events and Announcements</p>
-      </div>
+    <section
+      className="relative box-border flex w-full flex-col items-center justify-start gap-[15px] overflow-hidden bg-[#69d7e5] px-0 pb-[30px] pt-[25px]"
+      data-section={isMentorMentee ? "mentor-mentee-events" : "events"}
+    >
+      <header className="relative flex shrink-0 flex-col justify-center px-4 text-center">
+        <h2 className="font-lexend text-[20px] font-medium text-black md:text-[25px]">
+          Events and Announcements
+        </h2>
+      </header>
       <FilterButtons onNavigate={onNavigate} filterButtonType={filterButtonType} />
       <EventsCarousel
         currentSlide={currentSlide}
@@ -432,6 +521,6 @@ export default function EventsSection({
         onSlideChange={setCurrentSlide}
         totalSlides={totalSlides}
       />
-    </div>
+    </section>
   );
 }
