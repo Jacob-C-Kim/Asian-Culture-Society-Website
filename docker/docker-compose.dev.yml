@@ -22,6 +22,27 @@ services:
     networks:
       - acs-network-dev
     command: npm run dev
+    depends_on:
+      - postgres
+
+  # PostgreSQL database for events
+  postgres:
+    image: postgres:16-alpine
+    container_name: acs-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: acs_user
+      POSTGRES_PASSWORD: acs_password
+      POSTGRES_DB: acs_events
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - acs-network-dev
+
+volumes:
+  postgres_data:
 
 networks:
   acs-network-dev:

@@ -22,6 +22,7 @@
     "perf:report": "node scripts/perf-generate-report.js"
   },
   "dependencies": {
+    "@prisma/client": "^7.0.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-aspect-ratio": "^1.1.2",
@@ -95,6 +96,7 @@
     "postcss": "^8.4.0",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
+    "prisma": "^7.0.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5"
   },
@@ -113,5 +115,8 @@
     "rimraf": "^6.1.0",
     "glob": "^11.0.3",
     "jsdom": "^27.2.0"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }

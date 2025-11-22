@@ -1,0 +1,26 @@
+// Prisma schema for ACS Events database
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Event model - stores all ACS events
+// This matches the Event interface in src/lib/data/events.ts
+// Your shadow will need to migrate the existing events from that file
+model Event {
+  id            Int      @id @default(autoincrement())
+  title         String   // Event name (e.g., "First GBM")
+  time          String   // Time range (e.g., "5:00 PM - 7:00 PM")
+  location      String   // Location (e.g., "Bamboo Room")
+  date          DateTime // Full date/time - used for calendar integration
+  description   String   @db.Text // Full event description
+  isWeekendEvent Boolean  @default(false) // True if event is on weekend
+
+  // Index on date for faster queries when filtering by date
+  @@index([date])
+  @@map("events")
+}
