@@ -40,8 +40,8 @@ import { NextRequest, NextResponse } from "next/server";
  * 6. Convert Date to ISO string and return event
  */
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  { params: _params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     // TODO: Extract and validate ID from params
@@ -79,10 +79,7 @@ export async function GET(
     return NextResponse.json({ error: "Not implemented" }, { status: 501 });
   } catch (error) {
     console.error("Error fetching event:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
@@ -132,8 +129,8 @@ export async function GET(
  * 7. Convert Date to ISO string and return updated event
  */
 export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  { params: _params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     // TODO: Extract and validate ID
@@ -184,10 +181,7 @@ export async function PUT(
     return NextResponse.json({ error: "Not implemented" }, { status: 501 });
   } catch (error) {
     console.error("Error updating event:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
@@ -216,8 +210,8 @@ export async function PUT(
  * 5. Return success message with 200 status
  */
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  _request: NextRequest,
+  { params: _params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     // TODO: Extract and validate ID
@@ -248,10 +242,6 @@ export async function DELETE(
     return NextResponse.json({ error: "Not implemented" }, { status: 501 });
   } catch (error) {
     console.error("Error deleting event:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-

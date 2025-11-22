@@ -11,18 +11,22 @@
  * const events = await prisma.event.findMany()
  * ```
  */
-import { PrismaClient } from "@prisma/client";
+// TODO: Uncomment after running `npx prisma generate`
+// import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+// const globalForPrisma = globalThis as unknown as {
+//   prisma: PrismaClient | undefined;
+// };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  });
+// export const prisma =
+//   globalForPrisma.prisma ??
+//   new PrismaClient({
+//     log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+//   });
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
+// if (process.env.NODE_ENV !== "production") {
+//   globalForPrisma.prisma = prisma;
+// }
+
+// Placeholder export - remove when uncommenting above
+export const prisma = null as any;

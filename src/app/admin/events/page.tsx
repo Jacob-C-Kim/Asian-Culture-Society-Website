@@ -10,8 +10,10 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+// TODO: Import useState, useEffect from "react" when implementing state
+// import { useState, useEffect } from "react";
+// TODO: Import Button from @/components/ui/button when implementing UI
+// import { Button } from "@/components/ui/button";
 // TODO: Import EventForm from @/components/common/EventForm
 // import EventForm from '@/components/common/EventForm'
 // TODO: Import event types from @/lib/types/event
@@ -226,4 +228,3 @@ export default function AdminEventsPage() {
     </div>
   );
 }
-

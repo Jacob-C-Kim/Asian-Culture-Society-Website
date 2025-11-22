@@ -8,7 +8,8 @@
  * Reference: https://react.dev/reference/react
  */
 
-import { useState, useEffect } from "react";
+// TODO: Import useState, useEffect from "react" when implementing the hook
+// import { useState, useEffect } from "react";
 import type { EventResponse, CreateEventInput, UpdateEventInput } from "@/lib/types/event";
 
 /**
@@ -45,9 +46,15 @@ import type { EventResponse, CreateEventInput, UpdateEventInput } from "@/lib/ty
  * ```
  */
 export function useEvents() {
-  const [events, setEvents] = useState<EventResponse[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // TODO: Uncomment and use these when implementing the hook
+  // const [events, setEvents] = useState<EventResponse[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+
+  // Placeholder to satisfy return type - remove when implementing
+  const events: EventResponse[] = [];
+  const isLoading = false;
+  const error: string | null = null;
 
   /**
    * @brief Fetches all events from the API
@@ -98,7 +105,7 @@ export function useEvents() {
    * After successful creation, automatically refreshes the events list.
    */
   // TODO: Implement createEvent
-  const createEvent = async (data: CreateEventInput) => {
+  const createEvent = async (_data: CreateEventInput) => {
     // Example implementation:
     // try {
     //   const response = await fetch('/api/events', {
@@ -130,7 +137,7 @@ export function useEvents() {
    * After successful update, automatically refreshes the events list.
    */
   // TODO: Implement updateEvent
-  const updateEvent = async (data: UpdateEventInput) => {
+  const updateEvent = async (_data: UpdateEventInput) => {
     // Example implementation:
     // try {
     //   const response = await fetch(`/api/events/${data.id}`, {
@@ -162,7 +169,7 @@ export function useEvents() {
    * After successful deletion, automatically refreshes the events list.
    */
   // TODO: Implement deleteEvent
-  const deleteEvent = async (id: number) => {
+  const deleteEvent = async (_id: number) => {
     // Example implementation:
     // try {
     //   const response = await fetch(`/api/events/${id}`, {
@@ -180,10 +187,11 @@ export function useEvents() {
     // }
   };
 
+  // TODO: Uncomment when implementing the hook
   // Fetch events on component mount
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  // useEffect(() => {
+  //   fetchEvents();
+  // }, []);
 
   return {
     events,
@@ -195,4 +203,3 @@ export function useEvents() {
     deleteEvent,
   };
 }
-

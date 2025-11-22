@@ -39,7 +39,8 @@
  * Reference: https://www.prisma.io/docs/concepts/components/prisma-client
  */
 
-import { prisma } from "@/lib/db/prisma";
+// TODO: Import prisma when implementing service functions
+// import { prisma } from "@/lib/db/prisma";
 import type { Event, CreateEventInput, UpdateEventInput } from "@/lib/types/event";
 
 /**
@@ -72,7 +73,7 @@ import type { Event, CreateEventInput, UpdateEventInput } from "@/lib/types/even
  * return events
  * ```
  */
-export async function getAllEvents(sortByDate = true): Promise<Event[]> {
+export async function getAllEvents(_sortByDate = true): Promise<Event[]> {
   // TODO: Implement using prisma.event.findMany()
   //
   // WHY THIS FUNCTION EXISTS:
@@ -111,7 +112,7 @@ export async function getAllEvents(sortByDate = true): Promise<Event[]> {
   //   console.error('Error fetching events:', error)
   //   throw error // Re-throw so API route can handle it
   // }
-  
+
   throw new Error("Not implemented");
 }
 
@@ -152,7 +153,7 @@ export async function getAllEvents(sortByDate = true): Promise<Event[]> {
  * return events
  * ```
  */
-export async function getEventsByDate(date: Date): Promise<Event[]> {
+export async function getEventsByDate(_date: Date): Promise<Event[]> {
   // TODO: Implement date filtering
   //
   // WHY WE NEED START/END OF DAY:
@@ -198,7 +199,7 @@ export async function getEventsByDate(date: Date): Promise<Event[]> {
   //   orderBy: { date: 'asc' } // Sort by time within the day
   // })
   // return events
-  
+
   throw new Error("Not implemented");
 }
 
@@ -267,7 +268,7 @@ export async function getWeekendEvents(): Promise<Event[]> {
  * return event
  * ```
  */
-export async function getEventById(id: number): Promise<Event | null> {
+export async function getEventById(_id: number): Promise<Event | null> {
   // TODO: Implement using prisma.event.findUnique()
   // Steps:
   // 1. Validate that id is a positive integer (optional but recommended)
@@ -322,7 +323,7 @@ export async function getEventById(id: number): Promise<Event | null> {
  * return event
  * ```
  */
-export async function createEvent(data: CreateEventInput): Promise<Event> {
+export async function createEvent(_data: CreateEventInput): Promise<Event> {
   // TODO: Implement using prisma.event.create()
   //
   // WHY WE CHECK DATE TYPE:
@@ -376,7 +377,7 @@ export async function createEvent(data: CreateEventInput): Promise<Event> {
   //   console.error('Error creating event:', error)
   //   throw error // Re-throw so API route can handle it
   // }
-  
+
   throw new Error("Not implemented");
 }
 
@@ -435,7 +436,7 @@ export async function createEvent(data: CreateEventInput): Promise<Event> {
  * return event
  * ```
  */
-export async function updateEvent(data: UpdateEventInput): Promise<Event | null> {
+export async function updateEvent(_data: UpdateEventInput): Promise<Event | null> {
   // TODO: Implement using prisma.event.update()
   //
   // WHY WE EXTRACT ID SEPARATELY:
@@ -516,7 +517,7 @@ export async function updateEvent(data: UpdateEventInput): Promise<Event | null>
   //   // Re-throw other errors
   //   throw error
   // }
-  
+
   throw new Error("Not implemented");
 }
 
@@ -558,7 +559,7 @@ export async function updateEvent(data: UpdateEventInput): Promise<Event | null>
  * }
  * ```
  */
-export async function deleteEvent(id: number): Promise<boolean> {
+export async function deleteEvent(_id: number): Promise<boolean> {
   // TODO: Implement using prisma.event.delete()
   //
   // WHY WE RETURN BOOLEAN:
@@ -615,7 +616,6 @@ export async function deleteEvent(id: number): Promise<boolean> {
   //   // Re-throw other errors (connection issues, etc.)
   //   throw error
   // }
-  
+
   throw new Error("Not implemented");
 }
-

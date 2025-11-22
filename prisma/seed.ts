@@ -12,11 +12,13 @@
  * - See src/lib/data/events.ts for the events structure
  */
 
-import { PrismaClient } from "@prisma/client";
+// TODO: Uncomment after running `npx prisma generate`
+// import { PrismaClient } from "@prisma/client";
 // TODO: Import events from src/lib/data/events.ts
 // import { events } from '../src/lib/data/events'
 
-const prisma = new PrismaClient();
+// TODO: Uncomment after uncommenting PrismaClient import
+// const prisma = new PrismaClient();
 
 /**
  * @brief Checks if a date falls on a weekend (Saturday or Sunday)
@@ -111,11 +113,11 @@ async function main() {
   console.log("✅ Seeding completed");
 }
 
-main()
-  .catch((e) => {
-    console.error("❌ Seeding failed:", e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch((e) => {
+  console.error("❌ Seeding failed:", e);
+  process.exit(1);
+});
+// TODO: Uncomment after uncommenting prisma variable
+// .finally(async () => {
+//   await prisma.$disconnect();
+// });

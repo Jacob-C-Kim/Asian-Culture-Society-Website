@@ -34,7 +34,8 @@
 
 "use client";
 
-import { useState } from "react";
+// TODO: Import useState from "react" when implementing form state
+// import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -109,7 +110,7 @@ interface EventFormProps {
  * />
  * ```
  */
-export default function EventForm({ event, onSuccess, onCancel }: EventFormProps) {
+export default function EventForm({ event, onSuccess: _onSuccess, onCancel }: EventFormProps) {
   const isEditMode = !!event;
 
   // TODO: Add form state management
@@ -430,4 +431,3 @@ export default function EventForm({ event, onSuccess, onCancel }: EventFormProps
     </form>
   );
 }
-

@@ -68,7 +68,7 @@ import { NextRequest, NextResponse } from "next/server";
  * 3. Convert Date objects to ISO strings for JSON response
  * 4. Return events array in response
  */
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   try {
     // TODO: Extract query params
     //
@@ -148,10 +148,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // 2. Return a generic error message to client (don't expose internal details)
     // 3. Use 500 status code (server error)
     console.error("Error fetching events:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
@@ -200,7 +197,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  * 5. Convert Date to ISO string in response
  * 6. Return created event with 201 status
  */
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(_request: NextRequest): Promise<NextResponse> {
   try {
     // TODO: Parse and validate request body
     //
@@ -274,10 +271,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // - Unexpected errors (network issues, etc.)
     // We log the full error for debugging but return a generic message to client.
     console.error("Error creating event:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-
