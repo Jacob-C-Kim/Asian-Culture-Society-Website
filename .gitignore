@@ -41,3 +41,5 @@ next-env.d.ts
 
 # Performance reports
 performance-reports/
+
+/src/generated/prisma

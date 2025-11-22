@@ -28,4 +28,3 @@ public/
 
 # Supabase Functions (Deno runtime, not Node.js)
 archive/supabase-functions
-acs-consolidated/supabase-functions

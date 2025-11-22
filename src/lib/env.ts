@@ -36,6 +36,12 @@ export const env = {
     "ALLOWED_ORIGINS",
     "https://campusgroups.rit.edu,https://rit.edu"
   ).split(","),
+
+  // Database
+  DATABASE_URL: getEnvVar(
+    "DATABASE_URL",
+    "postgresql://acs_user:acs_password@localhost:5432/acs_events?schema=public"
+  ),
 } as const;
 
 // Validate critical environment variables in production
