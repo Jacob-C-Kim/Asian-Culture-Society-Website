@@ -110,7 +110,8 @@
     "@humanwhocodes/object-schema": "@eslint/object-schema@^3.0.0",
     "rimraf": "^6.1.0",
     "glob": "^11.1.0",
-    "jsdom": "^27.2.0"
+    "jsdom": "^27.2.0",
+    "hono": "^4.10.3"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
